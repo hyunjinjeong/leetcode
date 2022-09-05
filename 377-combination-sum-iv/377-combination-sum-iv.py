@@ -13,7 +13,7 @@ class Solution:
             for num in nums:
                 if i < num:
                     continue
-                elif i == num:
+                elif i == num: # 엣지 케이스
                     dp[i] += 1
                 elif i >= num:
                     dp[i] += dp[i-num]
