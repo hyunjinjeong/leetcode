@@ -9,10 +9,11 @@ class Solution:
         return max(self.get_rob(nums[1:]), self.get_rob(nums[:-1]))
         
     def get_rob(self, nums):
-        dp = [0] * (len(nums)+1)
-        dp[1] = nums[0]
+        prev, curr = 0, 0
         
-        for i in range(1, len(nums)):
-            dp[i+1] = max(dp[i], dp[i-1]+nums[i])
+        for num in nums:
+            temp = max(curr, prev + num)
+            prev = curr
+            curr = temp
         
-        return dp[-1]
+        return curr
