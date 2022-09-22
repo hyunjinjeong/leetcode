@@ -5,7 +5,7 @@ class Solution:
         
         num_set = set(nums)
         
-        for num in nums:
+        for num in num_set:
             # 요 if문 없으면 TLE 걸림. 1 2 3 4 5 6 7 ... 이런 케이스 생각해보면 된다
             if num - 1 in num_set:
                 continue
