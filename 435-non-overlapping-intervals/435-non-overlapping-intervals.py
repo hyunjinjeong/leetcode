@@ -4,11 +4,9 @@ class Solution:
         # 여기도 interval 순서는 뒤죽박죽...
         intervals.sort(key=lambda interval: interval[START])
         
-        # last_end를 저장해두고 overlap을 만날 때마다 +1 해주면 됨.
-        last_end = intervals[0][END]
+        last_end = float("-inf")
         answer = 0
-        # 이 때는 첫 요소는 빼야 함
-        for interval in intervals[1:]:
+        for interval in intervals:
             # last_end가 갱신되어야 하는 경우
             if last_end > interval[START]:
                 # last_end가 갱신되는 경우.
