@@ -1,37 +1,72 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        # 딱 봐도 backtracking 쓰는 문제 같긴 한데...
-        # 방향은 맞았는데 다른 데서 시간을 많이 쓴 듯? moves for문 없애고 set 안 쓰고 하니까 됨.
-        # 근데 제대로 코드 짜도 자꾸 TLE 뜸;
-        self.board = board
-        self.word = word
-        self.found = False
+#         # 딱 봐도 backtracking 쓰는 문제 같긴 한데...
+#         # 코드 맞게 짜도 자꾸 TLE 떴다가 안 떴다가 함
+#         def dfs(r, c, length):
+#             if length == len(word):
+#                 return True
+            
+#             if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
+#                 return False
+#             if board[r][c] is True:
+#                 return False
+#             if board[r][c] != word[length]:
+#                 return False
+            
+#             char = board[r][c]
+#             board[r][c] = True # visited
+#             result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
+#             board[r][c] = char
+            
+#             return result
+
+#         for r in range(len(board)):
+#             for c in range(len(board[0])):
+#                 if dfs(r, c, 0):
+#                     return True
         
+#         return False
+        # 아래는 follow up인 pruning 활용. pruning은 그냥 엣지 케이스들 대비해서 미리 체크하는 정도.
+        def dfs(r, c, length):
+            if length == len(word):
+                return True
+            
+            if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
+                return False
+            if board[r][c] is True:
+                return False
+            if board[r][c] != word[length]:
+                return False
+            
+            char = board[r][c]
+            board[r][c] = True # visited
+            result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
+            board[r][c] = char
+            
+            return result
+        
+        # Pruning/Edge case #1 - Check if word length is longer than matrix itself
+        if len(word) > len(board) * len(board[0]):
+            return False;
+        
+        # Pruning/Edge case #2 - Check if all needed characters for word are on the board
+        charFreq = {};
         for r in range(len(board)):
             for c in range(len(board[0])):
-                if self.found:
+                if board[r][c] not in charFreq:
+                    charFreq[board[r][c]] = 0
+                charFreq[board[r][c]] += 1
+        
+        for char in word:
+            if char not in charFreq:
+                return False;
+            charFreq[char] -= 1
+            
+            if charFreq[char] == 0:
+                del charFreq[char]
+        
+        # Pruning 다 통과하면 이제 메인 알고리즘으로..
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if dfs(r, c, 0):
                     return True
-                self.dfs(r, c, 0)
-        
-        return self.found
-    
-    def dfs(self, r, c, index):
-        if self.found:
-            return
-        
-        if index == len(self.word):
-            self.found = True
-            return
-
-        if r < 0 or c < 0 or r >= len(self.board) or c >= len(self.board[0]):
-            return
-        if self.board[r][c] != self.word[index]:
-            return
-
-        char = self.board[r][c]
-        self.board[r][c] = "-" # visited
-        self.dfs(r+1, c, index+1)
-        self.dfs(r-1, c, index+1)
-        self.dfs(r, c+1, index+1)
-        self.dfs(r, c-1, index+1)
-        self.board[r][c] = char
