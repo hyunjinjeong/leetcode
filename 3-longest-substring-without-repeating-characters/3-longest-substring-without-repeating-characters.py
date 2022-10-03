@@ -1,23 +1,15 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        chars = set()
+        # silding window... 마지막으로 c가 사용된 위치 저장하면 된당
+        last_used = {}
+        max_length, start = 0, 0
         
-        answer = 0
-        left, i = 0, 0
-        
-        # 일단 naive하게..
-        # 중복이 있을 때마다 left를 한칸씩 뒤로 가면 되지 않을까.
-        while left < len(s) and i < len(s):
-            c = s[i]            
-            if c in chars:
-                answer = max(answer, i-left)
-                
-                chars.clear()
-                left += 1
-                i = left
+        for i, c in enumerate(s):
+            if c in last_used and start <= last_used[c]:
+                start = last_used[c] + 1
             else:
-                answer = max(answer, i-left+1)
-                chars.add(c)
-                i += 1
+                max_length = max(max_length, i-start+1)
             
-        return answer
+            last_used[c] = i
+        
+        return max_length
