@@ -6,22 +6,16 @@ class Solution:
         # 넘으면 l은 오른쪽으로 한칸.
         answer = 0
         l = 0
-        freq = {}
-        freq_max = 0
+        freq = collections.Counter()
         
         for r, c in enumerate(s):
-            # freq 늘려주기
-            if c not in freq:
-                freq[c] = 1
-            else:
-                freq[c] += 1
+            freq[c] += 1
             
             length = r - l + 1
-            freq_max = max(freq_max, freq[c])
-            # 조건 만족하면 업뎃
-            if length - freq_max <= k:
+            # 조건 만족하면 업뎃. 이 때 최댓값만 추적하면 됨.
+            if length - max(freq.values()) <= k:
                 answer = max(answer, length)
-            # l 오른쪽으로.
+            # 아니면 l 오른쪽으로.
             else:
                 freq[s[l]] -= 1
                 l += 1
