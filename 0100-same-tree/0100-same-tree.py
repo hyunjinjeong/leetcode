@@ -14,14 +14,6 @@ class Solution:
                 return False
             if q and not p:
                 return False
-            if p.left and not q.left:
-                return False
-            if p.right and not q.right:
-                return False
-            if q.left and not p.left:
-                return False
-            if q.right and not p.right:
-                return False
             if p.val != q.val:
                 return False
             
