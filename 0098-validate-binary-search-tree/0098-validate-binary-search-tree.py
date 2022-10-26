@@ -6,27 +6,19 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        # right의 최솟값이 node보다 커야 하고, left의 최댓값이 node보다 작아야 함
-        def get_max(node):
+        # BST면 inorder로 돌아서 항상 val[i] < val[i+1] 이면 된다.
+        vals = []
+        def in_order(node):
             if not node:
-                return float('-inf')
-            return max(node.val, get_max(node.left), get_max(node.right))
+                return
             
-            
-        def get_min(node):
-            if not node:
-                return float('inf')
-            return min(node.val, get_min(node.left), get_min(node.right))
+            in_order(node.left)
+            vals.append(node.val)
+            in_order(node.right)
         
-        def dfs(node):
-            if not node:
-                return True
-            
-            if node.val <= get_max(node.left):
+        in_order(root)
+        for i in range(len(vals)-1):
+            if vals[i] >= vals[i+1]:
                 return False
-            if node.val >= get_min(node.right):
-                return False
-            
-            return dfs(node.left) and dfs(node.right)
-            
-        return dfs(root)
+        
+        return True
