@@ -8,37 +8,36 @@ class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         # preorder면 node -> left -> right
         # inorder면 left -> node -> right
-        # 이 두개가 주어졌을 때 원래 순서라..
         
         # 아.. inorder는 root 찾으면 divide and conquer가 가능하다. root는 preorder에서 계속 뽑고
         # 우선 다른 최적화 같은거 안하고 기본 개념만.
-        if not inorder:
-            return
+#         if not inorder:
+#             return
         
-        root_val = preorder.pop(0)
-        root = TreeNode(root_val)
-        root_index = inorder.index(root_val)
+#         root_val = preorder.pop(0)
+#         root = TreeNode(root_val)
+#         root_index = inorder.index(root_val)
         
-        root.left = self.buildTree(preorder, inorder[:root_index])
-        root.right = self.buildTree(preorder, inorder[root_index+1:])
+#         root.left = self.buildTree(preorder, inorder[:root_index])
+#         root.right = self.buildTree(preorder, inorder[root_index+1:])
         
-        return root
+#         return root
         
-#         pre = deque(preorder)
-                
-#         dt = {}
-#         for val, i in enumerate(inorder):
-#             dt[val] = i
+        # 여기서 pop(0)이 매번 O(n)이고 index 찾는 것도 매번 O(n)이라서 각각 deque, hashmap 써서 O(1)로 최적화할 수 있음.        
+        pre_deque = deque(preorder)
+        inorder_dt = { val: i for i, val in enumerate(inorder) }
             
-#         def dfs(left, right):
-#             if not pre:
-#                 return
+        def dfs(left, right):
+            if left > right: # element가 없는 경우
+                return
             
-#             val = pre.popleft()
-#             root = TreeNode(val)
-#             root_index = dt[val]
+            val = pre_deque.popleft()
+            root = TreeNode(val)
+            root_index = inorder_dt[val]
             
+            root.left = dfs(left, root_index-1)
+            root.right = dfs(root_index+1, right)
+            return root
             
-        
-#         root = preorder[0]
+        return dfs(0, len(preorder)-1)
         
