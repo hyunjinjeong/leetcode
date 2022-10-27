@@ -13,11 +13,21 @@ class Solution:
         # node.val > high.val 이면 왼쪽으로 가면 되고
         # 아니면 node가 LCA.
         
-        def dfs(node):
-            if node.val < low.val:
-                return dfs(node.right)
-            if node.val > high.val:
-                return dfs(node.left)
-            return node
+#         def dfs(node):
+#             if node.val < low.val:
+#                 return dfs(node.right)
+#             if node.val > high.val:
+#                 return dfs(node.left)
+#             return node
         
-        return dfs(root)
+#         return dfs(root)
+        
+        # 위는 recursive고 iterative로도 해보자
+        node = root
+        while node:
+            if node.val < low.val:
+                node = node.right
+            elif node.val > high.val:
+                node = node.left
+            else:
+                return node
