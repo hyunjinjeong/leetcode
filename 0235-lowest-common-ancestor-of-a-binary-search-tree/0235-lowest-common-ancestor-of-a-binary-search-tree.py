@@ -7,7 +7,6 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        # LCA는 low <= LCA <= high가 된다.
         high, low = (p, q) if p.val > q.val else (q, p)
         # 경우를 나눠서 돌면 됨.
         # node.val < low.val 이면 오른쪽으로 가야 하고
