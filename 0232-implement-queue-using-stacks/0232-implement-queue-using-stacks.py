@@ -1,23 +1,21 @@
 class MyQueue:
-
+    
     def __init__(self):
         self._in_stack = []
         self._out_stack = []
-
+    
+    # 1. push는 O(n), pop은 O(1) 버전
     def push(self, x: int) -> None:
         while self._out_stack:
             self._in_stack.append(self._out_stack.pop())
         self._in_stack.append(x)
-
-    def pop(self) -> int:
         while self._in_stack:
             self._out_stack.append(self._in_stack.pop())
+
+    def pop(self) -> int:
         return self._out_stack.pop()
 
     def peek(self) -> int:
-        while self._in_stack:
-            self._out_stack.append(self._in_stack.pop())
-        
         return self._out_stack[-1]
 
     def empty(self) -> bool:
