@@ -19,17 +19,30 @@ class Solution:
             
             return is_same(n1.left, n2.left) and is_same(n1.right, n2.right)
         
-        s = [root]
-        while s:
-            n = s.pop()
-            if is_same(n, subRoot):
-                return True
+#         s = [root]
+#         while s:
+#             n = s.pop()
+#             if is_same(n, subRoot):
+#                 return True
             
-            if n.left:
-                s.append(n.left)
-            if n.right:
-                s.append(n.right)
+#             if n.left:
+#                 s.append(n.left)
+#             if n.right:
+#                 s.append(n.right)
         
-        return False
+#         return False
         
-        
+        self.is_sub_tree = False
+        def dfs(node):
+            if not node or self.is_sub_tree:
+                return
+            
+            if is_same(node, subRoot):
+                self.is_sub_tree = True
+                return
+            
+            dfs(node.left)
+            dfs(node.right)
+            
+        dfs(root)
+        return self.is_sub_tree
