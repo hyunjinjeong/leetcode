@@ -3,7 +3,7 @@ class Solution:
         answer = []
         right = 0
         
-        # 우선 right를 0 맨 오른쪽으로 옮겨서..
+        # 우선 0 이상인 수가 나타날 때까지 right를 오른쪽으로 옮기고..
         for num in nums:
             if num >= 0:
                 break
