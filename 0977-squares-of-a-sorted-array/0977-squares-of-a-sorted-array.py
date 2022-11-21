@@ -29,3 +29,6 @@ class Solution:
             right += 1
         
         return answer
+        
+        # 요렇게 안하고 queue 사용하는 방법도 있다. 그러면 맨 위에 탐색 단계가 없어진다.
+        # left는 0부터 오른쪽으로, right는 끝에서부터 왼쪽으로, 조건은 while left <= right..
