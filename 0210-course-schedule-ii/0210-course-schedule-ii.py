@@ -19,11 +19,9 @@ class Solution:
                 queue.append(key)
         
         # 본격 위상 정렬
-        visited = 0
         while queue:
             vertex = queue.popleft()            
             orders.append(vertex)
-            visited += 1
             for child in graph[vertex]:
                 in_degrees[child] -= 1
                 if in_degrees[child] == 0:
