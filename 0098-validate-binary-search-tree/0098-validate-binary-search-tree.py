@@ -7,18 +7,16 @@
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         # BST면 inorder로 돌아서 항상 val[i] < val[i+1] 이면 된다.
-        vals = []
-        def in_order(node):
+        # 더 최적화해서 O(1) 공간 쓰도록. 물론 재귀 스택을 포함하면 O(N)임
+        def check_bst(node, left, right):
             if not node:
-                return
-            
-            in_order(node.left)
-            vals.append(node.val)
-            in_order(node.right)
-        
-        in_order(root)
-        for i in range(len(vals)-1):
-            if vals[i] >= vals[i+1]:
+                return True
+
+            if not left < node.val < right:
                 return False
+
+            return check_bst(node.left, left, node.val) and check_bst(node.right, node.val, right)
         
-        return True
+        return check_bst(root, float("-inf"), float("inf"))
+	
+    
