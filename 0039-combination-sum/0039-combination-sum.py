@@ -1,21 +1,18 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        def dfs(index, current):
-            if index >= len(candidates):
-                return
-            
-            current_sum = sum(current)
+        def dfs(index, current_array, current_sum):
             if current_sum > target:
                 return
             
             if current_sum == target:
-                ans.append(current)
+                ans.append(current_array)
                 return 
             
             for i in range(index, len(candidates)):
-                dfs(i, current + [candidates[i]])
+                val = candidates[i]
+                dfs(i, current_array + [val], current_sum + val)
         
         ans = []
-        dfs(0, [])
+        dfs(0, [], 0)
         
         return ans
