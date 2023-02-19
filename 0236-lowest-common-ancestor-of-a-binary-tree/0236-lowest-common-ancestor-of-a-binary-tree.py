@@ -13,15 +13,17 @@ class Solution:
         # 그 쪽으로 dfs로 타고 가다가 왼쪽 오른쪽 둘다 lca가 아닌 친구가 나오면 그게 lca.
         def dfs(node, p, q):
             if not node:
-                return node
+                return None
             if node is p or node is q:
                 return node
             
             left = dfs(node.left, p, q)
             right = dfs(node.right, p, q)
             
+            # 노드 양쪽에서 모두 노드를 리턴하는 경우. 즉 p q를 둘 다 찾았단 얘기이고 얘가 lca임
             if left and right:
                 return node
+            # 한 쪽에서만 찾은 경우. 그러면 그 쪽으로 내려가야 lca가 나옴.
             return left or right
         
         return dfs(root, p, q)
