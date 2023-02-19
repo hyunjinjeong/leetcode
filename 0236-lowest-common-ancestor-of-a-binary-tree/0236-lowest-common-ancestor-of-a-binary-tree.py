@@ -8,7 +8,7 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         # dfs? binary search? how?
-        # root는 무조건 lca임.
+        # root는 무조건 true이고...
         # 그 밑으로는 한 쪽에서만 후손들이 존재할 수 있으니까 그 쪽으로 타고 들어가다가
         # 양 쪽이 모두 후손이면 그게 LCA!
         def dfs(node, p, q):
