@@ -8,8 +8,10 @@ class Solution:
         for start, end in intervals:
             prev_start, prev_end = merged
             
+            # 합쳐야 하는 상황
             if start <= prev_end:
                 merged = [prev_start, max(prev_end, end)]
+            # 안 합쳐도 되면 left 배열에 추가해주고.. merged를 갱신해줌
             else:
                 left.append(merged)
                 merged = [start, end]
