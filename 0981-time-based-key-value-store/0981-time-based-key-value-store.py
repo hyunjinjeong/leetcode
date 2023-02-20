@@ -23,7 +23,10 @@ class TimeMap:
             mid = (left + right) // 2
             curr_timestamp = arr[mid][0]
             
-            if curr_timestamp <= timestamp:
+            if curr_timestamp == timestamp:
+                return arr[mid][1]
+            
+            if curr_timestamp < timestamp:
                 left = mid + 1
             else:
                 right = mid
