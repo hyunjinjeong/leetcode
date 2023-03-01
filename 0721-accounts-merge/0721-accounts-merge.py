@@ -1,8 +1,7 @@
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        # 그래프 문제로 치환할 수 있음...
-        # 이메일 -> 계정으로 hashmap 저장한 다음에 DFS로 도는 것
-        # union-find를 사용하면 더 빨라짐.
+        # 그래프 문제로 치환할 수 있음... connected components를 찾는 것
+        # 이메일 -> 계정으로 hashmap 저장한 다음에 DFS로 도는 방법
         emails_accounts_map = {}
         for i, account in enumerate(accounts):
             for j in range(1, len(account)):
