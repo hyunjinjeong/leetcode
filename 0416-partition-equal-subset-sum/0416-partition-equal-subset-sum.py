@@ -15,6 +15,7 @@ class Solution:
 #         return subset_sum(total_sum // 2, 0)
         
         # bottom-up DP
+        # knapsack problem이라고 한다.
         total_sum = sum(nums)
         if total_sum % 2 == 1:
             return False
