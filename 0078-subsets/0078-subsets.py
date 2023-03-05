@@ -1,16 +1,18 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-        def dfs(start, curr):
-            if start >= len(nums):
+        
+        def backtrack(start, current_subset, max_length):
+            if len(current_subset) == max_length:
+                answer.append(current_subset[:])
                 return
             
-            if curr not in ans:
-                ans.append(curr)
-            
-            for i in range(start+1, len(nums)):
-                dfs(i, curr + [nums[i]])
-                dfs(i, curr)
+            for i in range(start, len(nums)):
+                current_subset.append(nums[i])
+                backtrack(i+1, current_subset, max_length)
+                current_subset.pop()
         
-        dfs(-1, [])
-        return ans
+        answer = []    
+        for max_length in range(len(nums) + 1):
+            backtrack(0, [], max_length)
+        
+        return answer
