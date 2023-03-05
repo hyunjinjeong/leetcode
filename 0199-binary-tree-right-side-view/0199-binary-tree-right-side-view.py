@@ -6,13 +6,13 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        # level 별로 가장 오른쪽에 있는 노드를 보여주면 된다!
+        # 레벨 별로 가장 오른쪽에 있는 노드를 보여주면 된다!
         # 그러면 어떻게.. pre-order에서 node -> right -> left 순으로 찾는 거임.
         def traverse(node, level):
             if not node:
                 return
             
-            # 가장 오른쪽에 있는 노드가 처음으로 여기 들어오게 된다
+            # 레벨 별로 가장 오른쪽에 있는 노드가 처음으로 여기 들어오게 된다
             if level == len(ans):
                 ans.append(node.val)
             
