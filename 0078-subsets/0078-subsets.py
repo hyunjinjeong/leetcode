@@ -1,18 +1,15 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         
-        def backtrack(start, current_subset, max_length):
-            if len(current_subset) == max_length:
-                answer.append(current_subset[:])
-                return
+        def backtrack(start, current_subset):
+            answer.append(current_subset[:])
             
             for i in range(start, len(nums)):
                 current_subset.append(nums[i])
-                backtrack(i+1, current_subset, max_length)
+                backtrack(i+1, current_subset)
                 current_subset.pop()
         
-        answer = []    
-        for max_length in range(len(nums) + 1):
-            backtrack(0, [], max_length)
+        answer = []
+        backtrack(0, [])
         
         return answer
