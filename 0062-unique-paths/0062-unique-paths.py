@@ -4,13 +4,8 @@ class Solution:
         # 기본적으로 dp[i][j] = dp[i-1][j] + dp[i][j-1] 가 될건데
         # 코너 케이스는 i나 j가 0인 경우? 다 1로 처리해주기.
         
-        dp = [[0] * n for _ in range(m)]
-        
-        # 코너 케이스
-        for i in range(m):
-            dp[i][0] = 1
-        for j in range(n):
-            dp[0][j] = 1
+        # 애초에 처음부터 1로 초기화하면 되는구나..
+        dp = [[1] * n for _ in range(m)]
         
         for i in range(1, m):
             for j in range(1, n):
