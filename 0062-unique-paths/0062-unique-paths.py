@@ -18,6 +18,7 @@ class Solution:
         
         for _ in range(1, m):
             for j in range(1, n):
+                # row 단위로 계속 덮어 씌우면서 업데이트하는 느낌.
                 dp[j] += dp[j-1]
         
         return dp[-1]
