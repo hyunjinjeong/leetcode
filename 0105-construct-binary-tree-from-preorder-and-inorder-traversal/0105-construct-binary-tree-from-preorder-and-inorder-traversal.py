@@ -24,14 +24,14 @@ class Solution:
 #         return root
         
         # 여기서 pop(0)이 매번 O(n)이고 index 찾는 것도 매번 O(n)이라서 각각 deque, hashmap 써서 O(1)로 최적화할 수 있음.        
-        pre_deque = deque(preorder)
+        preorder_queue = collections.deque(preorder)
         inorder_dt = { val: i for i, val in enumerate(inorder) }
             
         def dfs(left, right):
             if left > right: # element가 없는 경우
                 return
             
-            val = pre_deque.popleft()
+            val = preorder_queue.popleft()
             root = TreeNode(val)
             root_index = inorder_dt[val]
             
