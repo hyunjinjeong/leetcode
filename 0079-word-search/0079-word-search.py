@@ -50,20 +50,15 @@ class Solution:
             return False;
         
         # Pruning/Edge case #2 - Check if all needed characters for the word are on the board
-        charFreq = {};
+        charFreq = collections.defaultdict(int)
         for r in range(len(board)):
             for c in range(len(board[0])):
-                if board[r][c] not in charFreq:
-                    charFreq[board[r][c]] = 0
                 charFreq[board[r][c]] += 1
         
         for char in word:
-            if char not in charFreq:
+            if char not in charFreq or charFreq[char] < 0:
                 return False;
             charFreq[char] -= 1
-            
-            if charFreq[char] == 0:
-                del charFreq[char]
         
         # Pruning 다 통과하면 이제 메인 알고리즘으로..
         for r in range(len(board)):
