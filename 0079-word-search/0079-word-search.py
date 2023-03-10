@@ -8,13 +8,13 @@ class Solution:
             
 #             if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
 #                 return False
-#             if board[r][c] == True:
+#             if board[r][c] == "":
 #                 return False
 #             if board[r][c] != word[length]:
 #                 return False
             
 #             char = board[r][c]
-#             board[r][c] = True # visited
+#             board[r][c] = "" # visited
 #             result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
 #             board[r][c] = char
             
@@ -33,13 +33,13 @@ class Solution:
             
             if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
                 return False
-            if board[r][c] == True:
+            if board[r][c] == "":
                 return False
             if board[r][c] != word[length]:
                 return False
             
             char = board[r][c]
-            board[r][c] = True # visited
+            board[r][c] = "" # visited
             result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
             board[r][c] = char
             
