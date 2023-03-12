@@ -6,33 +6,67 @@ class Solution:
         # MHT가 최대 2개라는 사실 이용.
         # bfs 방법은 topological sort를 거꾸로 하는 것과 비슷..
         
-        # 1. dfs 버전
-        graph, seen = collections.defaultdict(set), [False] * n
+#         # 1. dfs 버전
+#         graph, seen = collections.defaultdict(set), [False] * n
+#         # 초기화
+#         for u, v in edges:
+#             graph[u].add(v)
+#             graph[v].add(u)
+        
+#         def dfs(i):
+#             if seen[i]:
+#                 return []
+            
+#             longest_path = []
+#             seen[i] = True
+#             for adj in graph[i]:
+#                 if seen[adj]:
+#                     continue
+#                 path = dfs(adj)
+#                 if len(path) > len(longest_path):
+#                     longest_path = path
+            
+#             longest_path.append(i)
+#             seen[i] = False
+#             return longest_path
+        
+#         # 하나는 랜덤하게 골라서 끝에 있는 원소를 찾고
+#         edge = dfs(0)[0]
+#         # 끝에 있는 원소로부터 dfs 실행하면 diameter가 됨.
+#         path = dfs(edge)
+#         # 길이가 짝수면 2개, 홀수면 1개
+#         return [path[len(path)//2], path[len(path)//2 - 1]] if len(path) % 2 == 0 else [path[len(path)//2]]
+        # 2. bfs 버전
+        # 베이스
+        if n <= 2:
+            return [i for i in range(n)]
+    
+        graph = collections.defaultdict(set)
         # 초기화
         for u, v in edges:
             graph[u].add(v)
             graph[v].add(u)
         
-        def dfs(i):
-            if seen[i]:
-                return []
-            
-            longest_path = []
-            seen[i] = True
-            for adj in graph[i]:
-                if seen[adj]:
-                    continue
-                path = dfs(adj)
-                if len(path) > len(longest_path):
-                    longest_path = path
-            
-            longest_path.append(i)
-            seen[i] = False
-            return longest_path
+        # leaves 찾기
+        leaves = []
+        for i in range(n):
+            if len(graph[i]) == 1:
+                leaves.append(i)
         
-        # 하나는 랜덤하게 골라서 끝에 있는 원소를 찾고
-        edge = dfs(0)[0]
-        # 끝에 있는 원소로부터 dfs 실행하면 diameter가 됨.
-        path = dfs(edge)
-        # 길이가 짝수면 2개, 홀수면 1개
-        return [path[len(path)//2], path[len(path)//2 - 1]] if len(path) % 2 == 0 else [path[len(path)//2]]
+        remaining_nodes = n
+        while remaining_nodes > 2:
+            remaining_nodes -= len(leaves)
+            
+            new_leaves = []
+            while leaves:
+                leaf = leaves.pop()
+                # 이웃 노드를 꺼내서 보관
+                adj = graph[leaf].pop()
+                # graph에서 삭제. 길이가 1이면 얘가 다음 leaf임.
+                graph[adj].remove(leaf)
+                if len(graph[adj]) == 1:
+                    new_leaves.append(adj)
+                    
+            leaves = new_leaves
+            
+        return leaves
