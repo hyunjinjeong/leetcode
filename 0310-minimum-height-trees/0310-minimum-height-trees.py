@@ -38,8 +38,8 @@ class Solution:
 #         return [path[len(path)//2], path[len(path)//2 - 1]] if len(path) % 2 == 0 else [path[len(path)//2]]
         # 2. bfs 버전
         # 베이스
-        if n <= 2:
-            return [i for i in range(n)]
+        if n == 1:
+            return [0]
     
         graph = collections.defaultdict(set)
         # 초기화
