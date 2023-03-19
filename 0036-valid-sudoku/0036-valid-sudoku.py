@@ -1,44 +1,21 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        # 이것도 일단 brute force로 구현해보자.
+        # 각 케이스마다 set을 별도로 만들면 1-pass에 해결 가능하넹
+        row_set = [set() for _ in range(9)]
+        col_set = [set() for _ in range(9)]
+        sub_box_set = [[set() for _ in range(3)] for _ in range(3)]
         
-        # 1. Each row must contain the digits 1-9 without repetition.
-        def check_rows():
-            for r in range(9):
-                s = set()
-                for c in range(9):
-                    num = board[r][c]
-                    if num == ".":
-                        continue
-                    if num in s:
-                        return False
-                    s.add(num)
-            return True
-        
-        # 2. Each column must contain the digits 1-9 without repetition.
-        def check_columns():
+        for r in range(9):
             for c in range(9):
-                s = set()
-                for r in range(9):
-                    num = board[r][c]
-                    if num == ".":
-                        continue
-                    if num in s:
-                        return False
-                    s.add(num)
-            return True
+                num = board[r][c]
+                if num == ".":
+                    continue
+                
+                if num in row_set[r] or num in col_set[c] or num in sub_box_set[r//3][c//3]:
+                    return False
+                
+                row_set[r].add(num)
+                col_set[c].add(num)
+                sub_box_set[r//3][c//3].add(num)
         
-        # 3. Each of the nine 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
-        def check_sub_boxes(row_start, col_start):
-            s = set()
-            for r in range(row_start, row_start+3):
-                for c in range(col_start, col_start+3):
-                    num = board[r][c]
-                    if num == ".":
-                        continue
-                    if num in s:
-                        return False
-                    s.add(num)
-            return True
-        
-        return check_rows() and check_columns() and check_sub_boxes(0, 0) and check_sub_boxes(0, 3) and check_sub_boxes(0, 6) and check_sub_boxes(3, 0) and check_sub_boxes(3, 3) and check_sub_boxes(3, 6) and check_sub_boxes(6, 0) and check_sub_boxes(6, 3) and check_sub_boxes(6, 6)
+        return True
