@@ -24,7 +24,7 @@ class Solution:
         # 뭔가 DP로 최적화할 수 있을 것 같다. 근데 시작지점에 따라 값이 변해서... 최적 부분 문제를 어떻게 찾지
         # ? 그리디였음..
         # total gas > total cost면 정답이 존재. 없으면 -1
-        # 그 다음에는 시작 지점만 찾으면 됨.
+        # 그 다음에는 시작 지점을 찾을 때 효율적인 방법이 있었음.
         
         total_surplus = 0
         for i in range(len(gas)):
@@ -34,8 +34,8 @@ class Solution:
         
         start, surplus = 0, 0
         for i in range(len(gas)):
-            # 부분합이 0보다 작아지면 그 사이는 모두 답이 안 됨.
-            # 뭔가 직관적으로 보이는데... 증명은 어케하지?
+            # 부분합이 0보다 작아지면 그 사이는 모두 답이 안 되므로 바로 다음 인덱스로 건너뜀.
+            # 왜냐면 그 사이 구간에 surplus가 있는데 안 됐다는 거니까...
             surplus += gas[i] - cost[i]
             if surplus < 0:
                 surplus = 0
