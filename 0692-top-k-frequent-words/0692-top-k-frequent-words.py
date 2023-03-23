@@ -5,6 +5,7 @@ class Item:
     
     def __lt__(self, other):
         if self.freq == other.freq:
+            # 최소 힙에서 하나씩 꺼내서 reverse 하니까.. 크기를 반대로 해놓음.
             return self.word > other.word
         return self.freq < other.freq
 
@@ -25,6 +26,7 @@ class Solution:
             if len(heap) > k: # O(nlogk) 위해서 크기를 k로 고정
                 heapq.heappop(heap)
         
+        # 최소 힙이니까 하나씩 꺼내서 거꾸로.
         ans = []
         while heap:
             ans.append(heapq.heappop(heap).word)
