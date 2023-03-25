@@ -12,15 +12,18 @@ class Solution:
             if not node:
                 return
             
+            path.append(node.val)
             new_sum = current_sum + node.val
-            new_path = path + [node.val]
             
-            if new_sum == targetSum and node.left is None and node.right is None:
-                ans.append(new_path)
-                return
+            if not node.left and not node.right:
+                if new_sum == targetSum:
+                    ans.append(path[:])
+            else:
+                dfs(node.left, new_sum, path)
+                dfs(node.right, new_sum, path)
             
-            dfs(node.left, new_sum, new_path)
-            dfs(node.right, new_sum, new_path)
+            # backtracking
+            path.pop()
             
         ans = []
         dfs(root, 0, [])
