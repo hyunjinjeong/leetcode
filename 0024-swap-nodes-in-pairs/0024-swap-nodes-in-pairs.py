@@ -11,19 +11,18 @@ class Solution:
         
         new_head = head.next
         
-        prev, curr, nxt = None, head, head.next
-        while curr and nxt:
+        prev, curr = None, head
+        while curr and curr.next:
+            nxt = curr.next
+            
             # swap
             curr.next = nxt.next
             nxt.next = curr
             if prev:
                 prev.next = nxt
             
-            if not (curr.next and curr.next.next):
-                break
-            
+            # next
             prev = curr
             curr = curr.next
-            nxt = curr.next
     
         return new_head
