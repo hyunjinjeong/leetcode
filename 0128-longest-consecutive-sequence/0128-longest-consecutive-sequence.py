@@ -42,8 +42,6 @@ class Solution:
         
         # Union
         for num in num_set:
-            # if num - 1 in num_set:
-            #     union(num, num-1)
             if num + 1 in num_set:
                 union(num, num+1)
         
