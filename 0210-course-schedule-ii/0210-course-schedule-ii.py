@@ -1,8 +1,7 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-         # 그래프에 사이클이 없으면 된다. => 위상 정렬 활용. BFS가 더 편함.
-        
-        graph = {i: set() for i in range(numCourses)}
+        # topological sort?
+        graph = {i:set() for i in range(numCourses)}
         in_degrees = {i:0 for i in range(numCourses)}
         
         # 그래프 만들기
@@ -10,8 +9,7 @@ class Solution:
             graph[parent].add(child)
             in_degrees[child] += 1
         
-        queue = deque() # 파이썬은 Queue가 없으니..
-        orders = []
+        queue = collections.deque()
         
         # in_degree가 0이면 다 추가
         for key in in_degrees:
@@ -19,13 +17,13 @@ class Solution:
                 queue.append(key)
         
         # 본격 위상 정렬
+        ans = []
         while queue:
-            vertex = queue.popleft()            
-            orders.append(vertex)
+            vertex = queue.popleft()
+            ans.append(vertex)
             for child in graph[vertex]:
                 in_degrees[child] -= 1
                 if in_degrees[child] == 0:
                     queue.append(child)
         
-        return orders if len(orders) == numCourses else []
-                
+        return ans if len(ans) == numCourses else []
