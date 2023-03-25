@@ -4,10 +4,6 @@ class Solution:
         def binary_search(target, left, right):
             while left < right:
                 mid = (left + right) // 2
-                
-                if tails[mid] == target:
-                    return mid
-                
                 if tails[mid] < target:
                     left = mid + 1
                 else:
