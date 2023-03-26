@@ -19,10 +19,11 @@ class Solution:
 #             nums[i] = tmp[j]
         # 2. reverse 이용. 왼쪽 오른쪽 각각 뒤집고 또 전체를 뒤집으면 됨
         def reverse(left, right):
-            while left < right:
-                nums[left], nums[right] = nums[right], nums[left]
-                left += 1
-                right -= 1
+            _left, _right = left, right
+            while _left < _right:
+                nums[_left], nums[_right] = nums[_right], nums[_left]
+                _left += 1
+                _right -= 1
         
         steps = k % len(nums)
         # 각각 reverse
