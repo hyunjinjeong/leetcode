@@ -17,7 +17,7 @@ class Solution:
 
             return left
         
-        # 2. Make the answer array. 아까 찾은 x의 index가 right
+        # 2. Make the answer array. 아까 찾은 x의 index를 right로. 조건에 따라 작은 것들부터 찾아야 함.
         right = find_x()
         left = right - 1
         
