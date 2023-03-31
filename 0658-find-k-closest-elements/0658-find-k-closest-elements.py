@@ -20,7 +20,6 @@ class Solution:
         # 2. Make the answer array. 아까 찾은 x의 index가 right
         right = find_x()
         left = right - 1
-        print(left, right)
         
         while k:
             if left < 0:
