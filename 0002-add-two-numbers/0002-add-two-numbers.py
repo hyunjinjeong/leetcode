@@ -10,7 +10,7 @@ class Solution:
         
         n1, n2 = l1, l2
         carry = 0
-        while n1 or n2:
+        while n1 or n2 or carry:
             n1_val = n1.val if n1 else 0
             n2_val = n2.val if n2 else 0
             _sum = n1_val + n2_val + carry
@@ -22,8 +22,5 @@ class Solution:
                 n1 = n1.next
             if n2:
                 n2 = n2.next
-        
-        if carry:
-            node.next = ListNode(val=1)
         
         return dummy.next
