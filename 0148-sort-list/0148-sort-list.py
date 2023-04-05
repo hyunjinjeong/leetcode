@@ -5,21 +5,42 @@
 #         self.next = next
 class Solution:
     def sortList(self, head: ListNode) -> ListNode:
-        # 간단한 방법을 생각해보면
-        # 한번 돌아서 array에 저장 후 sort -> 그 다음에 array를 다시 ll로 만들어 주기
-        # 시간은 O(nlogn), 공간은 O(n)
-        arr = []
-        node = head
-        while node:
-            arr.append(node.val)
-            node = node.next
+        # Merge sort를 사용해야 하는구나..
+        # top-down은 logn 공간 써서 bottom-up으로 해야 함.
+        # 우선 top-down
+        if not (head and head.next):
+            return head
         
-        arr.sort()
-        
-        dummy = ListNode()
+        mid = self.get_mid(head)
+        left = self.sortList(head)
+        right = self.sortList(mid)
+        return self.merge(left, right)
+    
+    def get_mid(self, node):
+        slow, fast = node, node
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        mid = slow.next
+        slow.next = None
+        return mid
+    
+    def merge(self, left, right):
+        dummy = ListNode(None)
         node = dummy
-        for item in arr:
-            node.next = ListNode(item)
+
+        while left and right:
+            if left.val < right.val:
+                node.next = left
+                left = left.next
+            else:
+                node.next = right
+                right = right.next
             node = node.next
-        
+
+        node.next = left or right
         return dummy.next
+        
+        
+                    
+            
