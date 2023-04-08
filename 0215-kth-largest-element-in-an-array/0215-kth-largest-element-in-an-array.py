@@ -29,7 +29,7 @@ class Solution:
                     nums[left], nums[i] = nums[i], nums[left]
                     left += 1
             
-            # 이 시점에서 left는 pivot과 작거나 같은 첫 번째 원소 위치
+            # 이 시점에서 left는 pivot보다 작은 첫 번째 원소 위치 (swap 후 +1 되므로)
             # 따라서 -1을 해야 pivot의 위치가 됨
             return left - 1
         
