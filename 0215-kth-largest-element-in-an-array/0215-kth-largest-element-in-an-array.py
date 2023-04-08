@@ -20,20 +20,24 @@ class Solution:
         
         def partition(left, right):
             pivot_index = random.randint(left, right)
-            pivot = nums[pivot_index]
+            # swap을 쉽게 하기 위해 맨 마지막으로 보냄
             nums[right], nums[pivot_index] = nums[pivot_index], nums[right]
             
+            pivot = nums[right]
             for i in range(left, right+1):
-                if nums[i] >= nums[right]:
+                if nums[i] >= pivot: # kth largest니까 pivot보다 큰 친구들을 왼쪽으로 보냄
                     nums[left], nums[i] = nums[i], nums[left]
                     left += 1
             
+            # 이 시점에서 left는 pivot과 작거나 같은 첫 번째 원소 위치
+            # 따라서 -1을 해야 pivot의 위치가 됨
             return left - 1
         
         l, r = 0, len(nums)-1
         while True:
             pivot_index = partition(l, r)
             
+            # zero-based index니까 k-1 사용.
             if pivot_index == k-1:
                 return nums[pivot_index]
             
