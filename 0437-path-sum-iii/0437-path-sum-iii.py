@@ -7,7 +7,7 @@
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
         # 뭔가 자식 tree를 어떻게 재활용할 수 있을 것 같은디
-        # 일단 brute force 버전
+        # 일단 brute force 버전. 공간은 O(n) 시간은 O(n^2).
         def dfs(node):
             if not node:
                 return
