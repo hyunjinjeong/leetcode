@@ -6,10 +6,12 @@ class Solution:
         
         ans = 0
         prefix_sum = 0
-        count = {0:1}
+        count = {}
         
         for num in nums:
             prefix_sum += num
+            if prefix_sum == k:
+                ans += 1
             if prefix_sum - k in count:
                 ans += count[prefix_sum - k]
             
