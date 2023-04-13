@@ -12,9 +12,6 @@ class Solution:
             else:
                 return -1
         
-        # 엣지 케이스. [0, 0] 같은 경우 처리.
-        if not any(nums):
-            return "0"
-        
         sorted_nums = sorted(nums, key=functools.cmp_to_key(compare))
-        return "".join([str(item) for item in sorted_nums])
+        # int로 한번 더 묶는 건 엣지 케이스 [0, 0] 같은 경우 처리.
+        return str(int("".join([str(item) for item in sorted_nums])))
