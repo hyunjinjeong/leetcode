@@ -8,10 +8,13 @@ class Solution:
         # 그리고 10 <= s[n-2:n] <= 26 이면 dp[n] += dp[n-2]
         # 둘을 각각 따로 계산하는 게 핵심...
         
+        if s[0] == "0": # leading zero. 에러 케이스 처리
+            return 0
+        
         dp = [0] * (len(s)+1)
         # 초기화
-        dp[0] = 1 # 0은 코너 케이스 처리용 extra
-        dp[1] = 1 if s[0] != "0" else 0
+        dp[0] = 1
+        dp[1] = 1
         
         for i in range(2, len(s)+1):
             if 0 < int(s[i-1]) <= 9:
