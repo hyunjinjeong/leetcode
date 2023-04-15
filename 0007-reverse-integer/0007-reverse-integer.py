@@ -13,5 +13,5 @@ class Solution:
             ans = ans * 10 + x % 10
             x //= 10
             
-        ans = ans * sign
+        ans *= sign
         return ans if -2**31 <= ans <= 2**31 - 1 else 0
