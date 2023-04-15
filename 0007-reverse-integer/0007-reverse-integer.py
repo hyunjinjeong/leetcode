@@ -31,11 +31,12 @@ class Solution:
             # MAX_INT: 2147483647 이니까.
             if sign == 1 and (ans > MAX_INT // 10 or ans == MAX_INT // 10 and x % 10 > 7):
                 return 0
-            if sign == -1 and (-ans < MIN_INT // 10 or -ans == MIN_INT // 10 and -(x % 10) > 8):
+            # MIN_INT: -2147483648. 양수로 만들어줬기 때문에 해당 부분 고려
+            # Python에서 음수 나누기는 이런식으로..
+            if sign == -1 and (-ans < math.ceil(MIN_INT / 10) or -ans == math.ceil(MIN_INT / 10) and -(x % 10) < -8):
                 return 0
             
             ans = ans * 10 + x % 10
             x //= 10
-            
-        ans *= sign
-        return ans if -2**31 <= ans <= 2**31 - 1 else 0
+        
+        return ans * sign
