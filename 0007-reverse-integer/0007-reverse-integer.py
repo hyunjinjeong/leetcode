@@ -2,15 +2,16 @@ class Solution:
     def reverse(self, x: int) -> int:
         ans = 0
         
-        is_negative = False
+        # 음수 처리
         if x < 0:
-            is_negative = True
+            sign = -1
             x = -x
+        else:
+            sign = 1
         
         while x:
-            remainder = x % 10
-            ans = ans * 10 + remainder
+            ans = ans * 10 + x % 10
             x //= 10
             
-        ans = -ans if is_negative else ans
+        ans = ans * sign
         return ans if -2**31 <= ans <= 2**31 - 1 else 0
