@@ -20,6 +20,7 @@ class Solution:
                     matrix[0][c] = 0
                     matrix[r][0] = 0
         
+        # 0부터 보면 덮어씌워져서 1부터 기록. 어차피 0번째는 위에서 0으로 해놓음.
         for c in range(1, len(matrix[0])):
             if matrix[0][c] == 0:
                 for r in range(len(matrix)):
