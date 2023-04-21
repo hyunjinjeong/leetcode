@@ -1,11 +1,10 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        # infix -> postfix로 바꿔서 계산하면 될 듯?
-        postfix = []
-        operators = []
-        
-        # infix -> postfix로 바꾸기
+        # infix -> postfix 아이디어인데.. in place로도 가능함.
         precendence = {"+": 1, "-": 1, "*": 2, "/": 2}
+        
+        operators = []
+        nums = []
         i = 0
         while i < len(s):
             if "0" <= s[i] <= "9":
@@ -13,35 +12,34 @@ class Solution:
                 while i < len(s) and "0" <= s[i] <= "9":
                     curr_num = curr_num * 10 + ord(s[i]) - ord("0")
                     i += 1
-                postfix.append(curr_num)
-            elif s[i] in ("+", "-", "*", "/"):
+                nums.append(curr_num)
+            elif s[i] in "+-*/":
                 while operators and precendence[operators[-1]] >= precendence[s[i]]:
-                    postfix.append(operators.pop())
+                    print(nums, operators)
+                    self.cal(nums, operators)
+                    print(nums, operators)
                 operators.append(s[i])
                 i += 1
             else:
                 i += 1
                 continue
         
+        # 마지막 계산이 남아 있음.
         while operators:
-            postfix.append(operators.pop())
+            self.cal(nums, operators)
         
-        # postfix 계산
-        stack = []
-        for item in postfix:
-            if item not in ("+", "-", "*", "/"):
-                stack.append(item)
-            else:
-                right = stack.pop()
-                left = stack.pop()
-                if item == "+":
-                    tmp = left + right
-                elif item == "-":
-                    tmp = left - right
-                elif item == "*":
-                    tmp = left * right
-                else:
-                    tmp = left // right
-                stack.append(tmp)
-
-        return stack.pop()
+        return nums.pop()
+    
+    def cal(self, nums, operators):
+        op = operators.pop()
+        right = nums.pop()
+        left = nums.pop()
+        if op == "+":
+            tmp = left + right
+        elif op == "-":
+            tmp = left - right
+        elif op == "*":
+            tmp = left * right
+        else:
+            tmp = left // right
+        nums.append(tmp)
