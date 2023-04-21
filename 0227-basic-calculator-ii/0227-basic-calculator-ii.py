@@ -15,9 +15,7 @@ class Solution:
                 nums.append(curr_num)
             elif s[i] in "+-*/":
                 while operators and precendence[operators[-1]] >= precendence[s[i]]:
-                    print(nums, operators)
                     self.cal(nums, operators)
-                    print(nums, operators)
                 operators.append(s[i])
                 i += 1
             else:
