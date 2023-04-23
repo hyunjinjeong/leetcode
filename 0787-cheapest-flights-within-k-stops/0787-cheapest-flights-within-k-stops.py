@@ -11,10 +11,8 @@ class Solution:
         
         # bfs로 체크
         q = collections.deque([(src, 0)])
-        
         cheapest_prices = [float("inf")] * (n + 1)
         stops = 0
-        ans = float("inf")
         while q and stops <= k:
             for _ in range(len(q)):
                 curr_city, curr_price = q.popleft()
