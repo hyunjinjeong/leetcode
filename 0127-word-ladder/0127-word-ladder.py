@@ -11,11 +11,12 @@ class Solution:
         # 가능한 모든 문자열을 돌면서 테스트.. (그래봐야 26개. O(1)이니까.)
         
         # BFS
+        # 이건 공간은 O(n)이고.. 시간은 O(nm*2?)
+        # queue 도는게 일단 O(n)이고, 
         lower_cases = "abcdefghijklmnopqrstuvwxyz"
         
         word_set = set(wordList)
         q = collections.deque([(beginWord, 1)])
-        visited = set(beginWord)
         while q:
             word, seq = q.popleft()
             if word == endWord:
@@ -24,9 +25,9 @@ class Solution:
             for i in range(len(word)):
                 for c in lower_cases:
                     candidate = word[:i] + c + word[i+1:]
-                    if candidate not in visited and candidate in word_set:
+                    if candidate in word_set:
                         q.append((candidate, seq+1))
-                        visited.add(candidate)
+                        word_set.remove(candidate)
 
         return 0
                 
