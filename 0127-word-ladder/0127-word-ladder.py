@@ -12,7 +12,7 @@ class Solution:
         
         # BFS
         # 이건 공간은 O(n)이고.. 시간은 O(nm*2?)
-        # queue 도는게 일단 O(n)이고, 
+        # queue 도는게 일단 O(n)이고, for문이 O(26 * m * m). substring이 O(m)이니까.
         lower_cases = "abcdefghijklmnopqrstuvwxyz"
         
         word_set = set(wordList)
