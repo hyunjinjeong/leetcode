@@ -13,11 +13,11 @@ class Solution:
             elif c == "(":
                 stack.append(res)
                 stack.append(sign) # 이게 핵심.. 괄호 표현식 전체의 부호를 stack에 넣어둬서 활용
-                res, sign = 0, 1
+                res, sign = 0, 1 # 지금까지의 결과를 스택에 넣고 리셋
             elif c == ")":
                 res += sign * num
                 res *= stack.pop() # sign
                 res += stack.pop()
                 num = 0
         
-        return res + sign * num
+        return res + sign * num # 마지막 숫자 계산 위해서
