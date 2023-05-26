@@ -12,7 +12,7 @@ class Solution:
                 sign = 1 if c == "+" else -1
             elif c == "(":
                 stack.append(res)
-                stack.append(sign)
+                stack.append(sign) # 이게 핵심.. 괄호 표현식 전체의 부호를 stack에 넣어둬서 활용
                 res, sign = 0, 1
             elif c == ")":
                 res += sign * num
