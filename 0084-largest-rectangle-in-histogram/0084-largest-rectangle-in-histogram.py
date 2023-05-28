@@ -1,10 +1,5 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        # dp같이 생기긴 했는데
-        # dp[i]를 i에서 시작해서 가장 큰 너비라고 하면..?
-        # 근데 각 위치마다 높이를 알아야 함..
-        # 가장 간단한 방법은 이중 loop 돌면서 다 계산하는 것..
-        # 아.. monotonic stack..?
         ans = 0
         stack = [] # stack에는 index를 넣어줌.
         
@@ -12,6 +7,9 @@ class Solution:
         for i, height in enumerate(heights + [0]):
             while stack and heights[stack[-1]] >= height:
                 h = heights[stack.pop()]
+                # i가 h보다 낮은 오른쪽 첫번째, stack[-1]이 h보다 낮은 왼쪽 첫번째
+                # 그래서 i - stack[-1] - 1은 사각형 길이가 됨.
+                # 그리고 stack이 비어 있으면 왼쪽이 모두 h보다 높은 거니까 i...
                 w = i - stack[-1] - 1 if stack else i
                 ans = max(ans, w*h)
             stack.append(i)
