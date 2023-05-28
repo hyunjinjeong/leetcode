@@ -3,7 +3,7 @@ class Solution:
         ans = 0
         stack = [] # stack에는 index를 넣어줌.
         
-        # 코너 케이스 처리 위해 마지막에 0 추가...
+        # 마지막에 남은 원소들 모두 계산 위해 0 추가...
         for i, height in enumerate(heights + [0]):
             while stack and heights[stack[-1]] >= height:
                 h = heights[stack.pop()]
