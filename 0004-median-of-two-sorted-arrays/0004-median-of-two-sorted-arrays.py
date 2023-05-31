@@ -19,5 +19,3 @@ class Solution:
                 hi = mid2 - 1
             else:
                 return (max(l1, l2) + min(r1, r2)) / 2
-        
-        return -1
