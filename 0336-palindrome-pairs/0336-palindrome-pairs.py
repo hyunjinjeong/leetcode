@@ -17,8 +17,8 @@ class Solution:
                 
                 # suffix인 경우도 마찬가지로 확인.
                 # prefix와 반대로 생각하면 됨...
-                # 이 때 j != len(word)는 empty string의 경우 고려해서 중복 방지용으로 확인
-                if j != len(word) and self.is_palindrome(suffix):
+                # 이 때 empty string은 중복 방지용으로 확인
+                if suffix != "" and self.is_palindrome(suffix):
                     back = prefix[::-1]
                     if back != word and back in word_to_index:
                         ans.append([index, word_to_index[back]])
