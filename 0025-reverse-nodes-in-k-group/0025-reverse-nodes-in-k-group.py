@@ -20,7 +20,7 @@ class Solution:
             new_head, new_tail, next_new_tail = self.reverse(curr, k)
             
             prev.next = new_head
-            curr.next = next_new_tail
+            new_tail.next = next_new_tail
             prev = new_tail
             curr = next_new_tail
             
