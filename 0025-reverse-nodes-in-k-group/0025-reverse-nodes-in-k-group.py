@@ -19,10 +19,11 @@ class Solution:
         while total_count >= k:
             new_head, new_tail, next_new_tail = self.reverse(curr, k)
             
-            prev.next = new_head
-            new_tail.next = next_new_tail
+            new_tail.next = next_new_tail # count < k 인 경우 대비...
+            prev.next = new_head # 이전 node의 next는 변경된 head를 가리켜야 함
+            
             prev = new_tail
-            curr = next_new_tail
+            curr = next_new_tail # or prev.next
             
             total_count -= k
             
