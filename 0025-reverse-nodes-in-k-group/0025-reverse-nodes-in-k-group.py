@@ -16,8 +16,9 @@ class Solution:
         if count < k:
             return head
         
-        new_head, new_tail, next_new_tail = self.reverse(head, k)
-        new_tail.next = self.reverseKGroup(next_new_tail, k)
+        # 아 head가 tail이 되니까.. new_tail은 굳이 없어도 됨.
+        new_head, next_new_tail = self.reverse(head, k)
+        head.next = self.reverseKGroup(next_new_tail, k)
         return new_head
     
     # 요건 단순 reverse
@@ -32,5 +33,5 @@ class Solution:
             prev = curr
             curr = temp_next
         
-        head, tail, next_tail = prev, node, curr
-        return head, tail, next_tail
+        head, next_tail = prev, curr
+        return head, next_tail
