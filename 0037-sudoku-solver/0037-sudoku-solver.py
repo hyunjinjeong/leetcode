@@ -8,28 +8,47 @@ class Solution:
         # 한 점 board[x][y]에서 row, column, sub-box를 검사해서 가능한 수를 넣고
         # 안되면 backtrack..?
         
-        def check_row(row, num):
-            for col in range(9):
-                if board[row][col] == num:
-                    return False
-            return True
+#         def check_row(row, num):
+#             for col in range(9):
+#                 if board[row][col] == num:
+#                     return False
+#             return True
         
-        def check_col(col, num):
-            for row in range(9):
-                if board[row][col] == num:
-                    return False
-            return True
+#         def check_col(col, num):
+#             for row in range(9):
+#                 if board[row][col] == num:
+#                     return False
+#             return True
         
-        def check_square(r, c, num):
-            start_r, start_c = r - r%3, c - c%3
-            for row in range(start_r, start_r+3):
-                for col in range(start_c, start_c+3):
-                    if board[row][col] == num:
-                        return False
-            return True
+#         def check_square(r, c, num):
+#             start_r, start_c = r - r%3, c - c%3
+#             for row in range(start_r, start_r+3):
+#                 for col in range(start_c, start_c+3):
+#                     if board[row][col] == num:
+#                         return False
+#             return True
+        
+        # def is_valid(r, c, num):
+        #     return check_row(r, num) and check_col(c, num) and check_square(r, c, num)
+        
+        def add_sets(r, c, num):
+            row_set.add((r, num))
+            col_set.add((c, num))
+            square_set.add((r//3, c//3, num))
+        
+        def remove_sets(r, c, num):
+            row_set.discard((r, num))
+            col_set.discard((c, num))
+            square_set.discard((r//3, c//3, num))
         
         def is_valid(r, c, num):
-            return check_row(r, num) and check_col(c, num) and check_square(r, c, num)
+            if (r, num) in row_set:
+                return False
+            if (c, num) in col_set:
+                return False
+            if (r//3, c//3, num) in square_set:
+                return False
+            return True
         
         def solve(r, c):
             if r == 9: # 모든 케이스를 다 돈 경우
@@ -45,10 +64,21 @@ class Solution:
                     continue
                 
                 board[r][c] = str_num
+                add_sets(r, c, str_num)
                 if solve(r, c+1):
                     return True
                 board[r][c] = "." # backtrack
+                remove_sets(r, c, str_num)
             
             return False
+        
+        # is_valid를 좀 더 효율적으로. set을 활용해보자
+        row_set, col_set, square_set = set(), set(), set()
+        for r in range(9):
+            for c in range(9):
+                num = board[r][c]
+                if num == ".":
+                    continue
+                add_sets(r, c, num)
         
         solve(0, 0)
