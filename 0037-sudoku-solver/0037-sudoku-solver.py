@@ -37,9 +37,9 @@ class Solution:
             square_set.add((r//3, c//3, num))
         
         def remove_sets(r, c, num):
-            row_set.discard((r, num))
-            col_set.discard((c, num))
-            square_set.discard((r//3, c//3, num))
+            row_set.remove((r, num))
+            col_set.remove((c, num))
+            square_set.remove((r//3, c//3, num))
         
         def is_valid(r, c, num):
             if (r, num) in row_set:
