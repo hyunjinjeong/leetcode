@@ -48,5 +48,7 @@ class Solution:
                 if solve(r, c+1):
                     return True
                 board[r][c] = "." # backtrack
+            
+            return False
         
         solve(0, 0)
