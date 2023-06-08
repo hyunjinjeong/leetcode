@@ -10,12 +10,12 @@ class Solution:
             for r in range(row):
                 if board[r][col] == "Q":
                     return False
-            # left upper diagonal
+            # upper left diagonal
             for i in range(n):
                 if row - i >= 0 and col - i >= 0:
                     if board[row-i][col-i] == "Q":
                         return False
-            # right upper diagonal
+            # upper right diagonal
             for i in range(n):
                 if row - i >= 0 and col + i < n:
                     if board[row-i][col+i] == "Q":
@@ -32,7 +32,6 @@ class Solution:
                     board[row][col] = "Q"
                     dfs(row + 1)
                     board[row][col] = "."
-        
         
         ans = []
         board = [["."] * n for _ in range(n)]
