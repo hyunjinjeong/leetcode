@@ -9,12 +9,11 @@ class Solution:
         # 2. 표준 방법. heap을 사용하면 된다!
         counter = collections.Counter(nums)
         heap = []
+        # min heap 을 사용하면 O(nlogk)가 될 것 같은데?
         for num in counter:
             count = counter[num]
-            heapq.heappush(heap, (-count, num)) # min heap이므로 max heap으로 만들어주기 위해. 0번째 기준으로 정렬함
+            heapq.heappush(heap, (count, num))
+            if len(heap) == k + 1:
+                heapq.heappop(heap)
         
-        result = []
-        for _ in range(k):
-            result.append(heapq.heappop(heap)[1])
-        
-        return result
+        return [tup[1] for tup in heap]
