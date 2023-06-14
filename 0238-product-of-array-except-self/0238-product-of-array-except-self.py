@@ -21,10 +21,13 @@ class Solution:
         # 3. Follow-up 조건인 공간 O(1)을 만족해야 한다..
         # prefix_sum과 suffix_sum을 저장해두지 않고 그때그때 계산..
         # 처음엔 prefix_sum 계산하는 것처럼 하고 그 다음에 suffix_sum 계산하면서 곱함.
-        ans, suffix_product = [1]*len(nums), 1
+        ans, suffix_product = [1] * len(nums), 1
+        
         for i in range(1, len(nums)):
             ans[i] = ans[i-1] * nums[i-1]
+            
         for i in range(len(nums)-1, -1, -1):
             ans[i] *= suffix_product
             suffix_product *= nums[i]
+            
         return ans
