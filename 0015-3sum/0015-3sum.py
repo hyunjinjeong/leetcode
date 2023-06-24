@@ -17,7 +17,7 @@ class Solution:
                 if current_sum == target:
                     answer.append([nums[left], nums[mid], nums[right]])
                     mid += 1
-                    while mid < right and nums[mid] == nums[mid-1]:
+                    while mid < right and nums[mid] == nums[mid-1]: # 중복 방지
                         mid += 1
                 elif current_sum < target:
                     mid += 1
