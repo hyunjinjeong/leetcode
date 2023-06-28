@@ -7,14 +7,15 @@ class Solution:
         answer = 0
         left = 0
         freq = collections.defaultdict(int)
+        max_freq = 0
         
         for right, c in enumerate(s):
             freq[c] += 1
             
             length = right - left + 1
-            # 조건 만족하면 업뎃. 이 때 최댓값만 추적하면 됨.
-            # freq.values()는 시간, 공간 모두 O(1)임. uppercase letter로만 이루어져 있음.
-            if length - max(freq.values()) <= k:
+            max_freq = max(freq[c], max_freq)
+            # 조건 만족하면 업뎃
+            if length - max_freq <= k:
                 answer = max(answer, length)
             # 아니면 left 오른쪽으로.
             else:
