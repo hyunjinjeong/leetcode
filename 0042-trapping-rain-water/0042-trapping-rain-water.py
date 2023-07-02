@@ -5,10 +5,11 @@ class Solution:
         left, right = 0, len(height) - 1
         
         ans = 0
-        while left <= right:
+        while left < right:
             left_max = max(left_max, height[left])
             right_max = max(right_max, height[right])
             
+            # 한 지점에서의 높이를 계속 더하는 방식...
             if left_max < right_max:
                 ans += (left_max - height[left])
                 left += 1
