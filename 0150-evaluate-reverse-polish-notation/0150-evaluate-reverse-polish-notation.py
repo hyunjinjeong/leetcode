@@ -8,9 +8,11 @@ class Solution:
             if operator == "*":
                 return left * right
             if operator == "/":
-                return int(left / right)
+                # truncate toward zero.
+                # Python에선 -1 // 2 == -1 이 되기 때문에...
+                return int(left / right) 
 
-        # stack 쓰면 되지 않나?
+        # 간단하게 stack 쓰면 되지 않나?
         stack = []
         for token in tokens:
             if token in "+-*/":
