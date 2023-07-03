@@ -1,21 +1,23 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
+        def eval(operator, left, right):
+            if operator == "+":
+                return left + right
+            if operator == "-":
+                return left - right
+            if operator == "*":
+                return left * right
+            if operator == "/":
+                return int(left / right)
+
+        # stack 쓰면 되지 않나?
         stack = []
-        operators = set(["+", "-", "*", "/"])
-        
         for token in tokens:
-            if token in operators:
+            if token in "+-*/":
                 right = stack.pop()
                 left = stack.pop()
                 
-                if token == "+":
-                    result = left + right
-                elif token == "-":
-                    result = left - right
-                elif token == "*":
-                    result = left * right
-                else:
-                    result = int(left / right)
+                result = eval(token, left, right)
                 stack.append(result)
             else:
                 stack.append(int(token))
