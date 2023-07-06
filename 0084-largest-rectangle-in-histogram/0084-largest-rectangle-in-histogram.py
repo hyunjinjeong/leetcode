@@ -12,7 +12,7 @@ class Solution:
                 # 가로 범위는 stack[-1]+1 ~ i-1
                 # 즉 (i-1) - (stack[-1]+1) + 1 == i - stack[-1] - 1
                 # 그래서 i - stack[-1] - 1이 w가 됨.
-                # 그리고 stack이 비어 있으면 왼쪽이 모두 h보다 높은 거니까 i...
+                # 그리고 stack이 비어 있으면 해당 시점 기준 가장 낮은 높이가 됨. 그래서 i...
                 w = i - stack[-1] - 1 if stack else i
                 ans = max(ans, w*h)
             stack.append(i)
