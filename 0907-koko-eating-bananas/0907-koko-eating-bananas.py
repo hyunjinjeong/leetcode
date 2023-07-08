@@ -1,24 +1,17 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        # binary search...
-
-        def can_eat_all(k):
+        # binary search... O(NlogM) 이겠다.
+        def eating_time(k):
             hours = 0
             for pile in piles:
-                if k >= pile:
-                    hours += 1
-                else:
-                    hours += math.ceil(pile / k)
-            return hours <= h
+                hours += math.ceil(pile / k)
+            return hours
         
-        ans = float("inf")
-        left, right = 1, max(piles) + 1
+        left, right = 1, max(piles)
         while left < right:
             mid = (left + right) // 2
-            if can_eat_all(mid):
-                ans = min(mid, ans)
-                right = mid
-            else:
+            if eating_time(mid) > h:
                 left = mid + 1
-
-        return ans
+            else:
+                right = mid
+        return left
