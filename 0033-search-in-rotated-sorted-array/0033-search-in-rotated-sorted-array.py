@@ -10,27 +10,21 @@ class Solution:
         # 2. nums[mid] < nums[right]인 경우
         # target < nums[mid]면? right를 줄이고..
         # target > nums[mid]면? 여기도 마찬가지로 target > nums[right]면 right를 줄이고, 아니면 left를 줄이면 되지 않을까.
-        # [4 5 6 0 1 2 7]
+        # 이렇게 복잡하게 할 필요 없이... 단조증가 구간인지를 체크하면 된다!
         lo, hi = 0, len(nums) - 1
         while lo <= hi:
             mid = (lo + hi) // 2
             if nums[mid] == target:
                 return mid
             
-            if nums[mid] > nums[hi]:
-                if target < nums[mid]:
-                    if target > nums[hi]:
-                        hi = mid - 1
-                    else:
-                        lo = mid + 1
+            if nums[lo] <= nums[mid]:
+                if nums[lo] <= target <= nums[mid]:
+                    hi = mid - 1
                 else:
                     lo = mid + 1
             else:
-                if target > nums[mid]:
-                    if target > nums[hi]:
-                        hi = mid - 1
-                    else:
-                        lo = mid + 1
+                if nums[mid] <= target <= nums[hi]:
+                    lo = mid + 1
                 else:
                     hi = mid - 1
         
