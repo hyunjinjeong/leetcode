@@ -1,32 +1,37 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        # 이런 문제는 어떻게든 binary search를 사용할 방법을 찾아봐야 함..
-        # 여기선 왼쪽 오른쪽 둘 중 하나는 단조 증가하는 구간이라는 사실을 이용.
-        # 탈출 조건이랑 left, right 줄이는 조건도 잘 생각하기.
-        left, right = 0, len(nums) - 1
-        
-        while left <= right:
-            mid = (left + right) // 2
-            num_mid, num_left, num_right = nums[mid], nums[left], nums[right]
-            
-            if num_mid == target:
+        # binary search...
+        # find minimum in rotated 와 비슷하다.
+        # nums[mid] > nums[right]면 현재 rotated된 상태인 건데...  그럼 두 경우 각각 생각해보자.
+        # target을 찾기 위해서 left, right 어디를 줄여야 하는지 찾아야 함.
+        # 1. nums[mid] > nums[right]인 경우
+        # target < nums[mid]면? target > nums[right]면 right를 줄이고, 아니면 left를 줄이고
+        # target > nums[mid]면? 이 경우는 무조건 left를 올려야 할 것 같은데
+        # 2. nums[mid] < nums[right]인 경우
+        # target < nums[mid]면? right를 줄이고..
+        # target > nums[mid]면? 여기도 마찬가지로 target > nums[right]면 right를 줄이고, 아니면 left를 줄이면 되지 않을까.
+        # [4 5 6 0 1 2 7]
+        lo, hi = 0, len(nums) - 1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
                 return mid
             
-            # 왼쪽이 단조 증가하는 구간인 경우.
-            # <=인 이유는? 1개, 2개 이런 걸로 테스트해보면 됨. left랑 mid랑 같아지는 경우가 있음.
-            if num_left <= num_mid:
-                # target이 이 구간에 있으면 오른쪽을 버린다
-                if num_left <= target <= num_mid:
-                    # mid - 1인 이유는 위에서 mid를 검사하기 때문에. 안전하게 버려도 됨.
-                    right = mid - 1
-                else: # 아니면 왼쪽을 버리고.
-                    left = mid + 1
-            else: # 오른쪽이 단조 증가하는 구간인 경우.
-                # target이 이 구간에 있으면 왼쪽을 버린다.
-                if num_mid <= target <= num_right:
-                    left = mid + 1
-                else: # 아니면 오른쪽을 버리고.
-                    right = mid - 1
-                    
+            if nums[mid] > nums[hi]:
+                if target < nums[mid]:
+                    if target > nums[hi]:
+                        hi = mid - 1
+                    else:
+                        lo = mid + 1
+                else:
+                    lo = mid + 1
+            else:
+                if target > nums[mid]:
+                    if target > nums[hi]:
+                        hi = mid - 1
+                    else:
+                        lo = mid + 1
+                else:
+                    hi = mid - 1
+        
         return -1
-            
