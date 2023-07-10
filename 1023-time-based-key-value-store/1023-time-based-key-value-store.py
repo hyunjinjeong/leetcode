@@ -14,17 +14,18 @@ class TimeMap:
         self.dt[key].append((timestamp, value))
 
     def get(self, key: str, timestamp: int) -> str:
-        if key not in self.dt:
+        arr = self.dt.get(key)
+        if not arr:
             return ""
         
         # 제일 쉬운 방법은 timestamp부터 1까지 쭉 내려가면서 있는지 찾는 것...이고
         # 정렬되어 있기 때문에 binary search 활용 가능.
-        lo, hi = 0, len(self.dt[key]) - 1
+        lo, hi = 0, len(arr) - 1
         while lo <= hi:
             mid = (lo + hi) // 2
-            mid_timestamp = self.dt[key][mid][0]
+            mid_timestamp = arr[mid][0]
             if timestamp == mid_timestamp:
-                return self.dt[key][mid][1]
+                return arr[mid][1]
             
             if timestamp > mid_timestamp:
                 lo = mid + 1
@@ -33,7 +34,7 @@ class TimeMap:
 
         # 이 상태에서 lo는 timestamp_prev > timestamp인 leftmost index 상태.
         # 즉 lo - 1이 답이 될듯?
-        return self.dt[key][lo-1][1] if lo > 0 else ""
+        return arr[lo-1][1] if lo > 0 else ""
 
 
 # Your TimeMap object will be instantiated and called as such:
