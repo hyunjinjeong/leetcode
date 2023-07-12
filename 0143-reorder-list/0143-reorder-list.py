@@ -17,16 +17,16 @@ class Solution:
             return head
         
         # 1. find mid
-        prev, slow, fast = None, head, head
+        slow, fast = head, head
         while fast and fast.next:
-            prev = slow
             fast = fast.next.next
             slow = slow.next
         
         # slow == prev.next가 mid.
+        # 근데 reverse를 생각해보면 slow.next부터 뒤집어야 후에 합치는게 편함.
         # 연결 끊기
-        mid = prev.next
-        prev.next = None
+        mid = slow.next
+        slow.next = None
         
         # 2. 오른쪽 list reverse
         prev, curr = None, mid
@@ -41,11 +41,9 @@ class Solution:
         # 3. 왼쪽/오른쪽 리스트 합치기
         l1, l2 = head, prev
         while l1 and l2:
-            tmp_l1_next = l1.next
-            tmp_l2_next = l2.next
+            tmp_l1_next, tmp_l2_next = l1.next, l2.next
             l1.next = l2
-            # l2가 1개 더 많은 경우가 있기 때문에, 코너 케이스.
-            l2.next = tmp_l1_next if tmp_l1_next else tmp_l2_next
+            l2.next = tmp_l1_next
 
             l1 = tmp_l1_next
             l2 = tmp_l2_next
