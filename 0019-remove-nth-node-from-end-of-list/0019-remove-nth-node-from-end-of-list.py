@@ -11,11 +11,11 @@ class Solution:
 
         # slow fast 포인터 이용하면 될 듯.. n번 앞으로 먼저 가서...
         slow, fast = head, head
-        prev = dummy_head
         for _ in range(n):
             fast = fast.next
         
         # 이제 마지막까지 돌면 slow가 target임.
+        prev = dummy_head
         while fast:
             prev = slow
             fast = fast.next
