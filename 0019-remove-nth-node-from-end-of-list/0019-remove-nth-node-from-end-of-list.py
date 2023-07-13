@@ -5,21 +5,22 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        # target이 head인 경우를 처리하기 위해..
+        dummy_head = ListNode()
+        dummy_head.next = head
+
+        # slow fast 포인터 이용하면 될 듯.. n번 앞으로 먼저 가서...
         slow, fast = head, head
-        
-        for _ in range(n-1):
+        prev = dummy_head
+        for _ in range(n):
             fast = fast.next
         
-        prev = slow
-        while fast.next:
+        # 이제 마지막까지 돌면 slow가 target임.
+        while fast:
             prev = slow
-            slow = slow.next
             fast = fast.next
+            slow = slow.next
         
+        # target (slow) 제거
         prev.next = slow.next
-        
-        # 특수 케이스
-        if slow is head:
-            return slow.next
-        
-        return head
+        return dummy_head.next
