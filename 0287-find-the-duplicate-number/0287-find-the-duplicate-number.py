@@ -15,4 +15,7 @@ class Solution:
             tortoise = nums[tortoise]
             hare = nums[hare]
         
+        # 사이클의 시작점... 즉 두 포인터가 하나를 가리킨 것.
+        # 값이 같기 때문이고, 이 때 이전 포인터의 값이 nums[hare] == nums[tortoise] => 새로운 hare == tortoise 이므로 
+        # 요걸 리턴하면 됨
         return hare
