@@ -26,9 +26,9 @@ class LRUCache:
         self._dt[key] = node
         
         if len(self._dt) > self._capacity:
-            first = self._head.next
-            self._remove(first)
-            self._dt.pop(first.key)
+            head = self._head.next
+            self._remove(head)
+            self._dt.pop(head.key)
     
     def _remove(self, node):
         node.prev.next = node.next
