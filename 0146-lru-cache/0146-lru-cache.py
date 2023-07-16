@@ -1,73 +1,73 @@
 class LRUCache:
-#     # 파이썬 걍 dict도 순서 보장이라서 이렇게 해도되는데,
-#     # 내부적으로는 결국 hashmap + doubly linked list.
-#     def __init__(self, capacity: int):
-#         self._capacity = capacity
-#         self._dt = collections.defaultdict(int)
-
-#     def get(self, key: int) -> int:
-#         if key not in self._dt:
-#             return -1
-        
-#         val = self._dt[key]
-#         del self._dt[key]
-#         self._dt[key] = val
-#         return val
-
-#     def put(self, key: int, value: int) -> None:
-#         if key in self._dt:
-#             del self._dt[key]
-#         self._dt[key] = value
-        
-#         if len(self._dt) > self._capacity:
-#             first = next(iter(self._dt))
-#             del self._dt[first]
-    # 2. HashMap + Doubly Linked List 방법
+    # dict랑.. doubly linked list 쓰면 될 듯.
     def __init__(self, capacity: int):
-        self._capacity = capacity
-        self._dt = collections.defaultdict(int)
-        self._head = Node(None, None)
-        self._tail = Node(None, None)
-        self._head.next = self._tail
-        self._tail.prev= self._head
+        self.ll = LinkedList()
+        # key -> Node 형태로...
+        self.dt = {}
+        self.capacity = capacity
 
     def get(self, key: int) -> int:
-        if key not in self._dt:
+        if key not in self.dt:
             return -1
         
-        node = self._dt[key]
-        self._remove(node)
-        self._add(node)
+        node = self.dt[key]
+        self.ll.remove_node(node)
+        self.ll.append_node(node)
+        
         return node.val
 
     def put(self, key: int, value: int) -> None:
-        if key in self._dt:
-            self._remove(self._dt[key]) # LL에서만 갱신하기 위해...
+        if key not in self.dt:
+            node = Node(key, value)
+            self.dt[key] = node
+            self.ll.append_node(node)
+        else:
+            # dt 업데이트 하고..
+            node = self.dt[key]
+            node.val = value
+            self.ll.remove_node(node)
+            self.ll.append_node(node)
         
-        node = Node(key, value)
-        self._add(node)
-        self._dt[key] = node
-        
-        if len(self._dt) > self._capacity:
-            first = self._head.next
-            self._remove(first)
-            del self._dt[first.key]
+        if len(self.dt) > self.capacity:
+            head_key = self.ll.head.key
+            self.dt.pop(head_key)
+            self.ll.remove_head()
     
-    def _remove(self, node):
-        prev = node.prev
-        _next = node.next
         
-        prev.next = _next
-        _next.prev = prev
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
     
-    def _add(self, node): # 맨 뒤에 추가. LRU니까 맨 앞이 least.
-        prev_tail = self._tail.prev
+    def remove_head(self):
+        self.remove_node(self.head)
+    
+    def remove_node(self, node):
+        if node is self.head and node is self.tail:
+            self.head = None
+            self.tail = None
+        elif node is self.head:
+            node_next = node.next
+            node_next.prev = None
+            self.head = node_next
+        elif node is self.tail:
+            node_prev = node.prev
+            node_prev.next = None
+            self.tail = node_prev
+        else:
+            node_next, node_prev = node.next, node.prev
+            node_next.prev = node_prev
+            node_prev.next = node_next
+    
+    def append_node(self, node):
+        if self.head is None:
+            self.head = node
+            self.tail = node
+            return
         
-        prev_tail.next = node
-        node.next = self._tail
-        node.prev = prev_tail
-        self._tail.prev = node
-        
+        node.prev = self.tail
+        self.tail.next = node
+        self.tail = node
 
 class Node:
     def __init__(self, key, val):
@@ -75,7 +75,7 @@ class Node:
         self.val = val
         self.prev = None
         self.next = None
-            
+
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
