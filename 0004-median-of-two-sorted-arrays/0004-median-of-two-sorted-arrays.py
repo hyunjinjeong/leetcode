@@ -8,7 +8,7 @@ class Solution:
             return self.findMedianSortedArrays(nums2, nums1)
         
         total_length = len(nums1) + len(nums2)
-        left_partition_size = (total_length + 1) // 2
+        left_partition_size = total_length // 2
         
         left, right = 0, len(nums1)
         while left <= right:
@@ -30,6 +30,7 @@ class Solution:
                 left = mid + 1
             else:
                 if total_length % 2 == 1: # (total + 1) // 2 로 나눴으니 왼쪽 partition의 오른쪽 끝에 mid가 있음
-                    return max(nums1_left, nums2_left)
+                    return min(nums1_right, nums2_right)
+                    # return max(nums1_left, nums2_left)
                 else:
                     return (max(nums1_left, nums2_left) + min(nums1_right, nums2_right)) / 2
