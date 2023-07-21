@@ -7,27 +7,16 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        high, low = (p, q) if p.val > q.val else (q, p)
-        # 경우를 나눠서 돌면 됨.
-        # node.val < low.val 이면 오른쪽으로 가야 하고
-        # node.val > high.val 이면 왼쪽으로 가면 되고
-        # 아니면 node가 LCA.
+        # BST니까.. 경우들을 고려해보면
+        # 1. node < p, node < q면 오른쪽으로 가야 함
+        # 2. node > p, node > q면 왼쪽으로 가야 함
+        # 3. 나머지 경우엔 다 자기 자신이 LCA
         
-#         def dfs(node):
-#             if node.val < low.val:
-#                 return dfs(node.right)
-#             if node.val > high.val:
-#                 return dfs(node.left)
-#             return node
-        
-#         return dfs(root)
-        
-        # 위는 recursive고 iterative로도 해보자
         node = root
-        while node:
-            if node.val < low.val:
+        while True:
+            if node.val < p.val and node.val < q.val:
                 node = node.right
-            elif node.val > high.val:
+            elif node.val > p.val and node.val > q.val:
                 node = node.left
             else:
                 return node
