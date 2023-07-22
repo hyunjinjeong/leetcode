@@ -6,20 +6,21 @@
 #         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        # recursive는 쉬우니 iterative로..
         if not root:
-            return []
+            return root
         
-        answer = []
-        def dfs(n, level):
-            if not n:
-                return
-            
-            if len(answer) < level+1:
-                answer.append([])
-            answer[level].append(n.val)
-            
-            dfs(n.left, level+1)
-            dfs(n.right, level+1)
+        ans = []
+        q = collections.deque([root])
+        while q:
+            curr = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                curr.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            ans.append(curr)
         
-        dfs(root, 0)
-        return answer
+        return ans
