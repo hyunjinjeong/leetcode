@@ -8,7 +8,7 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         # recursive는 쉬우니 iterative로..
         if not root:
-            return root
+            return []
         
         ans = []
         q = collections.deque([root])
