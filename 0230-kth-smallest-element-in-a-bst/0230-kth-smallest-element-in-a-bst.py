@@ -6,17 +6,22 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        # inorder로 돌아서 k번째를 찾으면 될 듯?
+        # inorder로 돌아서 k번째를 찾으면 됨
+        # 이것도 iterative로..
         
-        inorder_list = []
-        def inorder(node):
-            if not node:
-                return
+        stack = []
+        curr = root
+        index = 0
+        
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
             
-            inorder(node.left)
-            inorder_list.append(node.val)
-            inorder(node.right)
-        
-        inorder(root)
-        
-        return inorder_list[k-1]
+            index += 1
+            curr = stack.pop()
+            if index == k:
+                return curr.val
+            
+            curr = curr.right
+                
