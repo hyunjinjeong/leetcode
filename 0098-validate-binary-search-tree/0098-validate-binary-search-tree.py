@@ -6,17 +6,23 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        # BST면 inorder로 돌아서 항상 val[i] < val[i+1] 이면 된다.
-        # 더 최적화해서 O(1) 공간 쓰도록. 물론 재귀 스택을 포함하면 O(N)임
-        def check_bst(node, left, right):
-            if not node:
-                return True
-
-            if not left < node.val < right:
-                return False
-
-            return check_bst(node.left, left, node.val) and check_bst(node.right, node.val, right)
+        # inorder로 돌았을 때 항상 이전 값 < 현재 값이어야 함.
+        # iterative로 해볼까...
         
-        return check_bst(root, float("-inf"), float("inf"))
-	
-    
+        stack = []
+        curr = root
+        prev_val = float("-inf")
+        while stack or curr:
+            if curr:
+                stack.append(curr)
+                curr = curr.left
+            else:
+                curr = stack.pop()
+                if prev_val >= curr.val:
+                    return False
+                prev_val = curr.val
+                curr = curr.right
+        
+        return True
+            
+            
