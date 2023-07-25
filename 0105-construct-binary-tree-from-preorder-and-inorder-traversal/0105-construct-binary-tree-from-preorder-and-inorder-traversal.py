@@ -6,24 +6,13 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        # preorder면 node -> left -> right
-        # inorder면 left -> node -> right
-        
-        # 아.. inorder는 root 찾으면 divide and conquer가 가능하다. root는 preorder에서 계속 뽑고
-        # 우선 다른 최적화 같은거 안하고 기본 개념만.
-#         if not inorder:
-#             return
-        
-#         root_val = preorder.pop(0)
-#         root = TreeNode(root_val)
-#         root_index = inorder.index(root_val)
-        
-#         root.left = self.buildTree(preorder, inorder[:root_index])
-#         root.right = self.buildTree(preorder, inorder[root_index+1:])
-        
-#         return root
-        
-        # 여기서 pop(0)이 매번 O(n)이고 index 찾는 것도 매번 O(n)이라서 각각 deque, hashmap 써서 O(1)로 최적화할 수 있음.        
+        # 어떻게 활용해야 할까...
+        # preorder는 node -> left -> right
+        # inorder는 left -> node -> right
+        # leaf가 아닌 node는 left나 right 중 하나는 있음... 근데 그게 뭔지 알려면?
+        # node의 위치를 inorder에서 찾아서... 왼쪽에 원소가 있는지 봐야 함.
+        # 이 과정을 divide-and-conquer로.
+        # preorder를 level-order로 착각해서 헤맴 ㅠ
         preorder_queue = collections.deque(preorder)
         inorder_dt = { val: i for i, val in enumerate(inorder) }
             
@@ -32,12 +21,14 @@ class Solution:
                 return
             
             val = preorder_queue.popleft()
-            root = TreeNode(val)
-            root_index = inorder_dt[val]
+            node = TreeNode(val)
+            node_index = inorder_dt[val]
             
-            root.left = dfs(left, root_index-1)
-            root.right = dfs(root_index+1, right)
-            return root
+            node.left = dfs(left, node_index - 1)
+            node.right = dfs(node_index + 1 , right)
+            return node
             
         return dfs(0, len(preorder)-1)
+        
+        
         
