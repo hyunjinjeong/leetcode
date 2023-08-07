@@ -15,7 +15,7 @@ class WordDictionary:
         return self.dfs(word, 0, self.root)
     
     def dfs(self, word, index, node):
-        if index >= len(word):
+        if index == len(word):
             return node.is_word
         
         c = word[index]
