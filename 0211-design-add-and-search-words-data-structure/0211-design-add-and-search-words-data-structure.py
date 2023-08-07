@@ -14,6 +14,7 @@ class WordDictionary:
     def search(self, word: str) -> bool:
         return self.dfs(word, 0, self.root)
     
+    # . 일때는 하나 건너뛰고 grand children을 모두 보면 됨
     def dfs(self, word, index, node):
         if index == len(word):
             return node.is_word
