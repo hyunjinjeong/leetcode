@@ -1,42 +1,39 @@
 class WordDictionary:
 
     def __init__(self):
-        self.root = Node(None)
+        self.root = TrieNode(None)
 
     def addWord(self, word: str) -> None:
         node = self.root
         for c in word:
             if c not in node.children:
-                node.children[c] = Node(c)
+                node.children[c] = TrieNode(c)
             node = node.children[c]
         node.is_word = True
 
     def search(self, word: str) -> bool:
-        # .이면 하나 건너뛰고 children 모두 돌면 되려나?
-        # 결국 dfs 였다 ㄷㄷ
-        def dfs(node, i):
-            if i == len(word):
-                return node.is_word
-            
-            if word[i] == '.':
-                for c in node.children:
-                    if dfs(node.children[c], i+1):
-                        return True
-                return False
-            else:
-                if word[i] not in node.children:
-                    return False
-                return dfs(node.children[word[i]], i+1)
-        
-        return dfs(self.root, 0)
-
-
-class Node:
+        return self.dfs(word, 0, self.root)
     
-    def __init__(self, key):
-        self.key = key
-        self.children = {}
+    def dfs(self, word, index, node):
+        if index >= len(word):
+            return node.is_word
+        
+        c = word[index]
+        if c == ".":
+            for key in node.children:
+                if self.dfs(word, index + 1, node.children[key]):
+                    return True
+            return False
+        else:
+            if c not in node.children:
+                return False
+            return self.dfs(word, index + 1, node.children[c])
+
+class TrieNode:
+    def __init__(self, val):
+        self.val = val
         self.is_word = False
+        self.children = {}
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
