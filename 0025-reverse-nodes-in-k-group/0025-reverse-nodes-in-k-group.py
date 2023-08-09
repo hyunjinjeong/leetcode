@@ -5,43 +5,38 @@
 #         self.next = next
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        # linked list 뒤집는 거야 별거 아닌데...
-        # 이걸 k번씩 어떻게 하지?
-        # 마지막에 k개가 있는지 없는지를 알아야 함.
-        # 길이를 구하면 된다.
-        length = 0
-        curr = head
-        while curr:
-            curr = curr.next
-            length += 1
+        total_count = 0
+        node = head
+        while node:
+            total_count += 1
+            node = node.next
         
-        curr_head = head
-        is_first = True
-
-        prev, curr = None, head
-        last_node = None
-        while length >= k:
-            tmp_last_node = curr
-
-            for _ in range(k):
-                tmp_next = curr.next
-                curr.next = prev
-
-                prev = curr
-                curr = tmp_next
-            
-            if is_first:
-                curr_head = prev
-                is_first = False
-            
-            if last_node:
-                last_node.next = prev
-            
-            last_node = tmp_last_node
-            prev = None
-            length -= k
+        dummy = ListNode()
+        dummy.next = head
         
-        if length:
-            last_node.next = curr
-
-        return curr_head
+        prev, curr = dummy, dummy.next
+        while total_count >= k:
+            new_head, new_tail, new_next_tail = self.reverse(curr, k)
+            
+            new_tail.next = new_next_tail # count < k 인 경우 대비...
+            prev.next = new_head # 이전 node의 next는 변경된 head를 가리켜야 함
+            
+            prev = new_tail
+            curr = new_next_tail # == prev.next
+            
+            total_count -= k
+            
+        return dummy.next
+    
+    # 요건 단순 reverse
+    def reverse(self, node, k):
+        prev, curr = None, node
+        for _ in range(k):
+            temp_next = curr.next
+            curr.next = prev
+            
+            prev = curr
+            curr = temp_next
+        
+        head, tail, next_tail = prev, node, curr
+        return head, tail, next_tail
