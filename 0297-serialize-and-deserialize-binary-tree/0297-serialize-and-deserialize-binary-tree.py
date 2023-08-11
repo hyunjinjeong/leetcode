@@ -13,20 +13,20 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        # preorder 사용
-        arr = []
+        ...
+        # 어떻게 도는게 좋을까... inorder, preorder, level order 등
+        # preorder로...
+        s = []
         stack = [root]
-        
         while stack:
             node = stack.pop()
             if node:
-                arr.append(str(node.val))
+                s.append(str(node.val))
                 stack.append(node.right)
                 stack.append(node.left)
             else:
-                arr.append("-")
-            
-        return " ".join(arr)
+                s.append("-")
+        return " ".join(s)
         
 
     def deserialize(self, data):
@@ -36,6 +36,7 @@ class Codec:
         :rtype: TreeNode
         """
         # preorder를 거꾸로...
+        # 재귀적으로 트리를 만들 수 있음
         def dfs():
             node = nodes.popleft()
             if node == "-":
