@@ -25,7 +25,8 @@ class Codec:
                 stack.append(node.right)
                 stack.append(node.left)
             else:
-                s.append("-")
+                s.append("*")
+        # -인 경우 때문에 띄어쓰기 해줌
         return " ".join(s)
         
 
@@ -37,18 +38,19 @@ class Codec:
         """
         # preorder를 거꾸로...
         # 재귀적으로 트리를 만들 수 있음
-        def dfs():
-            node = nodes.popleft()
-            if node == "-":
-                return None
-            
-            root = TreeNode(node)
-            root.left = dfs()
-            root.right = dfs()
-            return root
+        values_deque = collections.deque(data.split())
+        root = self.dfs(values_deque)
+        return root
+    
+    def dfs(self, values_deque):
+        value = values_deque.popleft()
+        if value == "*":
+            return None
         
-        nodes = collections.deque(data.split())
-        return dfs()
+        node = TreeNode(int(value))
+        node.left = self.dfs(values_deque)
+        node.right = self.dfs(values_deque)
+        return node
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
