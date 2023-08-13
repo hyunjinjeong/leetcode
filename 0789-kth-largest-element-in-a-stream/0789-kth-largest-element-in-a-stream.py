@@ -1,32 +1,18 @@
 class KthLargest:
 
     def __init__(self, k: int, nums: List[int]):
-        # max heap, min heap을 같이 쓰면..?
-        # min heap 원소 개수를 k개, max heap은 len(nums) - k개
-        # min heap에다가 더 큰 원소들을 넣고 max heap에는 작은 원소들 넣으면..
-        # min heap의 [0]이 k번째.
+        # 아 너무 복잡하게 생각했다...
+        # 그냥 min heap만 써도 되는 거였음
+        # k번째로 큰 원소 -> size가 k인 min heap을 구성하면 알아서 됨. 작은 원소부터 빠져나가니까...
 
-        # 먼저 max heap에다가 다 넣고, min heap으로 k개를 빼가면 됨
-        self.min_heap = []
-        self.max_heap = []
         self.k = k
-        for num in nums:
-            heapq.heappush(self.max_heap, -1 * num)
-        
-        # init 시점에는 갯수가 k가 안 될 수가 있어서... min heap으로 옮기는 건 add에서.
+        self.min_heap = nums
+        heapq.heapify(self.min_heap)
 
     def add(self, val: int) -> int:
-        while len(self.min_heap) < self.k and self.max_heap:
-            num = -1 * heapq.heappop(self.max_heap)
-            heapq.heappush(self.min_heap, num)
-
-        # min heap 크기가 k일 때는 min heap에서 원소를 빼서 max heap으로 옮긴 다음 해야 할 듯?
-        if len(self.min_heap) == self.k:
-            tmp_min = heapq.heappop(self.min_heap)
-            heapq.heappush(self.max_heap, -1 * tmp_min)
-
-        num = -1 * heapq.heappushpop(self.max_heap, -1 * val)
-        heapq.heappush(self.min_heap, num)
+        heapq.heappush(self.min_heap, val)
+        while len(self.min_heap) > self.k:
+            heapq.heappop(self.min_heap)
         return self.min_heap[0]
 
 
