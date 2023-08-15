@@ -15,14 +15,15 @@ class Solution:
 
     def partition(self, nums, left, right):
         pivot = random.randint(left, right) # 무작위로 선택
-        nums[right], nums[pivot] = nums[pivot], nums[right] # swap 편하도록 맨 뒤로
+        nums[right], nums[pivot] = nums[pivot], nums[right] # swap 편하도록 맨 뒤로. right가 pivot이 됨
 
+        tmp_left = left
         pivot_num = nums[right]
-        for i in range(left, right+1):
+        for i in range(left, right):
             if nums[i] >= pivot_num: # 문제 조건이 kth largest니까 pivot과 같거나 큰 원소를 왼쪽으로 보냄
-                nums[left], nums[i] = nums[i], nums[left]
-                left += 1
-            
-        # 이 시점에서 left는 pivot보다 작은 첫 번째 원소 위치 (swap 후 +1 되므로)
-        # 따라서 -1을 해야 pivot의 위치가 됨
-        return left - 1
+                nums[tmp_left], nums[i] = nums[i], nums[tmp_left]
+                tmp_left += 1
+        
+        # pivot(right)과 현재 위치(tmp_left) swap.
+        nums[tmp_left], nums[right] = nums[right], nums[tmp_left]
+        return tmp_left
