@@ -2,31 +2,23 @@ class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
         # heap을 사용하면..
         # 스케줄된 task index를 t_i라고 했을 때
-        # heap에다가 t_i를 넣고
-        # 현재 i - n > t_i 인지를 검사하면 되려나?
-        # 아 이렇게하면 안 되는게 가장 갯수가 많은 task를 최대한 빨리 줄여야 함.
-        # greedy. n개씩 사이클을 돌려야 함
-
-        ans = 0
-        heap = []
-        
+        # heap에다가는 freq만 넣고 queue를 이용해서 조건이 만족하면 heap에 넣어줄 수 있음
         counter = Counter(tasks)
-        for freq in counter.values():
-            heapq.heappush(heap, freq * -1) # freq가 높은 task가 우선 순위가 높도록
+        max_heap = [-1 * count for count in counter.values()]
+        heapq.heapify(max_heap)
         
-        while heap:
-            temp = []
-            for _ in range(n+1):
-                ans += 1
-                if heap:
-                    negative_freq = heapq.heappop(heap)
-                    if negative_freq < -1:
-                        temp.append(negative_freq + 1) # negative니까 +1
+        time = 0
+        q = collections.deque() # (count, idle_time)
+        while max_heap or q:
+            time += 1
 
-                if not heap and not temp:
-                    break
+            if max_heap:
+                count = 1 + heapq.heappop(max_heap)
+                if count < 0:
+                    q.append((count, time + n))
             
-            for negative_freq in temp:
-                heapq.heappush(heap, negative_freq)
+            if q and q[0][1] == time:
+                count = q.popleft()[0]
+                heapq.heappush(max_heap, count)
         
-        return ans
+        return time
