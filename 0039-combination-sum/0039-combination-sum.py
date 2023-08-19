@@ -1,18 +1,16 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        def dfs(start, current_array, current_sum):
-            if current_sum > target:
-                return
-            
-            if current_sum == target:
-                ans.append(current_array)
-                return 
-            
-            for i in range(start, len(candidates)):
-                val = candidates[i]
-                dfs(i, current_array + [val], current_sum + val)
-        
-        ans = []
-        dfs(0, [], 0)
-        
-        return ans
+        self.ans = []
+        self.backtrack(0, [], target, candidates)
+        return self.ans
+    
+    def backtrack(self, start, curr_array, target, candidates):
+        if target < 0:
+            return
+        if target == 0:
+            self.ans.append(curr_array[:])
+
+        for i in range(start, len(candidates)):
+            curr_array.append(candidates[i])
+            self.backtrack(i, curr_array, target - candidates[i], candidates)
+            curr_array.pop()
