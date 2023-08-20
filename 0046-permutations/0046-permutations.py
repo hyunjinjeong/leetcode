@@ -1,18 +1,20 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def backtrack(current, visited):
-            if len(current) == len(nums):
-                answer.append(current)
-                return
-            
-            for i in range(len(nums)):
-                if i in visited:
-                    continue
-                
-                visited.add(i)
-                backtrack(current+[nums[i]], visited)
-                visited.remove(i)
-        
-        answer = []
-        backtrack([], set())
-        return answer
+        self.ans = []
+        self.backtrack([], nums, set())
+        return self.ans
+
+    def backtrack(self, curr, nums, visited):
+        if len(curr) == len(nums):
+            self.ans.append(curr[:])
+            return
+
+        for num in nums:
+            if num in visited:
+                continue
+
+            visited.add(num)
+            curr.append(num)
+            self.backtrack(curr, nums, visited)
+            curr.pop()
+            visited.remove(num)
