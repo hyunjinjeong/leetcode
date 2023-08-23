@@ -1,67 +1,27 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-#         # 딱 봐도 backtracking 쓰는 문제 같긴 한데...
-#         # 코드 맞게 짜도 자꾸 TLE 떴다가 안 떴다가 함
-#         def dfs(r, c, length):
-#             if length == len(word):
-#                 return True
-            
-#             if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
-#                 return False
-#             if board[r][c] == "":
-#                 return False
-#             if board[r][c] != word[length]:
-#                 return False
-            
-#             char = board[r][c]
-#             board[r][c] = "" # visited
-#             result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
-#             board[r][c] = char
-            
-#             return result
-
-#         for r in range(len(board)):
-#             for c in range(len(board[0])):
-#                 if dfs(r, c, 0):
-#                     return True
-        
-#         return False
-        # 아래는 follow up인 pruning 활용. pruning은 그냥 엣지 케이스들 대비해서 미리 체크하는 정도.
-        def dfs(r, c, length):
-            if length == len(word):
-                return True
-            
-            if r < 0 or r >= len(board) or c < 0 or c >= len(board[0]):
-                return False
-            if board[r][c] == "":
-                return False
-            if board[r][c] != word[length]:
-                return False
-            
-            char = board[r][c]
-            board[r][c] = "" # visited
-            result = dfs(r+1, c, length+1) or dfs(r-1, c, length+1) or dfs(r, c+1, length+1) or dfs(r, c-1, length+1)
-            board[r][c] = char
-            
-            return result
-        
-        # Pruning/Edge case #1 - Check if a word length is longer than the matrix itself
-        if len(word) > len(board) * len(board[0]):
-            return False;
-        
-        # Pruning/Edge case #2 - Check if all needed characters for the word are on the board
-        charFreq = collections.defaultdict(int)
-        for r in range(len(board)):
-            for c in range(len(board[0])):
-                charFreq[board[r][c]] += 1
-        
-        for char in word:
-            if char not in charFreq or charFreq[char] < 0:
-                return False;
-            charFreq[char] -= 1
-        
-        # Pruning 다 통과하면 이제 메인 알고리즘으로..
-        for r in range(len(board)):
-            for c in range(len(board[0])):
-                if dfs(r, c, 0):
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if self.backtrack(i, j, 0, board, word):
                     return True
+        
+        return False
+    
+    def backtrack(self, x, y, index, board, word):
+        if board[x][y] != word[index]:
+            return False
+        
+        if index == len(word) - 1:
+            return True
+    
+        val = board[x][y]
+        board[x][y] = '-'
+
+        result = False
+        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            next_x, next_y = x + dx, y + dy
+            if 0 <= next_x < len(board) and 0 <= next_y < len(board[0]):
+                result = self.backtrack(next_x, next_y, index + 1, board, word) or result
+        
+        board[x][y] = val
+        return result
