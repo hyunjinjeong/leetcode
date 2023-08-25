@@ -2,18 +2,18 @@ class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
         if not digits:
             return []
+
+        mappings = { "2": ["a", "b", "c"], "3": ["d", "e", "f"], "4": ["g", "h", "i"], "5": ["j", "k", "l"], "6": ["m", "n", "o"], "7": ["p", "q", "r", "s"], "8": ["t", "u", "v"], "9": ["w", "x", "y", "z"]}
+        return self.backtrack(0, [], mappings, digits, [])
+    
+    def backtrack(self, index, curr, mappings, digits, ans):
+        if index == len(digits):
+            ans.append("".join(curr))
+            return ans
         
-        dt = { "2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz" }
-        result = []
+        for c in mappings[digits[index]]:
+            curr.append(c)
+            self.backtrack(index + 1, curr, mappings, digits, ans)
+            curr.pop()
         
-        def dfs(index, current):
-            if index == len(digits):
-                result.append(current)
-                return
-            
-            letters = dt[digits[index]]
-            for letter in letters:
-                dfs(index + 1, current + letter)
-            
-        dfs(0, "")
-        return result
+        return ans
