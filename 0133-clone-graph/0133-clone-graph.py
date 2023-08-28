@@ -8,26 +8,20 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        dt = {}
-        visited = set()
+        if not node:
+            return
 
-        def dfs(n):
-            if not n:
-                return
-            
-            if n.val not in dt:
-                dt[n.val] = Node(n.val)
-            new_node = dt[n.val]
+        dt = {node.val: Node(node.val)}
+        self.dfs(node, dt)
+        return dt[node.val]
+    
+    def dfs(self, old_node, dt):
+        new_node = dt[old_node.val]
 
-            visited.add(n.val)
-            for neighbor in n.neighbors:
-                if neighbor.val not in dt:
-                    dt[neighbor.val] = Node(neighbor.val)
-                neighbor_node = dt[neighbor.val]
-                new_node.neighbors.append(neighbor_node)
-                if neighbor.val not in visited:
-                    dfs(neighbor)
-            
-            return new_node
-        
-        return dfs(node)
+        for old_neighbor in old_node.neighbors:
+            if old_neighbor.val not in dt:
+                dt[old_neighbor.val] = Node(old_neighbor.val)
+                new_node.neighbors.append(dt[old_neighbor.val])
+                self.dfs(old_neighbor, dt)
+            else:
+                new_node.neighbors.append(dt[old_neighbor.val])
