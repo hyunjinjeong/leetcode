@@ -8,24 +8,26 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        # 3가지 방법: 1. Recursive DFS, 2. Iterative DFS, 3. Iterative BFS 가능. 난 1번이 젤 쉽당.
-        # 다른 것도 알아는 두자...
-        if not node:
-            return None
-        
-        new_node = Node(node.val)
-        dt = {node: new_node} # 일종의 visited 역할도 함.
-        
+        dt = {}
+        visited = set()
+
         def dfs(n):
+            if not n:
+                return
+            
+            if n.val not in dt:
+                dt[n.val] = Node(n.val)
+            new_node = dt[n.val]
+
+            visited.add(n.val)
             for neighbor in n.neighbors:
-                if neighbor not in dt:
-                    new_neighbor_node = Node(neighbor.val)
-                    dt[neighbor] = new_neighbor_node
-                    dt[n].neighbors.append(new_neighbor_node)
+                if neighbor.val not in dt:
+                    dt[neighbor.val] = Node(neighbor.val)
+                neighbor_node = dt[neighbor.val]
+                new_node.neighbors.append(neighbor_node)
+                if neighbor.val not in visited:
                     dfs(neighbor)
-                else:
-                    dt[n].neighbors.append(dt[neighbor])
+            
+            return new_node
         
-        dfs(node)
-        
-        return new_node
+        return dfs(node)
