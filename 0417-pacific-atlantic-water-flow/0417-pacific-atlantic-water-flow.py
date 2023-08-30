@@ -11,7 +11,7 @@ class Solution:
             self.dfs(0, col, p_visited, heights)
             self.dfs(M - 1, col, a_visited, heights)
         
-        return [[dup[0], dup[1]] for dup in p_visited & a_visited]
+        return [[tup[0], tup[1]] for tup in p_visited & a_visited]
     
     # 조건을 반대로 해서 edge에서 각 점에 도달 가능하면 됨. p, a 모두 도달한 점들이 답.
     def dfs(self, x, y, visited, heights):
