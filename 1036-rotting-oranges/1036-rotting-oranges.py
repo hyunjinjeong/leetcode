@@ -16,11 +16,8 @@ class Solution:
                 elif orange == 1:
                     fresh_orange_count += 1
         
-        if fresh_orange_count == 0:
-            return 0
-        
-        minute = -1
-        while q:
+        minute = 0
+        while q and fresh_orange_count > 0: # fresh도 체크...
             minute += 1
             for _ in range(len(q)):
                 r, c = q.popleft()
