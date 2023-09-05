@@ -1,31 +1,28 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # 그래프에 사이클이 없으면 된다. => 위상 정렬 활용. BFS가 더 편함.
-        
+        # 간단한 위상 정렬...
+        # 초기화
         graph = {i: set() for i in range(numCourses)}
-        in_degrees = {i:0 for i in range(numCourses)}
+        in_degree = {i:0 for i in range(numCourses)}
+
+        # graph, in_degree 값 할당
+        for _to, _from in prerequisites:
+            graph[_from].add(_to)
+            in_degree[_to] += 1
         
-        # 그래프 만들기
-        for child, parent in prerequisites:
-            graph[parent].add(child)
-            in_degrees[child] += 1
+        # Queue 초기화
+        q = collections.deque()
+        for key in in_degree:
+            if in_degree[key] == 0:
+                q.append(key)
         
-        queue = deque() # 파이썬은 Queue가 없으니..
+        num_visited = 0
+        while q:
+            course = q.popleft()
+            num_visited += 1
+            for next_course in graph[course]:
+                in_degree[next_course] -= 1
+                if in_degree[next_course] == 0:
+                    q.append(next_course)
         
-        # in_degree가 0이면 다 추가
-        for key in in_degrees:
-            if in_degrees[key] == 0:
-                queue.append(key)
-        
-        # 본격 위상 정렬
-        visited = 0
-        while queue:
-            vertex = queue.popleft()
-            visited += 1
-            for child in graph[vertex]:
-                in_degrees[child] -= 1
-                if in_degrees[child] == 0:
-                    queue.append(child)
-        
-        return visited == numCourses
-                
+        return num_visited == numCourses
