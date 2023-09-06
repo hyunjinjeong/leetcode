@@ -1,29 +1,28 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        # topological sort?
-        graph = {i:set() for i in range(numCourses)}
-        in_degrees = {i:0 for i in range(numCourses)}
+        # 전형적인 topological sort...
+        graph = {i: set() for i in range(numCourses)}
+        in_degree = {i: 0 for i in range(numCourses)}
+
+        # 그래프 초기화
+        for _to, _from in prerequisites:
+            graph[_from].add(_to)
+            in_degree[_to] += 1
         
-        # 그래프 만들기
-        for child, parent in prerequisites:
-            graph[parent].add(child)
-            in_degrees[child] += 1
+        q = collections.deque()
+        # queue 초기화
+        for course in range(numCourses):
+            if in_degree[course] == 0:
+                q.append(course)
         
-        queue = collections.deque()
-        
-        # in_degree가 0이면 다 추가
-        for key in in_degrees:
-            if in_degrees[key] == 0:
-                queue.append(key)
-        
-        # 본격 위상 정렬
         ans = []
-        while queue:
-            vertex = queue.popleft()
-            ans.append(vertex)
-            for child in graph[vertex]:
-                in_degrees[child] -= 1
-                if in_degrees[child] == 0:
-                    queue.append(child)
+        while q:
+            course = q.popleft()
+            ans.append(course)
+
+            for next_course in graph[course]:
+                in_degree[next_course] -= 1
+                if in_degree[next_course] == 0:
+                    q.append(next_course)
         
         return ans if len(ans) == numCourses else []
