@@ -47,11 +47,9 @@ class UnionFind:
         if pu == pv:
             return False  # Return False if u and v are already union
         
-        if self.size[pu] > self.size[pv]: # Union by larger size
-            self.size[pu] += self.size[pv]
-            self.parent[pv] = pu
-        else:
-            self.size[pv] += self.size[pu]
-            self.parent[pu] = pv
+        # Union by rank
+        larger, smaller = (pu, pv) if self.size[pu] > self.size[pv] else (pv, pu)
+        self.size[larger] += self.size[smaller]
+        self.parent[smaller] = larger
         
         return True
