@@ -13,7 +13,7 @@ class Solution:
     
     def can_reach(self, source, target, visited, graph):
         if source in visited:
-            return
+            return False
 
         visited.add(source)
         if source == target:
