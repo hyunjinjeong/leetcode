@@ -5,7 +5,7 @@ class Solution:
         graph = collections.defaultdict(set)
 
         for u, v in edges:
-            if u in graph and v in graph and self.can_reach(u, v, set(), graph):
+            if self.can_reach(u, v, set(), graph):
                 return u, v
 
             graph[u].add(v)
