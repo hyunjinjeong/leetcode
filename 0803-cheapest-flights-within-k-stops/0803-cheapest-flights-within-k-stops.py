@@ -7,14 +7,14 @@ class Solution:
             graph[u].append((price, v))
         
         q = collections.deque([(0, src, 0)])
-        visited = {}
+        price_map = {}
 
         while q:
             price, u, stop = q.popleft()
-            if u not in visited or price < visited[u]:
-                visited[u] = price
+            if price < price_map.get(u, float("inf")):
+                price_map[u] = price
                 for next_price, v in graph[u]:
                     if stop <= k:
                         q.append((price + next_price, v, stop + 1))
         
-        return visited[dst] if dst in visited else -1
+        return price_map.get(dst, -1)
