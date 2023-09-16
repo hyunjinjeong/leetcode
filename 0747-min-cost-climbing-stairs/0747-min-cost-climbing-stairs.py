@@ -6,11 +6,20 @@ class Solution:
         # 뒤에서부터 거꾸로 돌면 됨
         N = len(cost)
 
-        dp = [0] * N
-        dp[N-1] = cost[N-1]
-        dp[N-2] = cost[N-2]
+        # dp = [0] * N
+        # dp[N-1] = cost[N-1]
+        # dp[N-2] = cost[N-2]
 
-        for i in range(N-3, -1, -1):
-            dp[i] = cost[i] + min(dp[i+1], dp[i+2])
+        # for i in range(N-3, -1, -1):
+        #     dp[i] = cost[i] + min(dp[i+1], dp[i+2])
         
-        return min(dp[0], dp[1])
+        # return min(dp[0], dp[1])
+
+        dp = [0] * N
+        dp[0] = cost[0]
+        dp[1] = cost[1]
+
+        for i in range(2, N):
+            dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+        
+        return min(dp[N-1], dp[N-2])
