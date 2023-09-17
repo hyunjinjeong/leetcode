@@ -6,23 +6,15 @@ class Solution:
         # 엣지 케이스
         if len(nums) == 1:
             return nums[0]
+
+        return max(self.get_max_money(0, len(nums)-1, nums), self.get_max_money(1, len(nums), nums))
+    
+    def get_max_money(self, left, right, nums):
+        prev, curr = 0, 0
+        for i in range(left, right):
+            tmp_curr = curr
+            
+            curr = max(curr, prev + nums[i])
+            prev = tmp_curr
         
-        # 1. 0~n-2
-        prev, curr = 0, 0
-        for i in range(len(nums)-1):
-            tmp_curr = curr
-            
-            curr = max(curr, prev + nums[i])
-            prev = tmp_curr
-        ans = curr
-
-        # 2. 1~n-1
-        prev, curr = 0, 0
-        for i in range(1, len(nums)):
-            tmp_curr = curr
-            
-            curr = max(curr, prev + nums[i])
-            prev = tmp_curr
-        ans = max(curr, ans)
-
-        return ans
+        return curr
