@@ -1,27 +1,22 @@
 class Solution:
-    def longestPalindrome(self, s):
-        # dp를 dp[i][j]는 s[i:j+1]이 palindrome인 경우로 정의하고..
-        # array를 시작과 끝으로 돌면서 이전 결과를 활용하면 된다.
-        dp = [[False] * len(s) for _ in range(len(s))]
+    def longestPalindrome(self, s: str) -> str:
+        # dp...
+        # 베이스는 1개일 때는 항상 true, 2개일 때는 같으면 true
+        # 그 뒤로는 lo+1, hi-1이 dp인지 확인
+        N = len(s)
+        dp = [[False] * N for _ in range(N)]
         
-        # 길이 1짜리 초기화
-        for i in range(len(s)):
-            dp[i][i] = True
+        left, right = 0, 1
+        for start in range(N-1, -1, -1):
+            for end in range(start, N):
+                if start == end: # 1개
+                    dp[start][end] = True
+                elif end == start + 1: # 2개
+                    dp[start][end] = s[start] == s[end]
+                else:
+                    dp[start][end] = s[start] == s[end] and dp[start+1][end-1]
+
+                if end + 1 - start > right - left and dp[start][end]:
+                    left, right = start, end + 1
         
-        pos = (0, 1)
-        for i in range(len(s)-1, -1, -1):
-            for j in range(i+1, len(s)):
-                if s[i] != s[j]:
-                    continue
-                
-                # 처음과 끝이 같은 경우...
-                # j-i == 1이면 길이가 2인 경우. 엣지 케이스.
-                if j-i == 1 or dp[i+1][j-1]:
-                    dp[i][j] = True
-                    
-                    if pos[1] - pos[0] < j+1-i:
-                        pos = (i, j+1)
-        
-        return s[pos[0]:pos[1]]
-                    
-            
+        return s[left:right]
