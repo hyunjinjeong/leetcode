@@ -1,15 +1,17 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        curr_max, curr_min, ans = nums[0], nums[0], nums[0]
-        
-        for i in range(1, len(nums)):
-            num = nums[i]
+        # dp
+        # 곱하기라서 max min 둘다 관리..
+        tmp_max, tmp_min = 1, 1
+        ans = float("-inf")
+
+        for num in nums:
+            product_from_max = tmp_max * num
+            product_from_min = tmp_min * num
             
-            # max와 min을 둘 다 관리하는 것이 핵심!
-            tmp_curr_max = max(curr_max * num, curr_min * num, num)
-            tmp_curr_min = min(curr_min * num, curr_max * num, num)
-            
-            curr_max, curr_min = tmp_curr_max, tmp_curr_min
-            ans = max(curr_max, ans)
+            tmp_max = max(product_from_max, product_from_min, num)
+            tmp_min = min(product_from_max, product_from_min, num)
+
+            ans = max(tmp_max, ans)
         
         return ans
