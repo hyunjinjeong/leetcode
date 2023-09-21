@@ -1,15 +1,23 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * (len(s)+1) # dp[n]은 s[0:n]이 wordDict로 구성되는지.
-        dp[0] = True # 코너 케이스
-        
-        for left in range(len(s)):
-            if not dp[left]:
-                continue
+        N = len(s)
+        word_dict_set = set(wordDict)
+
+        dp = [False] * (N + 1)
+        dp[0] = True
+
+        for end in range(N + 1):
+            for word in wordDict:
+                word_len = len(word)
+                start = end - word_len
+                if start < 0:
+                    continue
+                if not dp[start]:
+                    continue
                 
-            for right in range(left, len(s)):
-                word = s[left:right+1]
-                if word in wordDict:
-                    dp[right+1] = True
-        
-        return dp[-1]
+                sub_str = s[start:end]
+                if sub_str in word_dict_set:
+                    dp[end] = True
+                    break
+
+        return dp[N]
