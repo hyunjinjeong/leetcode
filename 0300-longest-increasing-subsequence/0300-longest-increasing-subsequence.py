@@ -2,7 +2,7 @@ class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         N = len(nums)
         # dp
-        dp = [1] * len(nums)
+        dp = [1] * N
 
         for i in range(N):
             for j in range(i):
