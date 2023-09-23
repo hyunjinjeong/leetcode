@@ -1,28 +1,16 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-#         # top-down DP
-#         @cache
-#         def subset_sum(s, i):
-#             if s == 0:
-#                 return True
-#             if i >= len(nums) or s < 0:
-#                 return False
-#             return subset_sum(s-nums[i], i+1) or subset_sum(s, i+1)
-        
-#         total_sum = sum(nums)
-#         if total_sum % 2 == 1:
-#             return False
-#         return subset_sum(total_sum // 2, 0)
-        
-        # bottom-up DP
-        # knapsack problem이라고 한다.
+        # sorting...은 안 되는게 1 6 11 6 같은 경우가 있음
+        # dp...
+        # 핵심은 total_sum // 2가 되는 경우가 있는지 확인하는 것
         total_sum = sum(nums)
         if total_sum % 2 == 1:
             return False
         
-        target_sum = total_sum // 2
-        dp = [True] + [False] * target_sum
+        half_sum = total_sum // 2
+        dp = [True] + [False] * half_sum
         for num in nums:
-            for curr in range(target_sum, num-1, -1):
-                dp[curr] = dp[curr] or dp[curr-num]
-        return dp[-1]
+            for curr in range(half_sum, num-1, -1):
+                dp[curr] = dp[curr-num] or dp[curr]
+
+        return dp[half_sum]
