@@ -13,13 +13,13 @@ class Solution:
             if (i1, i2) in dp:
                 return dp[(i1, i2)]
             
-            ans = False
+            use_s1, use_s2 = False, False
             if i1 < len(s1) and s1[i1] == s3[i1+i2]:
-                ans = dfs(i1 + 1, i2) or ans
+                use_s1 = dfs(i1 + 1, i2)
             if i2 < len(s2) and s2[i2] == s3[i1+i2]:
-                ans = dfs(i1, i2 + 1) or ans
+                use_s2 = dfs(i1, i2 + 1)
             
-            dp[(i1, i2)] = ans
+            dp[(i1, i2)] = use_s1 or use_s2
             return dp[(i1, i2)]
         
         return dfs(0, 0)
