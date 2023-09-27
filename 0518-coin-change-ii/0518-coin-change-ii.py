@@ -6,12 +6,8 @@ class Solution:
         dp[0] = 1 # 베이스 케이스
 
         for coin in coins:
-            for i in range(1, amount + 1):
-                prev = i - coin
-                if prev < 0:
-                    continue
-                
-                dp[i] += dp[prev]
+            for i in range(coin, amount + 1):
+                dp[i] += dp[i - coin]
 
         return dp[amount]
 
