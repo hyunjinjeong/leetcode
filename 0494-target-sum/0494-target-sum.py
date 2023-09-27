@@ -6,11 +6,10 @@ class Solution:
         dp = {}
 
         def dfs(i, curr_value):
-            if (i, curr_value) in dp:
-                return dp[(i, curr_value)]
             if i == len(nums):
                 dp[(i, curr_value)] = 1 if curr_value == target else 0
-                return dp[(i, curr_value)]
+            if (i, curr_value) in dp:
+                return dp[(i, curr_value)]    
 
             positive = dfs(i + 1, curr_value + nums[i])
             negative = dfs(i + 1, curr_value - nums[i])
