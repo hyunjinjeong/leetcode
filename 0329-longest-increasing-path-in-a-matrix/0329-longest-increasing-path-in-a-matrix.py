@@ -1,35 +1,26 @@
 class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
-        def dfs(x, y):
-            if dp[x][y]: # visited
-                return dp[x][y]
-            
-            moves = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-            max_sub_length = 0
-            for dx, dy in moves:
-                next_x, next_y = x + dx, y + dy
-                # 조건들을 모두 충족하는 경우에만.
-                if (0 <= next_x < M) and (0 <= next_y < N) and (matrix[next_x][next_y] > matrix[x][y]):
-                    max_sub_length = max(max_sub_length, dfs(next_x, next_y))
-                
-            dp[x][y] = max_sub_length + 1
-            return dp[x][y]
-        
-        # edge cases
-        if not (matrix and matrix[0]):
-            return 0
-        
         M, N = len(matrix), len(matrix[0])
-        
-        dp = [[0 for _ in range(N)] for _ in range(M)]
-        
+
         ans = 0
+        cache = {}
         for r in range(M):
             for c in range(N):
-                curr_length = dfs(r, c)
-                ans = max(ans, curr_length)
+                ans = max(self.dfs(r, c, cache, matrix), ans)
         
         return ans
-                
+    
+    def dfs(self, r, c, cache, matrix):
+        M, N = len(matrix), len(matrix[0])
+
+        if (r, c) in cache:
+            return cache[(r, c)]
         
+        length = 1
+        for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            next_r, next_c = r + dr, c + dc
+            if 0 <= next_r < M and 0 <= next_c < N and matrix[next_r][next_c] > matrix[r][c]:
+                length = max(self.dfs(next_r, next_c, cache, matrix) + 1, length)
         
+        cache[(r, c)] = length
+        return cache[(r, c)]
