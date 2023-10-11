@@ -16,8 +16,7 @@ class Solution:
             
             ans = 0
             if s[i] == t[j]:
-                ans += dfs(i + 1, j + 1, cache)
-                ans += dfs(i + 1, j, cache)
+                ans += dfs(i + 1, j + 1, cache) + dfs(i + 1, j, cache)
             else:
                 ans += dfs(i + 1, j, cache)
             
