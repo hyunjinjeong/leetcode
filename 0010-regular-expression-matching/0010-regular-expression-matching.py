@@ -34,7 +34,7 @@ class Solution:
 
         # Filling the table from right to left, bottom to top.
         for i in range(M, -1, -1):
-            for j in range(N - 1, -1, -1):
+            for j in range(N - 1, -1, -1): # N인 경우는 어차피 False니까...
                 match = i < M and (s[i] == p[j] or p[j] == '.')
 
                 if j + 1 < N and p[j + 1] == '*':
