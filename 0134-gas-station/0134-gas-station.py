@@ -7,12 +7,8 @@ class Solution:
         # 이러면 O(n^2)인데
         # greedy하게 diff가 > 0 인지 체크하면 됐었음..
         
-        # 답이 없는 경우 확인
-        total_diff = 0
-        for i in range(len(gas)):
-            total_diff += gas[i] - cost[i]
-        
-        if total_diff < 0:
+        # 답이 없는 경우
+        if sum(gas) < sum(cost):
             return -1
 
         start, diff = 0, 0
