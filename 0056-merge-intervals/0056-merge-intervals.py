@@ -9,7 +9,7 @@ class Solution:
             last = ans[-1]
 
             if curr[0] <= last[1]:
-                ans[-1] = [min(last[0], curr[0]), max(last[1], curr[1])]
+                ans[-1][1] = max(last[1], curr[1])
             else:
                 ans.append(curr)
         
