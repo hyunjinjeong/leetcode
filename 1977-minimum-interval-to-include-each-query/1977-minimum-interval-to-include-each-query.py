@@ -18,6 +18,7 @@ class Solution:
                 i += 1
 
             # 더 이상 범위가 없는 경우는 heap에서 뺌. right < query
+            # size의 최솟값이 유효하기만 하면 되기 때문에 head만 체크. lazy하게 제거하는 것
             while heap and heap[0][1] < query:
                 heapq.heappop(heap)
             
