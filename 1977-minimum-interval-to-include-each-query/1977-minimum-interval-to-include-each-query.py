@@ -21,8 +21,6 @@ class Solution:
             while heap and heap[0][1] < query:
                 heapq.heappop(heap)
             
-            if heap:
-                size, _ = heap[0]
-                min_sizes[query] = size
+            min_sizes[query] = heap[0][0] if heap else -1
 
-        return [min_sizes.get(query, -1) for query in queries]
+        return [min_sizes[query] for query in queries]
