@@ -1,20 +1,22 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        # 아.. 그냥 x**n을 계산하면 곱하기를 n번 해야 하니까 횟수를 줄이는게 포인트.
-        # 예를 들어 5**10 = (5**2)**5. 이런 식으로 하면 O(logn)이 됨.
+        # TLE가 뜨는걸로 봐선... 최적화가 필요함
+        # x^(2y) = (x^2)^y 요걸 활용해보자. 홀수면 x^(2y+1) = x^2y * x 요런 식으로.
+        # def calc(num, e):
+        #     if e < 0:
+        #         return 1 / calc(num, -e)
+        #     if e == 0:
+        #         return 1
+        #     if e == 1:
+        #         return num
+
+        #     if e % 2 == 0:
+        #         return calc(num * num, e // 2)
+        #     else:
+        #         return num * calc(num, e - 1)
         
-#         # edge cases
-#         if n == 0:
-#             return 1
-#         if n < 0:
-#             return 1 / self.myPow(x, -n)
-        
-#         # 홀수인 경우.
-#         if n % 2 == 1:
-#             return x * self.myPow(x, n-1)
-        
-#         return self.myPow(x*x, n//2)
-    
+        # return calc(x, n)
+
         # iterative 버전
         if n < 0:
             x = 1 / x
@@ -22,9 +24,10 @@ class Solution:
         
         ans = 1
         while n:
-            if n & 1: # 홀수 케이스 처리
+            if n % 2 == 1:
                 ans *= x
             
             x *= x
-            n >>= 1
+            n = n // 2
+        
         return ans
