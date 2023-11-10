@@ -11,21 +11,22 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         # 일단 bfs로 구현
+        # constant space로 어케 하지..?
+        # pointer를 몇 개 더 쓰면 된다. next를 이용해서 레벨마다 도는 것..
         if not root:
             return root
         
-        q = collections.deque([root])
-        while q:
-            prev = None
-            for _ in range(len(q)):
-                node = q.popleft()
-
-                node.next = prev
-                prev = node
+        node = root
+        while node.left:
+            curr = node
+            while curr:
+                curr.left.next = curr.right
                 
-                if node.right:
-                    q.append(node.right)
-                if node.left:
-                    q.append(node.left)
+                if curr.next:
+                    curr.right.next = curr.next.left
+                
+                curr = curr.next
+            
+            node = node.left
         
         return root
