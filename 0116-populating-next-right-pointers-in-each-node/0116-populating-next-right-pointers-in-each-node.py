@@ -19,10 +19,10 @@ class Solution:
             prev = None
             for _ in range(len(q)):
                 node = q.popleft()
-                if prev:
-                    node.next = prev
-                    
+
+                node.next = prev
                 prev = node
+                
                 if node.right:
                     q.append(node.right)
                 if node.left:
