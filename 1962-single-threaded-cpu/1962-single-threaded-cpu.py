@@ -12,7 +12,6 @@ class Solution:
         heap = []
         
         ans = []
-        print(sorted_tasks)
         i = 0
         curr_time = sorted_tasks[0][0]
         while len(ans) < len(tasks):
