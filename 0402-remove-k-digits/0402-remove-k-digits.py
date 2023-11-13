@@ -8,11 +8,13 @@ class Solution:
         attempts = 0
 
         for n in num:
+            # monotonic increasing stack 이용
             while stack and stack[-1] > n and attempts < k:
                 stack.pop()
                 attempts += 1
             stack.append(n)
         
+        # 12345... 같은 경우 k가 안 줄어듦. 그러면 마지막부터 빼주면 됨.
         while attempts < k:
             stack.pop()
             attempts += 1
