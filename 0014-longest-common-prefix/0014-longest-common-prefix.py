@@ -1,15 +1,18 @@
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        answer = strs[0]
+        prefix = strs[0]
         
-        for string in strs:
-            i = 0
-            common = ""
-            while i < len(answer) and i < len(string):
-                if answer[i] != string[i]:
-                    break
-                common += answer[i]
-                i += 1
-            answer = common
+        for i in range(1, len(strs)):
+            s = strs[i]
             
-        return answer
+            j = 0
+            while j < len(prefix) and j < len(s) and prefix[j] == s[j]:
+                j += 1
+            
+            prefix = prefix[:j]
+        
+        return prefix
+            
+            
+        
+        
