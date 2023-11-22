@@ -6,18 +6,22 @@ class Solution:
         # 그러면 시간 O(n) 공간 O(1)에 가능. 알파벳이 26개니까.
         # ans set까지 생각하면... 최대 개수가 26*26이니까 그래도 O(1)인가?
         
-        pos = {}
-        last_pos = {}
+        # 방향은 맞았는데... 더 최적화할 수 있었음.
+        first, last = {}, {}
+        for i, c in enumerate(s):
+            if c not in first:
+                first[c] = i
+            last[c] = i
         
-        ans = set()
-        for i in range(len(s)):
-            if s[i] in pos and pos[s[i]] <= i - 2:
-                for c in "abcdefghijklmnopqrstuvwxyz":
-                    if c in last_pos and last_pos[c] > pos[s[i]]:
-                        ans.add(f"{s[i]}{c}{s[i]}")
-                
-            if s[i] not in pos:
-                pos[s[i]] = i
-            last_pos[s[i]] = i
+        ans = 0
+        for c in "abcdefghijklmnopqrstuvwxyz":
+            if c not in first:
+                continue
+            
+            between = set()
+            for mid in range(first[c] + 1, last[c]):
+                between.add(s[mid])
+            
+            ans += len(between)
         
-        return len(ans)
+        return ans
