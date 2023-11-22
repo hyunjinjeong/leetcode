@@ -8,13 +8,9 @@ class Solution:
         
         pos = {}
         last_pos = {}
-        for i in range(2):
-            last_pos[s[i]] = i
-            if s[i] not in pos:
-                pos[s[i]] = i
         
         ans = set()
-        for i in range(2, len(s)):
+        for i in range(len(s)):
             if s[i] in pos and pos[s[i]] <= i - 2:
                 for c in "abcdefghijklmnopqrstuvwxyz":
                     if c in last_pos and last_pos[c] > pos[s[i]]:
