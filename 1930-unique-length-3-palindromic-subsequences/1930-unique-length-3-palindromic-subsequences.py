@@ -17,13 +17,8 @@ class Solution:
         for i in range(2, len(s)):
             if s[i] in pos and pos[s[i]] <= i - 2:
                 for c in "abcdefghijklmnopqrstuvwxyz":
-                    if c in pos:
-                        if c == s[i]:
-                            if last_pos[s[i]] > pos[s[i]]:
-                                ans.add(f"{s[i]}{c}{s[i]}")
-                        else:
-                            if last_pos[c] > pos[s[i]]:
-                                ans.add(f"{s[i]}{c}{s[i]}")
+                    if c in last_pos and last_pos[c] > pos[s[i]]:
+                        ans.add(f"{s[i]}{c}{s[i]}")
                 
             if s[i] not in pos:
                 pos[s[i]] = i
