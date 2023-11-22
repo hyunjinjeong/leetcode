@@ -18,6 +18,7 @@ class Solution:
             if c not in first:
                 continue
             
+            # palindrome이면 특정 문자가 양 사이드, 가운데에 있는 문자 개수만 세면 됨!
             between = set()
             for mid in range(first[c] + 1, last[c]):
                 between.add(s[mid])
