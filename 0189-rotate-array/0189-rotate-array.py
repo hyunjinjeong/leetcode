@@ -3,32 +3,22 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-#         # 1. 얘는 시간은 O(n)이긴 하고 대신 공간을 O(n) 만큼 먹음.
-#         steps = k % len(nums)
+        N = len(nums)
         
-#         tmp = []
-#         for i in range(len(nums)-steps):
-#             tmp.append(nums[i])
+        def reverse(l, r):
+            while l < r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
         
-#         for i in range(steps):
-#             j = len(nums) - steps + i
-#             nums[i] = nums[j]
+        # 각각 뒤집고, 합쳐서 뒤집고
+        # 4 3 2 1 / 7 6 5
+        # 5 6 7 1 2 3 4
         
-#         for i in range(steps, len(nums)):
-#             j = i - steps
-#             nums[i] = tmp[j]
-        # 2. reverse 이용. 왼쪽 오른쪽 각각 뒤집고 또 전체를 뒤집으면 됨
-        def reverse(left, right):
-            _left, _right = left, right
-            while _left < _right:
-                nums[_left], nums[_right] = nums[_right], nums[_left]
-                _left += 1
-                _right -= 1
+        k = k % N # nums보다 크면 의미가 없으니
         
-        steps = k % len(nums)
-        # 각각 reverse
-        reverse(0, len(nums)-steps-1)
-        reverse(len(nums)-steps, len(nums)-1)
-        # 전체 reverse
-        reverse(0, len(nums)-1)
+        reverse(0, N - k - 1)
+        reverse(N - k, N - 1)
+        reverse(0, N - 1)
+        
         
