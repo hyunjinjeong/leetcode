@@ -1,12 +1,10 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        # 더한게 음수이면 새로 시작..?
-        ans = float("-inf")
-        curr = 0
-        for num in nums:
-            curr += num
-            ans = max(curr, ans)
-            if curr < 0:
-                curr = 0
+        global_max = nums[0]
+        curr_max = 0
         
-        return ans
+        for num in nums:
+            curr_max = max(curr_max + num, num)
+            global_max = max(curr_max, global_max)
+        
+        return global_max
