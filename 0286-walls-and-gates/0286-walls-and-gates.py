@@ -4,7 +4,6 @@ class Solution:
         Do not return anything, modify rooms in-place instead.
         """
         M, N = len(rooms), len(rooms[0])
-        INF = 2147483647
         
         # gate에서부터 시작하는게 더 쉬울듯?
         # dfs보단 bfs가 편할 것 같고
