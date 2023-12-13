@@ -1,17 +1,20 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        num2_index = {}
+        # 아 monotonic stack 이용하면 됨
+        next_gt = {}
+        stack = []
+
         for i, num2 in enumerate(nums2):
-            num2_index[num2] = i
+            while stack and num2 > stack[-1]:
+                next_gt[stack[-1]] = num2
+                stack.pop()
+            stack.append(num2)
         
+        for num2 in stack: # next_gt가 없는 경우
+            next_gt[num2] = -1
+
         ans = []
-        for i, num1 in enumerate(nums1):
-            next_gt = -1
-            for j in range(num2_index[num1] + 1, len(nums2)):
-                num2 = nums2[j]
-                if num2 > num1:
-                    next_gt = num2
-                    break
-            ans.append(next_gt)
+        for num1 in nums1:
+            ans.append(next_gt[num1])
         
         return ans
