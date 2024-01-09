@@ -4,9 +4,10 @@ class Solution:
         def neighbors(node):
             for i in range(4):
                 num = int(node[i])
-                for diff in (-1, 1):
-                    next_num = (num + diff) % 10
-                    yield node[:i] + str(next_num) + node[i+1:]
+                next_num = (num + 1) % 10
+                yield node[:i] + str(next_num) + node[i+1:]
+                next_num = (num - 1 + 10) % 10
+                yield node[:i] + str(next_num) + node[i+1:]
         
         dead_ends = set(deadends)
         q = collections.deque([('0000', 0)])
