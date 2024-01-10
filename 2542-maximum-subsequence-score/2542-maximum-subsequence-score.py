@@ -14,10 +14,9 @@ class Solution:
             nums1_sum += num1
             heapq.heappush(heap, num1)
 
-            if len(heap) > k:
-                nums1_sum -= heapq.heappop(heap)
             if len(heap) == k:
                 ans = max(nums1_sum * num2, ans)
+                nums1_sum -= heapq.heappop(heap)
             
         return ans
         
