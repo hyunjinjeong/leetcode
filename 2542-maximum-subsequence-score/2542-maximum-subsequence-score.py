@@ -10,19 +10,14 @@ class Solution:
         nums1_sum = 0
         heap = []
 
-        for i in range(k - 1):
-            num1, num2 = merged[i]
+        for num1, num2 in merged:
             nums1_sum += num1
             heapq.heappush(heap, num1)
 
-        for i in range(k - 1, len(merged)):
-            num1, num2 = merged[i]
-
-            nums1_sum += num1
-            heapq.heappush(heap, num1)
-            ans = max(nums1_sum * num2, ans)
+            if len(heap) > k:
+                nums1_sum -= heapq.heappop(heap)
+            if len(heap) == k:
+                ans = max(nums1_sum * num2, ans)
             
-            nums1_sum -= heapq.heappop(heap)
-
         return ans
         
