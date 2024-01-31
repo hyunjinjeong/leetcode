@@ -1,11 +1,17 @@
 class Solution:
     def arrangeCoins(self, n: int) -> int:
-        # 1 -> 2 -> 3 -> 4 -> 5 -> ... 이런 식으로 늘어나니까
-        # n에서 빼면서 계산하면 될 듯
+        # binary search를 사용할 수 있다
+        l, r = 0, n
+        while l <= r:
+            mid = (l + r) // 2
+            curr_sum = mid * (mid + 1) // 2
 
-        i = 1
-        while i <= n:
-            n -= i
-            i += 1
+            if curr_sum == n:
+                return mid
 
-        return i - 1
+            if curr_sum > n:
+                r = mid - 1
+            else:
+                l = mid + 1
+        
+        return r
