@@ -8,23 +8,21 @@ class Solution:
     def isEvenOddTree(self, root: Optional[TreeNode]) -> bool:
         # level order traversal..? kind of BFS
         q = collections.deque([(root, 0)])
-        even_last_num, odd_last_num = 0, float("inf")
+        last_level = -1
         while q:
             node, level = q.popleft()
 
+            if level > last_level:
+                even_last_num, odd_last_num = 0, float("inf")
+                last_level = level
+
             # odd && strictly increasing
             if level % 2 == 0:
-                odd_last_num = float("inf")
-                if node.val % 2 == 0:
-                    return False
-                if node.val <= even_last_num:
+                if node.val % 2 == 0 or node.val <= even_last_num:
                     return False
                 even_last_num = node.val
             else: # even && strictly decreasing
-                even_last_num = 0 
-                if node.val % 2 == 1:
-                    return False
-                if node.val >= odd_last_num:
+                if node.val % 2 == 1 or node.val >= odd_last_num:
                     return False
                 odd_last_num = node.val
             
