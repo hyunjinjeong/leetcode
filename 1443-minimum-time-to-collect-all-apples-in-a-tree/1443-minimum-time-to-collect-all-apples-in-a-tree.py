@@ -11,19 +11,16 @@ class Solution:
             graph[u].append(v)
             graph[v].append(u)
         
-        visited = set()
-        def dfs(node):
-            if node in visited:
-                return 0
-
-            visited.add(node)
+        def dfs(node, parent):
             time = 0
-            for adj in graph[node]:
-                time += dfs(adj)
             
-            if time > 0:
+            for adj in graph[node]:
+                if adj != parent:
+                    time += dfs(adj, node)
+            
+            if time > 0 or hasApple[node]:
                 return time + 2
             
-            return 2 if hasApple[node] else 0
+            return 0
         
-        return max(dfs(0) - 2, 0)
+        return max(dfs(0, -1) - 2, 0)
