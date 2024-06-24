@@ -6,7 +6,6 @@ class Solution:
 
         ans = []
         for c, count in sorted(freq.items(), reverse=True, key=lambda x: x[1]):
-            for _ in range(count):
-                ans.append(c)
+            ans.append(c * count)
 
         return "".join(ans)
