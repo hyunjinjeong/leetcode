@@ -24,8 +24,6 @@ class Solution:
 
         prev, node = new_tail, new_tail.next
         while i < right:
-            print(prev.val, node.val)
-
             nxt = node.next
             node.next = prev
             
