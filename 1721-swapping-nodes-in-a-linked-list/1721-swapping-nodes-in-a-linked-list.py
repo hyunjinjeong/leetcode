@@ -6,7 +6,7 @@
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         slow, fast = head, head
-        i = 0
+
         while k > 1:
             fast = fast.next
             k -= 1
