@@ -8,12 +8,25 @@ class Solution:
         # while stack[-1] >= start
         # 아 문제는 end가 같을 때 start가 역순으로 정렬되어 있어야 함.
 
-        intervals.sort(key=lambda interval: (interval[1], -interval[0]))
-        stack = []
+        # intervals.sort(key=lambda interval: (interval[1], -interval[0]))
+        # stack = []
+
+        # for start, end in intervals:
+        #     while stack and stack[-1] >= start:
+        #         stack.pop()
+        #     stack.append(start)
+        
+        # return len(stack)
+
+        # 요건 space O(1)
+        intervals.sort(key=lambda interval: (interval[0], -interval[1]))
+
+        count = 0
+        prev_end = 0
 
         for start, end in intervals:
-            while stack and stack[-1] >= start:
-                stack.pop()
-            stack.append(start)
-        
-        return len(stack)
+            if end > prev_end:
+                count += 1
+                prev_end = end
+
+        return count
