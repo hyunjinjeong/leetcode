@@ -46,13 +46,9 @@ class Solution:
         for c in path + "/":
             if c == "/":
                 if is_double_dot(curr):
-                    if stack:
-                        stack.pop()
-                elif is_single_dot(curr):
-                    pass # do nothing
-                else:
-                    if curr:
-                        stack.append("".join(curr))
+                    if stack: stack.pop()
+                elif curr and not is_single_dot(curr):
+                    stack.append("".join(curr))
                 curr = []
             else:
                 curr.append(c)
