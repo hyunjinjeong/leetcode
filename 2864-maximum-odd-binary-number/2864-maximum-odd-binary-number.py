@@ -9,12 +9,4 @@ class Solution:
             if c == "1":
                 one_count += 1
         
-        ans = []
-        for _ in range(one_count - 1):
-            ans.append("1")
-        for _ in range(len(s) - one_count):
-            ans.append("0")
-        
-        ans.append("1")
-
-        return "".join(ans)
+        return "1" * (one_count - 1) + "0" * (len(s) - one_count) + "1"
