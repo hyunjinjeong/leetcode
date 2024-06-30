@@ -17,8 +17,6 @@ class Solution:
         M, N = len(grid), len(grid[0])
         dp = [[float("inf")] * (N+1) for _ in range(M+1)]
 
-        # dp[i][j] = min(dp[i+1][j], dp[i][j+1]) + grid[i][j]
-        # 33 
         for i in range(M-1, -1, -1):
             for j in range(N-1, -1, -1):
                 if i + 1 < M or j + 1 < N:
