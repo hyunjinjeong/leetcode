@@ -6,28 +6,16 @@
 #         self.right = right
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
-        # postorder로 돌기?
-        
         def dfs(node):
-            if not (node.left or node.right):
-                return node.val == target
+            if not node:
+                return None
             
-            if node.left:
-                delete_left = dfs(node.left)
-                if delete_left:
-                    node.left = None
-            if node.right:
-                delete_right = dfs(node.right)
-                if delete_right:
-                    node.right = None
+            node.left = dfs(node.left)
+            node.right = dfs(node.right)
+
+            if not (node.left or node.right) and node.val == target:
+                return None
             
-            if not (node.left or node.right):
-                return node.val == target
-            else:
-                return False
-        
-        dfs(root)
-        # root는 따로 처리
-        if not (root.left or root.right) and root.val == target:
-            return None
-        return root
+            return node
+            
+        return dfs(root)
