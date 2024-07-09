@@ -4,35 +4,27 @@ class Solution:
         # graph를 그릴 수 있고.. topology sort 느낌인데
         # in_degree가 0개인 거에서 시작해서 DFS 돌리면 되려나?
         # 일단 처음엔 in_node가 0인 노드가 1개 있어야 함. 그 뒤로는 모두 1이어야 하고
-        graph = {i:set() for i in range(n)}
-        in_degree = {i:0 for i in range(n)}
-        for u, v in enumerate(leftChild):
-            if v != -1:
-                graph[u].add(v)
-                in_degree[v] += 1
-        for u, v in enumerate(rightChild):
-            if v != -1:
-                graph[u].add(v)
-                in_degree[v] += 1
+        root = 0
+        children_nodes = set(leftChild + rightChild)
+        for i in range(n):
+            if i not in children_nodes:
+                root = i
+                break
         
-        q = collections.deque()
-        for node in in_degree:
-            if in_degree[node] == 0:
-                q.append(node)
+        q = collections.deque([root])
+        visited = set()
         
-        if len(q) != 1:
-            return False
-        
-        visited = 0
         while q:
             node = q.popleft()
-            visited += 1
-            for child in graph[node]:
-                in_degree[child] -= 1
-                if in_degree[child] != 0:
-                    return False
-                q.append(child)
+            if node in visited:
+                return False
+            visited.add(node)
+            
+            if leftChild[node] != -1:
+                q.append(leftChild[node])
+            if rightChild[node] != -1:
+                q.append(rightChild[node])
         
-        return visited == n
+        return len(visited) == n
         
         
