@@ -20,7 +20,7 @@ class Solution:
         
         ans = 1
         while n:
-            if n - 3 >= 2:
+            if n - 3 >= 2 or n == 3:
                 ans *= 3
                 n -= 3
             else:
