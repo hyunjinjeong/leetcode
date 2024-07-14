@@ -11,8 +11,8 @@ class Solution:
                 if nums[j] < nums[i]:
                     if dp[j] + 1 > dp[i]:
                         dp[i] = dp[j] + 1
-                        count[i] = 0
-                    if dp[j] + 1 == dp[i]:
+                        count[i] = count[j]
+                    elif dp[j] + 1 == dp[i]:
                         count[i] += count[j]
         
         ans = 0
