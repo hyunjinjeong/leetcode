@@ -4,11 +4,9 @@ class Solution:
         # 그러면 여기서 removable을 뺀 다음엔..?
         # k는 binary search로 구하면 됨
         def is_subsequence(k):
-            removable_set = set(removable[:k+1])
-
             p_index = 0
             for i, c in enumerate(s):
-                if i in removable_set:
+                if i in remove and remove[i] <= k:
                     continue
                 
                 if c == p[p_index]:
@@ -19,11 +17,8 @@ class Solution:
             
             return False
         
-        # 0, 3, 1. 만족할거니까 2, 3, 2.
-        # 2, 3, 2도 만족할 거임. 그러면 3 3이 되고
-        # lo = 3인 상태로 탈출
-
         lo, hi = 0, len(removable)
+        remove = {r: i for i, r in enumerate(removable)}
         while lo < hi:
             mid = (lo + hi) // 2
             
