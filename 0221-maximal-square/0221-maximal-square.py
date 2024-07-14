@@ -2,6 +2,7 @@ class Solution:
     def maximalSquare(self, matrix: List[List[str]]) -> int:
         # dp(i,j)는 maximum square의 변의 길이
         # dp(i,j) = min(dp(i-1,j), dp(i, j-1), dp(i-1, j-1))+1
+        # https://leetcode.com/problems/maximal-square/discuss/600149/Python-Thinking-Process-Diagrams-DP-Approach
         R, C = len(matrix), len(matrix[0])
         dp = [[0] * (C+1) for _ in range(R+1)]
         
