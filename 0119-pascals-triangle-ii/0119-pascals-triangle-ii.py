@@ -1,15 +1,9 @@
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        if rowIndex == 0:
-            return [1]
-        
-        ans = [1, 1]
-        tmp = []
-        for row in range(2, rowIndex + 1):
-            for i in range(1, len(ans)):
-                tmp.append(ans[i] + ans[i-1])
-            
-            ans = [1] + tmp + [1]
-            tmp = []
+        row = [1] * (rowIndex + 1)
 
-        return ans
+        for i in range(1, rowIndex):
+            for j in range(i, 0, -1):
+                row[j] += row[j - 1]
+
+        return row
