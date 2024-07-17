@@ -18,9 +18,6 @@ class Solution:
             in_degree[u] += 1
             in_degree[v] += 1
 
-        print(graph)
-        print(in_degree)
-
         q = collections.deque()
         for node in range(n):
             if in_degree[node] == 1:
