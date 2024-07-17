@@ -3,16 +3,10 @@ class Solution:
         # topological sort? 도 되겠고
         # 그냥 DFS 돌려서 도착지도 될듯?
         # 아니면 그냥 outgoing path가 0인거 찾으면 되잖아..?
-
-        graph = {}
+        outgoing_cities = set()
         for u, v in paths:
-            if u not in graph:
-                graph[u] = []
-            if v not in graph:
-                graph[v] = []
+            outgoing_cities.add(u)
             
-            graph[u].append(v)
-            
-        for city in graph:
-            if len(graph[city]) == 0:
+        for _, city in paths:
+            if city not in outgoing_cities:
                 return city
