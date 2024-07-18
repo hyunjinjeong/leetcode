@@ -11,20 +11,20 @@ class Solution:
             for v in range(u+1, N):
                 x2, y2, r2 = bombs[v]
 
-                if (x2 - x1) ** 2 + (y2 - y1) ** 2 <= r1 ** 2:
+                distance = (x2 - x1) ** 2 + (y2 - y1) ** 2
+                if distance <= r1 ** 2:
                     graph[u].add(v)
-                if (x2 - x1) ** 2 + (y2 - y1) ** 2 <= r2 ** 2:
+                if distance <= r2 ** 2:
                     graph[v].add(u)
         
         def dfs(node, visited):
             visited.add(node)
             
-            res = 0
             for nei in graph[node]:
                 if nei not in visited:
-                    res += dfs(nei, visited)
+                    dfs(nei, visited)
             
-            return 1 + res
+            return len(visited)
 
         ans = 1
         for node in range(N):
