@@ -10,8 +10,11 @@ class Solution:
         # lefTChild는 *2, rightChild는 *2+1. width는 max(right) - max(left) + 1
         q = collections.deque([(root, 1)])
         ans = 0
+    
         while q:
-            leftmost, rightmost = float("inf"), float("-inf")
+            leftmost, rightmost = q[0][1], q[-1][1]
+            ans = max(rightmost - leftmost + 1, ans)
+
             for _ in range(len(q)):
                 node, index = q.popleft()
                 leftmost = min(index, leftmost)
@@ -21,7 +24,5 @@ class Solution:
                     q.append((node.left, index * 2))
                 if node.right:
                     q.append((node.right, index * 2 + 1))
-
-            ans = max(rightmost - leftmost + 1, ans)
 
         return ans
