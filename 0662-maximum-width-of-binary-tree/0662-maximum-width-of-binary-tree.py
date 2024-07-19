@@ -6,32 +6,32 @@
 #         self.right = right
 class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        # level order로 돌고
-        # max width 구하는 방법만 찾으면 될 듯?
-        # root로부터 왼쪽은 2n, 오른쪽은 2n+1 이걸 돌면서 부여할 수 있으려나?
-        # 길이는 right-left-1 이 될거고..
-        max_length = 0
+        # BFS 돌려서 레벨마다 최댓값 - 최솟값 구하고, max를 추적하고 있으면 되지 않을까
+        # lefTChild는 *2, rightChild는 *2+1. width는 max(right) - max(left) + 1
         
-        q = collections.deque()
-        q.append((root, 1))
-        
+        # 1
+        # 2 3 -> 2
+        # 4 5 _ 7 -> 4
+
+        # 1
+        # 2 3 -> 2
+        # 4 _ _ 7 -> 4
+        # 8 _ _ _ _ _ 14 _ -> 7
+
+        q = collections.deque([(root, 1)])
+        ans = 0
         while q:
-            left, right = 0, 0
-            # level 단위로 전체 순회
-            level_length = len(q)
-            for i in range(level_length):
-                node, num = q.popleft()
-                
-                if i == 0:
-                    left = num
-                if i == level_length-1:
-                    right = num
-                
+            leftmost, rightmost = float("inf"), float("-inf")
+            for _ in range(len(q)):
+                node, index = q.popleft()
+                leftmost = min(index, leftmost)
+                rightmost = max(index, rightmost)
+
                 if node.left:
-                    q.append((node.left, num*2))
+                    q.append((node.left, index * 2))
                 if node.right:
-                    q.append((node.right, num*2+1))
-            
-            max_length = max(max_length, right-left+1)
-        
-        return max_length
+                    q.append((node.right, index * 2 + 1))
+
+            ans = max(rightmost - leftmost + 1, ans)
+
+        return ans
