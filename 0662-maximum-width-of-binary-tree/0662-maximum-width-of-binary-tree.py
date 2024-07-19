@@ -8,16 +8,6 @@ class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         # BFS 돌려서 레벨마다 최댓값 - 최솟값 구하고, max를 추적하고 있으면 되지 않을까
         # lefTChild는 *2, rightChild는 *2+1. width는 max(right) - max(left) + 1
-        
-        # 1
-        # 2 3 -> 2
-        # 4 5 _ 7 -> 4
-
-        # 1
-        # 2 3 -> 2
-        # 4 _ _ 7 -> 4
-        # 8 _ _ _ _ _ 14 _ -> 7
-
         q = collections.deque([(root, 1)])
         ans = 0
         while q:
