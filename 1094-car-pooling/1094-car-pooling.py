@@ -2,7 +2,7 @@ class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
         # 인터벌 문제 같은데?
         # 정렬을 from을 기준으로 해야 순서대로 처리하면서 중간에 capacity가 없는 경우를 확인할 수 있다
-        trips.sort(key=lambda item: (item[1], item[2]))
+        trips.sort(key=lambda item: item[1])
         
         # heap을 써야할 듯?
         remaining_trips = []
