@@ -13,12 +13,12 @@ class Solution:
             # 과거 trip의 dest가 현재 start보다 크면? 겹치는 구간은 capacity를 차지함..
             while remaining_trips and remaining_trips[0][0] <= start:
                 trip = heapq.heappop(remaining_trips)
-                capacity += trip[2]
+                capacity += trip[1]
 
             capacity -= num_passengers
             if capacity < 0:
                 return False
             
-            heapq.heappush(remaining_trips, (dest, start, num_passengers))
+            heapq.heappush(remaining_trips, (dest, num_passengers))
 
         return True
