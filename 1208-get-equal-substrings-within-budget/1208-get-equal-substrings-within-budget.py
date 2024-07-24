@@ -6,20 +6,22 @@ class Solution:
         # O(n^2)으로 brute force는 가능할 듯
         # index = 0에서 시작해서 쭉 돌고, 1에서 시작해서 쭉 돌고... n-1까지 반복
         # 그러면 이거보다 작은 방법이 필요하다. O(nlogn)이나 O(n)
-        N = len(s)
+        # two pointer?
+        # 쭉쭉 더해가다가.. curr_cost가 maxCost보다 높아지면 left += 1을 하면 되지 않을까
+        def get_cost(i):
+            return abs(ord(s[i]) - ord(t[i]))
 
         ans = 0
 
-        for i in range(N):
-            curr_length, curr_cost = 0, 0
-            for j in range(i, N):
-                cost = abs(ord(s[j]) - ord(t[j]))
-                if curr_cost + cost > maxCost:
-                    break    
-                
-                curr_length += 1
-                curr_cost += cost
+        curr_cost = 0
+        left = 0
+        for right in range(len(s)):
+            curr_cost += get_cost(right)
             
-            ans = max(curr_length, ans)
-            
+            if curr_cost > maxCost:
+                curr_cost -= get_cost(left)
+                left += 1
+            else:
+                ans = max(right - left + 1, ans)
+        
         return ans
