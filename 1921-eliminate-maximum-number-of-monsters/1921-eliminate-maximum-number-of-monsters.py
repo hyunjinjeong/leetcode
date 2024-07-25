@@ -4,7 +4,7 @@ class Solution:
         # greedy로 풀기?
         times = []
         for i in range(len(dist)):
-            times.append(math.ceil(dist[i] / speed[i]))
+            times.append(dist[i] / speed[i])
         heapq.heapify(times)
 
         heapq.heappop(times) # 0초에 하나 죽일 수 있음
