@@ -6,22 +6,21 @@
 #         self.right = right
 class Solution:
     def rob(self, root: Optional[TreeNode]) -> int:
-        # 이건 그 색깔입히기 같은데
-        # 각각 합 중에 max 리턴하면 될 듯
-        RED, WHITE = 1, 0
-        red_money, white_money = 0, 0
+        # 아 문제를 잘못 이해함
+        # 색깔 입히기 문제는 아니고... dfs 돌면서 dp처럼 계산해야 할 듯?
+        # max(left), max(right)가 있을 거고... 
+        # 그럼 max(node)는? 바로 직전 자식을 포함하냐 마냐가 중요함.
+        # max(자식 포함 + 0, 자식 비포함 + current_node.val) 이런 식일거 같은데..
+        # 자식이 아니고 부모라고 생각하면 되겠다!
+        
+        @cache
+        def dfs(node, parent_node_used):
+            if not node:
+                return 0
 
-        stack = [(root, RED)]
-        while stack:
-            node, color = stack.pop()
-            if color == RED:
-                red_money += node.val
+            if parent_node_used:
+                return dfs(node.left, False) + dfs(node.right, False)
             else:
-                white_money += node.val
+                return max(node.val + dfs(node.left, True) + dfs(node.right, True), dfs(node.left, False) + dfs(node.right, False))
             
-            if node.left:
-                stack.append((node.left, RED if color == WHITE else WHITE))
-            if node.right:
-                stack.append((node.right, RED if color == WHITE else WHITE))
-
-        return max(red_money, white_money)
+        return dfs(root, False)
