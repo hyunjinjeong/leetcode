@@ -1,9 +1,6 @@
 class Solution:
     def champagneTower(self, poured: int, query_row: int, query_glass: int) -> float:
         # 파스칼의 삼각형.. 비슷한 거 같은데
-        prev, curr = [0] * 101, [0] * 101
-        prev[0] = poured
-
         row = [poured]
         for _ in range(query_row):
             new_row = [0] * (len(row) + 1)
