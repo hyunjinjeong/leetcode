@@ -6,14 +6,16 @@ class Solution:
         dp = [0] * (high + 1)
         dp[0] = 1
 
+        MOD = 10**9 + 7
+
         for i in range(high + 1):
             if i >= zero:
                 dp[i] = dp[i - zero]
             if i >= one:
-                dp[i] = dp[i - one] + dp[i]
+                dp[i] = (dp[i - one] + dp[i]) % MOD
         
         ans = 0
         for i in range(low, high + 1):
-            ans = (dp[i] + ans) % (10**9 + 7)
+            ans = (dp[i] + ans) % MOD
 
         return ans
