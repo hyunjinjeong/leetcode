@@ -9,10 +9,11 @@ class Solution:
         MOD = 10**9 + 7
 
         for i in range(high + 1):
-            if i >= zero:
-                dp[i] = dp[i - zero]
             if i >= one:
-                dp[i] = (dp[i - one] + dp[i]) % MOD
+                dp[i] += dp[i - one]
+            if i >= zero:
+                dp[i] += dp[i - zero]
+            dp[i] %= MOD
         
         ans = 0
         for i in range(low, high + 1):
