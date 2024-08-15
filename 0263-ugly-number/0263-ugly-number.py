@@ -6,14 +6,8 @@ class Solution:
         if n <= 0:
             return False
         
-        def divide(target):
-            num = n
-            while num % target == 0:
-                num //= target
-            return num
-        
-        n = divide(2)
-        n = divide(3)
-        n = divide(5)
+        for p in [2, 3, 5]:
+            while n % p == 0:
+                n //= p
         
         return n == 1
