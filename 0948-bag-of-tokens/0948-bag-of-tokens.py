@@ -10,7 +10,7 @@ class Solution:
 
         # power >= tokens[lo]면 왼쪽 face up 하고
         # 아니면 face down 하고?
-        while lo <= hi:
+        while lo <= hi and cur >= 0:
             if power >= tokens[lo]:
                 power -= tokens[lo]
                 lo += 1
