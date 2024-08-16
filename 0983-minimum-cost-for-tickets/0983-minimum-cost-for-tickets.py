@@ -12,7 +12,7 @@ class Solution:
                 dp[day] = dp[day - 1]
             else:
                 if day < 7:
-                    dp[day] = min(dp[day - 1] + costs[0], costs[1])
+                    dp[day] = min(dp[day - 1] + costs[0], costs[1], costs[2])
                 elif day < 30:
                     dp[day] = min(dp[day - 1] + costs[0], dp[day - 7] + costs[1], costs[2])
                 else:
