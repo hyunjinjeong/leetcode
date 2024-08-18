@@ -24,7 +24,6 @@ class Solution:
                 return node
             elif node.val < low:
                 # 여긴 node 포함 왼쪽은 다 버리고, 오른쪽에 대해서 마저 돌아야 하고
-                node.left = None
                 return dfs(node.right)
             elif node.val > high:
                 # 여긴 오른쪽 다 버리고 왼쪽에 마저 돌고.
