@@ -20,23 +20,18 @@ class Solution:
             total_count += 1
             node = node.next
         
-        each_item = total_count // k
+        each_part_size = total_count // k
         extra_item_count = total_count % k
 
         original = head
-        i = 0
-            
         for i, dummy_node in enumerate(res):
             node = dummy_node
-            curr = 0
-            while curr < each_item:
+            for _ in range(each_part_size):
                 node.next = ListNode(original.val)
                 node = node.next
                 original = original.next
-                curr += 1
 
             if i < extra_item_count:
-                print(original)
                 node.next = ListNode(original.val)
                 node = node.next
                 original = original.next
