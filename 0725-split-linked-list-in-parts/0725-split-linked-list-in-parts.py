@@ -12,8 +12,6 @@ class Solution:
         # 앞에서부터 count % k 개만큼은 count // k + 1, 나머지는 count // k면 되려나?
         # 이건 k >= count일 때도 적용 가능할 듯? k:5, count:3이면 3%5 = 3, 3 // 5 = 0.
         # 5 5라고 해도 0, 1
-        res = [ListNode(None) for _ in range(k)]
-
         node = head
         total_count = 0
         while node:
@@ -22,9 +20,12 @@ class Solution:
         
         each_part_size = total_count // k
         extra_item_count = total_count % k
+        
+        res = []
 
         original = head
-        for i, dummy_node in enumerate(res):
+        for i in range(k):
+            dummy_node = ListNode(None)
             node = dummy_node
             for _ in range(each_part_size):
                 node.next = ListNode(original.val)
@@ -36,6 +37,6 @@ class Solution:
                 node = node.next
                 original = original.next
             
-            res[i] = dummy_node.next
+            res.append(dummy_node.next)
         
         return res
