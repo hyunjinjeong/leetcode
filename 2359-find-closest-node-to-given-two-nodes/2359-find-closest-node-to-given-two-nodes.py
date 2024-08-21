@@ -31,10 +31,9 @@ class Solution:
         res = -1
         for i in range(N):
             distance_from_node1, distance_from_node2 = distances_from_node1[i], distances_from_node2[i]
-            if distance_from_node1 != -1 and distance_from_node2 != -1:
-                if res == -1:
-                    res = i
-                elif max(distance_from_node1, distance_from_node2) < max(distances_from_node1[res], distances_from_node2[res]):
-                    res = i
+            if distance_from_node1 == -1 or distance_from_node2 == -1:
+                continue
+            if res == -1 or max(distance_from_node1, distance_from_node2) < max(distances_from_node1[res], distances_from_node2[res]):
+                res = i
         
         return res
