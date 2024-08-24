@@ -1,30 +1,19 @@
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
-        # hmm.. 그냥 다 돌아보면 되나?
-        # order를 각각 점수라고 생각해서..
-        # string을 int로 치환해서 해볼까?
-        # abc -> 123점 같은 식.
-        # 이렇게 하려면 가장 긴 스트링 길이만큼 *10을 해줘야 하는구나
-        score = {}
-        for i, c in enumerate(order):
-            score[c] = i + 1
-        
-        longest_length = 0
-        for word in words:
-            longest_length = max(longest_length, len(word))
-        
-        word_scores = []
-        for word in words:
-            curr = 0
-            for c in word:
-                curr = score[c] + curr * 10
-            for _ in range(longest_length - len(word)):
-                curr *= 10
-            word_scores.append(curr)
-    
-        prev_score = 0
-        for word_score in word_scores:
-            if word_score < prev_score:
-                return False
-            prev_score = word_score
+        # 그냥 이렇게 처음부터 다 돌아도 되는구나
+        # 캐릭터가 같을 때만 뒤를 비교하면 됨
+        order_map = {c: i for i, c in enumerate(order)}
+
+        for i in range(len(words) - 1):
+            word1, word2 = words[i], words[i + 1]
+            for j in range(len(word1)):
+                if j == len(word2):
+                    return False
+
+                c1_score, c2_score = order_map[word1[j]], order_map[word2[j]]
+                if c1_score > c2_score:
+                    return False
+                elif c1_score < c2_score:
+                    break
+
         return True
