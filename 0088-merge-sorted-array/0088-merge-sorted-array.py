@@ -3,23 +3,23 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        i, j = 0, 0
-        new_nums = []
-        while i < m and j < n:
-            if nums1[i] <= nums2[j]:
-                new_nums.append(nums1[i])
-                i += 1
+        # 오.. 오른쪽에서부터 돌면 된다
+        # 1 3 5 0 0 6 // 2 4
+        # 1 3 X 0 5 6 // 2 4
+        # 1 3 X 4 5 6 // 2
+        # 1 X 3 4 5 6 // 2
+        # 1 2 3 4 5 6
+        p = m + n - 1
+        while m > 0 and n > 0:
+            if nums1[m - 1] > nums2[n - 1]:
+                nums1[p] = nums1[m - 1]
+                m -= 1
             else:
-                new_nums.append(nums2[j])
-                j += 1
+                nums1[p] = nums2[n - 1]
+                n -= 1
+            p -= 1
         
-        while i < m:
-            new_nums.append(nums1[i])
-            i += 1
-        while j < n:
-            new_nums.append(nums2[j])
-            j += 1
-        
-        # 요렇게 하면 O(n) 공간 복잡도인데, O(1)으로 가능하겠지 아마?
-        for i in range(m + n):
-            nums1[i] = new_nums[i]
+        while n > 0:
+            nums1[p] = nums2[n - 1]
+            n -= 1
+            p -= 1
