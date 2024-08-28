@@ -16,12 +16,10 @@ class Solution:
 
         def dfs(start, curr):
             s = "".join(curr)
-            if len(s) == len(set(s)):
-                self.res = max(self.res, len(s))
-            
-            if start == len(arr):
+            if len(s) != len(set(s)):
                 return
-
+            
+            self.res = max(self.res, len(s))
             for i in range(start, len(arr)):
                 curr.append(arr[i])
                 dfs(i + 1, curr)
