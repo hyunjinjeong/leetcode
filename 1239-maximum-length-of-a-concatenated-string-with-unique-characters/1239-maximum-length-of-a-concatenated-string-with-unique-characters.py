@@ -11,19 +11,16 @@ class Solution:
         # unue -> 끝
         # 요런 식으로..?
         # a b c가 있으면 -> 0, a, ab, ac, abc, b, bc, c 를 다 확인해야 함
-
-        self.res = 0
-
         def dfs(start, curr):
             s = "".join(curr)
             if len(s) != len(set(s)):
-                return
+                return 0
             
-            self.res = max(self.res, len(s))
+            res = len(s)
             for i in range(start, len(arr)):
                 curr.append(arr[i])
-                dfs(i + 1, curr)
+                res = max(res, dfs(i + 1, curr))
                 curr.pop()
+            return res
         
-        dfs(0, [])
-        return self.res
+        return dfs(0, [])
