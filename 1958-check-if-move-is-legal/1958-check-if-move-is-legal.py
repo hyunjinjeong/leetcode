@@ -7,22 +7,23 @@ class Solution:
         def check(r, c, dr, dc, length):
             if r >= 8 or r < 0 or c >= 8 or c < 0:
                 return False
+
+            res = True
             if board[r][c] == ".":
-                return False
-            if board[r][c] == color:
-                return length >= 3
+                res = False
+            elif board[r][c] == color:
+                res = length >= 2
+            else:
+                res = check(r + dr, c + dc, dr, dc, length + 1)
+            return res
 
-            return check(r + dr, c + dc, dr, dc, length + 1)
-
-        board[rMove][cMove] = color
-
-        res = (check(rMove, cMove + 1, 0, 1, 0)
-            or check(rMove, cMove - 1, 0, -1, 0)
-            or check(rMove + 1, cMove, 1, 0, 0)
-            or check(rMove + -1, cMove, -1, 0, 0)
-            or check(rMove + 1, cMove + 1, 1, 1, 0)
-            or check(rMove + 1, cMove - 1, 1, -1, 0)
-            or check(rMove - 1, cMove + 1, -1, +1, 0)
-            or check(rMove - 1, cMove - 1, -1, -1, 0))
+        res = (check(rMove, cMove + 1, 0, 1, 1)
+            or check(rMove, cMove - 1, 0, -1, 1)
+            or check(rMove + 1, cMove, 1, 0, 1)
+            or check(rMove - 1, cMove, -1, 0, 1)
+            or check(rMove + 1, cMove + 1, 1, 1, 1)
+            or check(rMove + 1, cMove - 1, 1, -1, 1)
+            or check(rMove - 1, cMove + 1, -1, 1, 1)
+            or check(rMove - 1, cMove - 1, -1, -1, 1))
 
         return res
