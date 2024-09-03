@@ -23,13 +23,19 @@ class Solution:
         
         # return dfs(0, 0)
         N, M = len(nums1), len(nums2)
-        dp = [[0] * (M + 1) for _ in range(N + 1)]
+        # dp = [[0] * (M + 1) for _ in range(N + 1)]
+        prev_dp = [0] * (M + 1)
 
         for i in range(N - 1, -1, -1):
+            dp = [0] * (M + 1)
             for j in range(M - 1, -1, -1):
                 if nums1[i] == nums2[j]:
-                    dp[i][j] = 1 + dp[i + 1][j + 1]
+                    # dp[i][j] = 1 + dp[i + 1][j + 1]
+                    dp[j] = 1 + prev_dp[j + 1]
                 else:
-                    dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])
+                    # dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])
+                    dp[j] = max(dp[j + 1], prev_dp[j])
+            prev_dp = dp
         
-        return dp[0][0]
+        # return dp[0][0]
+        return prev_dp[0]
