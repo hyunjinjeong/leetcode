@@ -30,12 +30,12 @@ class Solution:
 
         # 요건 bottom up DP로 다시 풀 수 있겠구만
         RED, BLUE, GREEN = 0, 1, 2
-        dp = [[0] * 3 for _ in range(len(costs))]
-        dp[0] = costs[0]
+        dp = [0, 0, 0]
 
-        for i in range(1, len(costs)):
-            dp[i][RED] = costs[i][RED] + min(dp[i-1][BLUE], dp[i-1][GREEN])
-            dp[i][BLUE] = costs[i][BLUE] + min(dp[i-1][RED], dp[i-1][GREEN])
-            dp[i][GREEN] = costs[i][GREEN] + min(dp[i-1][RED], dp[i-1][BLUE])
+        for i in range(len(costs)):
+            red = costs[i][RED] + min(dp[BLUE], dp[GREEN])
+            blue = costs[i][BLUE] + min(dp[RED], dp[GREEN])
+            green = costs[i][GREEN] + min(dp[RED], dp[BLUE])
+            dp = [red, blue, green]
 
-        return min(dp[-1])
+        return min(dp)
