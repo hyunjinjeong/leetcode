@@ -12,7 +12,7 @@ class Solution:
                 return ""
             tree_str = "(" + dfs(node.left) + ")" + str(node.val) + "(" + dfs(node.right) + ")"
             self.hash[tree_str] += 1
-            if self.hash[tree_str] >= 2:
+            if self.hash[tree_str] == 2:
                 self.res.append(node)
             return tree_str
         
