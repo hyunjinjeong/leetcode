@@ -7,20 +7,6 @@ class Solution:
         # 1번째 col부터는 1이 많도록..
         R, C = len(grid), len(grid[0])
 
-        def flip_row(r):
-            for c in range(0, C):
-                if grid[r][c] == 1:
-                    grid[r][c] = 0
-                else:
-                    grid[r][c] = 1
-        
-        def flip_col(c):
-            for r in range(0, R):
-                if grid[r][c] == 1:
-                    grid[r][c] = 0
-                else:
-                    grid[r][c] = 1
-
         def col_one_count(c):
             count = 0
             for r in range(0, R):
@@ -30,11 +16,13 @@ class Solution:
 
         for r in range(R):
             if grid[r][0] == 0:
-                flip_row(r)
+                for c in range(C):
+                    grid[r][c] ^= 1
 
         for c in range(1, C):
             if col_one_count(c) <= R // 2:
-                flip_col(c)
+                for r in range(R):
+                    grid[r][c] ^= 1
         
         res = 0
         for r in range(R):
