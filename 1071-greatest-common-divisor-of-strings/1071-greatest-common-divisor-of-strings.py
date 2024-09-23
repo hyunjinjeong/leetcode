@@ -4,19 +4,17 @@ class Solution:
         if len(str1) < len(str2):
             str1, str2 = str2, str1
         
-        def check(s1, s2):
-            if len(s1) % len(s2) != 0:
+        def check(k):
+            if len(str1) % k != 0 or len(str2) % k != 0:
                 return False
             
-            for i in range(0, len(s1), len(s2)):
-                for j in range(len(s2)):
-                    if s1[i + j] != s2[j]:
-                        return False
+            n1, n2 = len(str1) // k, len(str2) // k
+            prefix = str2[:k]
+
+            return str1 == prefix * n1 and str2 == prefix * n2
             
-            return True
-        
-        for i in range(len(str2) - 1, -1, -1):
-            if len(str2) % (i + 1) == 0 and check(str2, str2[:i+1]) and check(str1, str2[:i+1]):
-                return str2[:i+1]
+        for i in range(len(str2), 0, -1):
+            if check(i):
+                return str2[:i]
         
         return ""
