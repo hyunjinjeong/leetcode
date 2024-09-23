@@ -16,7 +16,7 @@ class Solution:
             return True
         
         for i in range(len(str2) - 1, -1, -1):
-            if len(str2) % (i + 1) == 0 and check(str1, str2[:i+1]):
+            if len(str2) % (i + 1) == 0 and check(str2, str2[:i+1]) and check(str1, str2[:i+1]):
                 return str2[:i+1]
         
         return ""
