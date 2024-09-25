@@ -4,11 +4,7 @@ class Solution:
         points.sort(key=lambda point: point[0])
 
         res = 0
-
-        prev = points[0][0]
         for i in range(1, len(points)):
-            x = points[i][0]
-            res = max(res, x - prev)
-            prev = x
+            res = max(res, points[i][0] - points[i-1][0])
         
         return res
