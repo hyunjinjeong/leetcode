@@ -5,38 +5,33 @@
 #         self.next = next
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        # k만큼 rotate하면
-        # 끝에서 k만큼 뚝 떼서 head에다가 붙이면 되는데..
-        # 문제는 k가 길이보다 클 때.
-        # 길이를 구해서 remainder로 가야하나?
+        # 1 -> 2 -> 3 // 4 -> 5
+        # 일단 길이를 구하고.. N이라고 하면
+        # N - k만큼 앞으로 간 다음에
+        # 그 노드의 next는 None으로 하고
         if not head:
             return head
-        
-        # 길이 구하기
+
+        prev, node = None, head
         length = 0
-        node = head
         while node:
             length += 1
+            prev = node
             node = node.next
+        tail = prev
         
-        # remainder
-        k = k % length
+        k %= length
         if k == 0:
             return head
         
-        # 뒤에서 k만큼 구하는건 slow fast pointer로
-        slow, fast = head, head
-        for _ in range(k):
-            fast = fast.next
+        new_tail, new_head = None, head
+        count = 0
+        while count < length - k:
+            count += 1
+            new_tail = new_head
+            new_head = new_head.next
         
-        # fast.next까지만 봐야 slow가 원하는 노드 이전 지점에서 끊김
-        while fast.next:
-            slow = slow.next
-            fast = fast.next
-        
-        new_head = slow.next
-        slow.next = None
-        # 지금 fast가 tail이므로 기존 head에 연결해줌
-        fast.next = head
-        
+        new_tail.next = tail.next
+        tail.next = head
+
         return new_head
