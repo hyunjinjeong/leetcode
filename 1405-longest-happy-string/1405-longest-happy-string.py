@@ -15,17 +15,20 @@ class Solution:
         # 그럼 매번 가장 큰 숫자를 뽑아야 함. 그건 heap으로?
         # 뽑고.. 규칙을 만족하면 결과에 더하고 1을 줄여서 다시 넣으면 되고
         # 규칙을 만족하지 않으면? 다음거 뽑고 다시 넣어야 함
-        heap = [(-a, "a"), (-b, "b"), (-c, "c")]
-        heapq.heapify(heap)
-        res = []
+        heap = []
+        if a:
+            heapq.heappush(heap, (-a, "a"))
+        if b:
+            heapq.heappush(heap, (-b, "b"))
+        if c:
+            heapq.heappush(heap, (-c, "c"))
         
+        res = []
         while heap:
             tmp = []
             char_used = False
             while heap:
                 limit, char = heapq.heappop(heap)
-                if limit == 0:
-                    continue
                 if len(res) < 2 or not (res[-1] == res[-2] == char):
                     res.append(char)
                     char_used = True
