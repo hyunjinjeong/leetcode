@@ -14,12 +14,11 @@ class Solution:
             left_num = nums[mid - 1] if mid > 0 else float("-inf")
             right_num = nums[mid + 1] if mid < len(nums) - 1 else float("-inf")
             
-            if nums[mid] > left_num and nums[mid] > right_num:
-                return mid
-            
             if nums[mid] < left_num:
                 right = mid - 1
-            else:
+            elif nums[mid] < right_num:
                 left = mid + 1
+            else:
+                return mid
             
             
