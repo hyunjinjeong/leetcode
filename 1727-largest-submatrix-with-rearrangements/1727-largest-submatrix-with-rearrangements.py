@@ -7,20 +7,17 @@ class Solution:
         M, N = len(matrix), len(matrix[0])
         res = 0
 
-        prev_row = [0] * N
+        prev_heights = [0] * N
         for r in range(M):
-            row = matrix[r][:]
+            heights = matrix[r][:]
             for c in range(N):
-                if row[c] == 1:
-                    row[c] += prev_row[c]
+                if heights[c] == 1:
+                    heights[c] += prev_heights[c]
             
-            sorted_row = sorted(row, reverse=True)
-            height = sorted_row[0]
-            
+            sorted_heights = sorted(heights, reverse=True)
             for c in range(N):
-                height = min(sorted_row[c], height)
-                res = max(res, height * (c + 1))
+                res = max(res, sorted_heights[c] * (c + 1))
             
-            prev_row = row
+            prev_heights = heights
 
         return res
