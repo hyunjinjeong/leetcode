@@ -11,21 +11,17 @@ class Solution:
         # 1 1 2
         # 1 1, 2 2 이렇게 2개씩 나와야 하니까.. 동일한 숫자가 짝수 -> 홀수 순으로 나와야 함. 즉 숫자가 바뀌는 index는 짝수여야 함.
         # 왼쪽에 1개짜리가 있으면 1 2 2 처럼.. 숫자가 바뀌는 index가 홀수가 됨.
+        # 1 1 2 3 3
 
         left, right = 0, len(nums) - 1
-        while left <= right:
+        while left < right:
             mid = (left + right) // 2
 
-            num_left = nums[mid - 1] if mid > 0 else float("-inf")
-            num_right = nums[mid + 1] if mid < len(nums) - 1 else float("inf")
-            
-            if num_left < nums[mid] < num_right:
-                return nums[mid]
-
-            # nums[mid]가 pair의 0번쨰일 수도 있고 1번째일 수도 있고..
-            if (nums[mid] == nums[mid - 1] and (mid - 1) % 2 == 1
-                or nums[mid] == nums[mid + 1] and mid % 2 == 1):
-                right = mid
-            else:
+            # target이 왼쪽에 있는 경우
+            if (mid % 2 == 1 and nums[mid] == nums[mid - 1]
+                or mid % 2 == 0 and nums[mid] == nums[mid + 1]):
                 left = mid + 1
+            else:
+                right = mid
 
+        return nums[left]
