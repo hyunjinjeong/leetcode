@@ -17,7 +17,7 @@ class Solution:
         while left < right:
             mid = (left + right) // 2
 
-            # target이 왼쪽에 있는 경우
+            # target이 오른쪽에 있는 경우
             if (mid % 2 == 1 and nums[mid] == nums[mid - 1]
                 or mid % 2 == 0 and nums[mid] == nums[mid + 1]):
                 left = mid + 1
