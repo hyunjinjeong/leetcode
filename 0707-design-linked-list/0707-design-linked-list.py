@@ -6,7 +6,7 @@ class MyLinkedList:
         self.length = 0
 
     def get(self, index: int) -> int:
-        if index > self.length:
+        if index >= self.length:
             return -1
         node = self.head
         while index:
