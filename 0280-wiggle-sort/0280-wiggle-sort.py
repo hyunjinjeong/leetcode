@@ -3,10 +3,9 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # 1 2 3 4 5
-        # 1 3 2 5 4
-
-        # 정렬하고 swap 계속하면 되긴 하는데
-        nums.sort()
-        for i in range(1, len(nums) - 1, 2):
-            nums[i], nums[i + 1] = nums[i + 1], nums[i]
+        # 홀수 index 숫자는 양 옆의 숫자보다 높아야 함
+        # greedy로 가능하네..
+        for i in range(len(nums) - 1):
+            if (i % 2 == 0 and nums[i] > nums[i + 1]
+                or i % 2 == 1 and nums[i] < nums[i + 1]):
+                nums[i], nums[i + 1] = nums[i + 1], nums[i]
