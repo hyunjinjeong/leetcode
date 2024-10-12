@@ -10,14 +10,16 @@ class Solution:
         # bbbb 4개짜리가 있는데
         # 세 가지 경우를 다 봐야 할 듯?
         N = len(s)
-        dp = [[0] * (N) for _ in range(N)]
         
+        prev = [0] * N
+        curr = [0] * N
         for i in range(N - 1, -1, -1):
-            dp[i][i] = 1
+            curr[i] = 1
             for j in range(i + 1, N):
                 if s[i] == s[j]:
-                    dp[i][j] = dp[i + 1][j - 1] + 2
+                    curr[j] = prev[j - 1] + 2
                 else:
-                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+                    curr[j] = max(prev[j], curr[j - 1])
+            prev = curr[:]
         
-        return dp[0][N - 1]
+        return curr[N - 1]
