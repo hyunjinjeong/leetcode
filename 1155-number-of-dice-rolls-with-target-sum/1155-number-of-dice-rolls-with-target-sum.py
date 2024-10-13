@@ -1,13 +1,14 @@
 class Solution:
     def numRollsToTarget(self, n: int, k: int, target: int) -> int:
-        @cache
-        def dfs(count, t): # 아 항상 n번을 던져야 함
-            if count == n:
-                return 1 if t == 0 else 0
+        dp = [0] * (target + 1)
+        dp[0] = 1
+        MOD = 10 ** 9 + 7
 
-            res = 0
-            for num in range(1, k + 1):
-                res += dfs(count + 1, t - num)
-            return res
+        for dice in range(n):
+            next_dp = [0] * (target + 1)
+            for val in range(1, k + 1):
+                for total in range(val, target + 1):
+                    next_dp[total] = (next_dp[total] + dp[total - val]) % MOD
+            dp = next_dp
         
-        return dfs(0, target) % (10**9 + 7)
+        return dp[target]
