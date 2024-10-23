@@ -10,16 +10,18 @@ class Solution:
             graph[u].append((v, succProb[i]))
             graph[v].append((u, succProb[i]))
         
-        max_prob = [0.0] * n
-        max_prob[start_node] = 1.0
+        max_heap = [(-1, start_node)]
+        visited = set()
 
-        q = collections.deque([start_node])
-        while q:
-            node = q.popleft()
-            for nei, prob in graph[node]:
-                if max_prob[node] * prob <= max_prob[nei]:
+        while max_heap:
+            prob, node = heapq.heappop(max_heap)
+            if node == end_node:
+                return -prob
+
+            visited.add(node)
+            for nei, nei_prob in graph[node]:
+                if nei in visited:
                     continue
-                max_prob[nei] = max_prob[node] * prob
-                q.append(nei)
-
-        return max_prob[end_node]
+                heapq.heappush(max_heap, (prob * nei_prob, nei))
+        
+        return 0
