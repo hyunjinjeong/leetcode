@@ -10,6 +10,8 @@ class Solution:
             graph[u].append((v, succProb[i]))
             graph[v].append((u, succProb[i]))
         
+        max_prob = [0.0] * n
+        max_prob[start_node] = 1.0
         max_heap = [(-1, start_node)]
         visited = set()
 
@@ -17,11 +19,15 @@ class Solution:
             prob, node = heapq.heappop(max_heap)
             if node == end_node:
                 return -prob
-
+            
             visited.add(node)
             for nei, nei_prob in graph[node]:
                 if nei in visited:
                     continue
-                heapq.heappush(max_heap, (prob * nei_prob, nei))
+
+                new_prob = -(prob * nei_prob)
+                if new_prob <= max_prob[nei]:
+                    continue
+                heapq.heappush(max_heap, (-new_prob, nei))
         
         return 0
