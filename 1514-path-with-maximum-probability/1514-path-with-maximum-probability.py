@@ -13,21 +13,17 @@ class Solution:
         max_prob = [0.0] * n
         max_prob[start_node] = 1.0
         max_heap = [(-1, start_node)]
-        visited = set()
 
         while max_heap:
             prob, node = heapq.heappop(max_heap)
             if node == end_node:
                 return -prob
             
-            visited.add(node)
             for nei, nei_prob in graph[node]:
-                if nei in visited:
-                    continue
-
                 new_prob = -(prob * nei_prob)
                 if new_prob <= max_prob[nei]:
                     continue
+                max_prob[nei] = new_prob
                 heapq.heappush(max_heap, (-new_prob, nei))
         
         return 0
