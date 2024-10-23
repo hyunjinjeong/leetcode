@@ -15,7 +15,6 @@ class MyCircularQueue:
             self.front = node
         else:
             self.rear.next = node
-            node.prev = self.rear
         
         self.rear = node
         self.size += 1
@@ -28,7 +27,7 @@ class MyCircularQueue:
         
         self.front = self.front.next
         self.size -= 1
-        
+
         return True
 
     def Front(self) -> int:
@@ -49,9 +48,8 @@ class MyCircularQueue:
         
 
 class Node:
-    def __init__(self, value, prev=None, nxt=None):
+    def __init__(self, value, nxt=None):
         self.value = value
-        self.prev = prev
         self.next = nxt
 
 # Your MyCircularQueue object will be instantiated and called as such:
