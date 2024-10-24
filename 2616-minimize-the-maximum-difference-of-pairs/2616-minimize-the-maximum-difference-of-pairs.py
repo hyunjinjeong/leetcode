@@ -9,8 +9,9 @@ class Solution:
             while i < len(nums) - 1:
                 if nums[i + 1] - nums[i] <= diff:
                     count += 1
+                    i += 2
+                else:
                     i += 1
-                i += 1
             return count
         
         left, right = 0, nums[-1] - nums[0]
