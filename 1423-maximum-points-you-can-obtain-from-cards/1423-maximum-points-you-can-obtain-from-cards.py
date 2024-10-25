@@ -9,12 +9,13 @@ class Solution:
         if rest_length == 0:
             return all_sum
 
-        rest_sum = sum(cardPoints[:rest_length - 1])
+        rest_sum = 0
         min_rest_sum = all_sum
 
-        for i in range(rest_length - 1, N):
+        for i in range(N):
             rest_sum += cardPoints[i]
-            min_rest_sum = min(min_rest_sum, rest_sum)
-            rest_sum -= cardPoints[i - rest_length + 1]
+            if i >= rest_length - 1:
+                min_rest_sum = min(min_rest_sum, rest_sum)
+                rest_sum -= cardPoints[i - rest_length + 1]
         
         return all_sum - min_rest_sum
