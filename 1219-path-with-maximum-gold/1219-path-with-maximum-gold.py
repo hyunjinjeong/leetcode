@@ -4,13 +4,17 @@ class Solution:
         # 모든 cell에서 DFS 돌려보고 max값을 구하면 될 것 같은데?
 
         def dfs(r, c):
+            if not (0 <= r < M and 0 <= c < N):
+                return 0
+            if grid[r][c] == 0:
+                return 0
+
             value = grid[r][c]
             grid[r][c] = 0 # visited
             
             sub_max = 0
             for next_r, next_c in [[r + 1, c], [r - 1, c], [r, c + 1], [r, c - 1]]:
-                if 0 <= next_r < M and 0 <= next_c < N and grid[next_r][next_c] > 0:
-                    sub_max = max(sub_max, dfs(next_r, next_c))
+                sub_max = max(sub_max, dfs(next_r, next_c))
             
             grid[r][c] = value
             return value + sub_max
@@ -20,7 +24,6 @@ class Solution:
         res = 0
         for r in range(M):
             for c in range(N):
-                if grid[r][c] > 0:
-                    res = max(res, dfs(r, c))
+                res = max(res, dfs(r, c))
 
         return res
