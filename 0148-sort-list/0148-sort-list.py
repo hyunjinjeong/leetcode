@@ -4,10 +4,10 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def sortList(self, head: ListNode) -> ListNode:
-        # Merge sort를 사용해야 하는구나..
-        # top-down은 logn 공간 써서 bottom-up으로 해야 함.
-        # 우선 top-down
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # Merge sort를 때려보면 될 듯?
+        # merge sort는.. 합칠 때 정렬하는 방식. 나눠져있는 리스트들은 모두 정렬된 상태라고 가정하고 (왜냐면 합칠 때 정렬이 되니까)
+        # 길이가 1이 될 때까지 나누고
         if not (head and head.next):
             return head
         
@@ -23,12 +23,13 @@ class Solution:
             fast = fast.next.next
         mid = slow.next
         slow.next = None
+        
         return mid
     
     def merge(self, left, right):
         dummy = ListNode(None)
-        node = dummy
 
+        node = dummy
         while left and right:
             if left.val < right.val:
                 node.next = left
@@ -37,10 +38,7 @@ class Solution:
                 node.next = right
                 right = right.next
             node = node.next
-
         node.next = left or right
+
         return dummy.next
         
-        
-                    
-            
