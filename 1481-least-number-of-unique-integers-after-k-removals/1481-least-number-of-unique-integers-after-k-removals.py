@@ -4,12 +4,12 @@ class Solution:
         # 그럼 그냥 heap 쓰면 될 듯
         counter = collections.Counter(arr)
         
-        heap = [(count, num) for num, count in counter.items()]
+        heap = list(counter.values())
         heapq.heapify(heap)
 
         res = len(heap)
         while k:
-            count, num = heapq.heappop(heap)
+            count = heapq.heappop(heap)
             if count > k:
                 break
             
