@@ -7,11 +7,13 @@ class Solution:
         heap = [(count, num) for num, count in counter.items()]
         heapq.heapify(heap)
 
+        res = len(heap)
         while k:
             count, num = heapq.heappop(heap)
             if count > k:
-                heapq.heappush(heap, (count - k, num))
                 break
+            
             k -= count
+            res -= 1
         
-        return len(heap)
+        return res
