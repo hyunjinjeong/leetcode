@@ -28,8 +28,7 @@ class Solution:
         res = len(counter)
         for i in range(1, len(count_list)):
             if k >= i * count_list[i]:
-                remove = count_list[i]
-                k -= i * remove
+                k -= i * count_list[i]
                 res -= count_list[i]
             else:
                 remove = k // i
