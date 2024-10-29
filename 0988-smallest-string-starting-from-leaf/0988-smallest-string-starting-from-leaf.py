@@ -13,16 +13,12 @@ class Solution:
             string = chr(ord('a') + node.val) + string
 
             if node.left and node.right:
-                dfs(node.left, string)
-                dfs(node.right, string)
+                return min(dfs(node.left, string), dfs(node.right, string))
             elif node.left:
-                dfs(node.left, string)
+                return dfs(node.left, string)
             elif node.right:
-                dfs(node.right, string)
-            else:
-                if not self.smallest or string < self.smallest:
-                    self.smallest = string
+                return dfs(node.right, string)
+            
+            return string
 
-        self.smallest = ""
-        dfs(root, "")
-        return self.smallest
+        return dfs(root, "")
