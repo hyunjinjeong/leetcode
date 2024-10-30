@@ -30,7 +30,8 @@ class Solution:
                         domino_list[i + 1] = "R"
                         q.append(i + 1)
                         seen.add(i + 1)
-                    elif i + 1 in seen:
-                        domino_list[i + 1] = "."
+                    # 여기가 주석이어도 되는 이유는 q에 넣는 순서 때문에. R들이 먼저 처리됨.
+                    # elif i + 1 in seen:
+                    #     domino_list[i + 1] = "."
         
         return "".join(domino_list)
