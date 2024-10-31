@@ -17,12 +17,11 @@ class Solution:
             (1, "I")
         ]
 
-        i = 0
         res = []
-        while num:
-            value, symbol = roman[i]
+        for value, symbol in roman:
             count, num = divmod(num, value)
             res.append(symbol * count)
-            i += 1
+            if num == 0:
+                break
         
         return "".join(res)
