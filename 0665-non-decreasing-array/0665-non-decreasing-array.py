@@ -5,14 +5,30 @@ class Solution:
         # 하나를 고치는 건 결국 그 index만 없으면 sorted인지를 보는 거
         # 그러면 i에서 drop이 되는 경우, i - 1이 없으면 되는지 확인하면 되나?
         # 그럼 i - 2랑 i랑 비교하기?
+        # decreasing_count = 0
+        # for i in range(len(nums) - 1):
+        #     if nums[i] > nums[i + 1]:
+        #         decreasing_count += 1
+        #         left = nums[i - 1] if i > 0 else float("-inf")
+        #         right = nums[i + 2] if i < len(nums) - 2 else float("inf")
+        #         if left > nums[i + 1] and nums[i] > right:
+        #             return False
+            
+        #     if decreasing_count == 2:
+        #         return False
+        
+        # return True
+
+        # 위의 코드를 더 간단하게 바꾸면 결국 이거임. 두 가지 경우를 비교해서 이상한 숫자를 없애기
         decreasing_count = 0
-        for i in range(len(nums) - 1):
-            if nums[i] > nums[i + 1]:
+        for i in range(1, len(nums)):
+            if nums[i - 1] > nums[i]:
                 decreasing_count += 1
-                left = nums[i - 1] if i > 0 else float("-inf")
-                right = nums[i + 2] if i < len(nums) - 2 else float("inf")
-                if left > nums[i + 1] and nums[i] > right:
-                    return False
+
+                if i < 2 or nums[i] >= nums[i - 2]:
+                    nums[i - 1] = nums[i]
+                else:
+                    nums[i] = nums[i - 1]
             
             if decreasing_count == 2:
                 return False
