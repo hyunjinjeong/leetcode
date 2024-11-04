@@ -6,7 +6,7 @@
 #         self.right = right
 class Solution:
     def largestValues(self, root: Optional[TreeNode]) -> List[int]:
-        # level order traversal로 다 돌면 O(N). 공간 복잡도는 최대 O(logn).
+        # level order traversal로 다 돌면 O(N). 공간 복잡도는 최대 O(n).
         if not root:
             return []
         
