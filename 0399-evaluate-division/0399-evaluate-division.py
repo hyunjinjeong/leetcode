@@ -7,18 +7,15 @@ class Solution:
         # 음 근데 반대 방향으로도 갈 수 있구나...
         # 일단 그래프는 맞는 것 같음.
         graph = collections.defaultdict(list)
-        variables = set()
 
         for i, (a, b) in enumerate(equations):
             graph[a].append((b, values[i]))
             graph[b].append((a, 1 / values[i]))
-            variables.add(a)
-            variables.add(b)
         
         res = []
         
         for a, b in queries:
-            if a not in variables or b not in variables:
+            if a not in graph or b not in graph:
                 res.append(-1.0)
                 continue
             has_appended = False
