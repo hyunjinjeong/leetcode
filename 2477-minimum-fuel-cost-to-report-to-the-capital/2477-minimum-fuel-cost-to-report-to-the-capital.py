@@ -16,7 +16,6 @@ class Solution:
             count = 1 + sub_count
             cost = max(1, math.ceil(count / seats)) + sub_cost
 
-            print(f"city: {city}, result: {(count, cost)}, sub: {(sub_count, sub_cost)}")
             return (cost, count)
 
         N = len(roads)
