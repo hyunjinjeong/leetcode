@@ -8,21 +8,33 @@
 class Solution:
     def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> Optional[TreeNode]:
         
-        def inorder(node):
-            if not node:
-                return
+        # def inorder(node):
+        #     if not node:
+        #         return
             
-            inorder(node.left)
+        #     inorder(node.left)
             
-            if self.prev is p and not self.res:
-                self.res = node
-                return
-            self.prev = node
+        #     if self.prev is p and not self.res:
+        #         self.res = node
+        #         return
+        #     self.prev = node
 
-            inorder(node.right)
+        #     inorder(node.right)
 
-        self.prev = None
-        self.res = None
+        # self.prev = None
+        # self.res = None
 
-        inorder(root)
-        return self.res
+        # inorder(root)
+        # return self.res
+        res = None
+        node = root
+        while node:
+            if p.val >= node.val:
+                node = node.right
+            else:
+                res = node
+                node = node.left
+        return res
+
+
+        return None
