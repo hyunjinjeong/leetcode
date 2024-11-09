@@ -28,7 +28,6 @@ class Solution:
             
             if self.prev is p:
                 self.res = node
-                return
             self.prev = node
 
             inorder(node.right)
