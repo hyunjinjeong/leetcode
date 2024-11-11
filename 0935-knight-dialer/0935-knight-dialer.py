@@ -15,19 +15,30 @@ class Solution:
             0: [4, 6]   
         }
 
-        @cache
-        def dfs(num, count):
-            if count == n:
-                return 1
+        # @cache
+        # def dfs(num, count):
+        #     if count == n:
+        #         return 1
 
-            res = 0
-            for next_num in can_move[num]:           
-                res = (res + dfs(next_num, count + 1)) % MOD
+        #     res = 0
+        #     for next_num in can_move[num]:           
+        #         res = (res + dfs(next_num, count + 1)) % MOD
             
-            return res
+        #     return res
 
-        res = 0
-        for num in range(10):
-            res = (res + dfs(num, 1)) % MOD
+        # res = 0
+        # for num in range(10):
+        #     res = (res + dfs(num, 1)) % MOD
         
-        return res
+        # return res
+
+        # bottom-up
+        dp = [[0] * 10 for _ in range(n)]
+        dp[0] = [1] * 10
+
+        for count in range(1, n):
+            for num in range(10):
+                for next_num in can_move[num]:
+                    dp[count][next_num] = (dp[count][next_num] + dp[count - 1][num]) % MOD
+        
+        return sum(dp[-1]) % MOD
