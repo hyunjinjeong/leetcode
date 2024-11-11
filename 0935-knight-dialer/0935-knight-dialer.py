@@ -33,12 +33,13 @@ class Solution:
         # return res
 
         # bottom-up
-        dp = [[0] * 10 for _ in range(n)]
-        dp[0] = [1] * 10
+        dp = [1] * 10
 
         for count in range(1, n):
+            next_dp = [0] * 10
             for num in range(10):
                 for next_num in can_move[num]:
-                    dp[count][next_num] = (dp[count][next_num] + dp[count - 1][num]) % MOD
+                    next_dp[next_num] = (next_dp[next_num] + dp[num]) % MOD
+            dp = next_dp
         
-        return sum(dp[-1]) % MOD
+        return sum(dp) % MOD
