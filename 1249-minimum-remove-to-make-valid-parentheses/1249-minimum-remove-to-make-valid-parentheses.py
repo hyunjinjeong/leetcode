@@ -15,19 +15,18 @@ class Solution:
                 extra_left_parenthesis_count += 1
                 tmp.append(c)
             elif c == ")":
+                if extra_left_parenthesis_count == 0:
+                    continue
                 extra_left_parenthesis_count -= 1
-                if extra_left_parenthesis_count < 0:
-                    extra_left_parenthesis_count = 0
-                else:
-                    tmp.append(c)
+                tmp.append(c)
             else:
                 tmp.append(c)
 
-        res = collections.deque()
-        for i in range(len(tmp) - 1, -1, -1):
-            if extra_left_parenthesis_count > 0 and tmp[i] == "(":
+        res = []
+        for c in reversed(tmp):
+            if extra_left_parenthesis_count > 0 and c == "(":
                 extra_left_parenthesis_count -= 1
             else:
-                res.appendleft(tmp[i])
+                res.append(c)
         
-        return "".join(res)
+        return "".join(reversed(res))
