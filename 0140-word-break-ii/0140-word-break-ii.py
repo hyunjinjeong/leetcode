@@ -15,7 +15,6 @@ class Solution:
                     backtrack(i + 1, curr)
                     curr.pop()
 
-        
         self.res = []
         backtrack(0, [])
         return self.res
