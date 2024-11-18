@@ -22,30 +22,21 @@ class Solution:
         # return dfs(0, 1)
 
         # binary search works...!
-        def satisfy(target_sum):
+        def can_split(target_sum):
             curr_part, curr_sum = 1, 0
             for num in nums:
-                if num > target_sum:
-                    return False
-                
-                if curr_sum + num > target_sum:
+                curr_sum += num
+                if curr_sum > target_sum:
                     curr_part += 1
                     curr_sum = num
-                else:
-                    curr_sum += num
-                
-                if curr_part > k:
-                    return False
             
-            return True
+            return curr_part <= k
 
-        total_sum = sum(nums)
-        lo, hi = 0, total_sum
-
+        lo, hi = max(nums), sum(nums)
         while lo < hi:
             mid = lo + (hi - lo) // 2
 
-            if satisfy(mid):
+            if can_split(mid):
                 hi = mid
             else:
                 lo = mid + 1
