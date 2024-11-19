@@ -15,10 +15,8 @@ class Solution:
         for _ in range(k):
             # Add valid projects to the heap
             while i < len(profits) and sorted_projects[i][0] <= curr_capital:
-                # max_heap.append(-sorted_projects[i][1])
                 heapq.heappush(max_heap, -sorted_projects[i][1])
                 i += 1
-            # heapq.heapify(max_heap)
 
             if not max_heap:
                 break
