@@ -1,13 +1,16 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        # grouping은 어떻게 하지..?
-        # hash table 써서 정렬한 str을 key로 하면 되지 않을까
-        dt = {}
-        for string in strs:
-            key = "".join(sorted(string))
-            if key in dt:
-                dt[key].append(string)
+        # Sort each str then save it to hashmap
+
+        res = []
+        anagram_indexes = {}
+
+        for s in strs:
+            sorted_string = "".join(sorted(s))
+            if sorted_string in anagram_indexes:
+                res[anagram_indexes[sorted_string]].append(s)
             else:
-                dt[key] = [string]
-        
-        return dt.values()
+                anagram_indexes[sorted_string] = len(res)
+                res.append([s])
+
+        return res
