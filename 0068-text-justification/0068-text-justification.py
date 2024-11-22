@@ -13,41 +13,27 @@ class Solution:
         curr_width = 0
         curr_line = []
         for word in words:
-            if curr_width == 0:
-                curr_line.append(word)
-                curr_width = len(word)
-            else:
-                if curr_width + len(word) + 1 <= maxWidth:
-                    curr_line.append(word)
-                    curr_width += len(word) + 1
-                else:
-                    word_count = len(curr_line)
-                    if word_count == 1:
-                        res.append(curr_line[0] + " " * (maxWidth - curr_width))
-                    else:
-                        curr_str = ""
-                        spacing = maxWidth - curr_width + (word_count - 1)
-                        each_spacing = spacing // (word_count - 1)
-                        remainder = spacing % (word_count -1)
-                        for w in curr_line:
-                            curr_str += w
-                            if spacing >= each_spacing:
-                                curr_str += " " * each_spacing
-                                spacing -= each_spacing
-                                if remainder:
-                                    curr_str += " "
-                                    spacing -= 1
-                                    remainder -= 1
-                            else:
-                                curr_str += " " * spacing
-                                spacing = 0
-                        res.append(curr_str)
+            # Add a new line
+            if curr_width + len(curr_line) + len(word) > maxWidth:
+                extra_space = maxWidth - curr_width
+                spacing = extra_space // max(1, len(curr_line) - 1)
+                remainder = extra_space % max(1, len(curr_line) - 1)
 
-                    curr_line = [word]
-                    curr_width = len(word)
+                for i in range(max(1, len(curr_line) - 1)):
+                    curr_line[i] += " " * spacing
+                    if remainder:
+                        curr_line[i] += " "
+                        remainder -= 1
+                
+                res.append("".join(curr_line))
+                curr_line = []
+                curr_width = 0
+            
+            curr_line.append(word)
+            curr_width += len(word)
         
-        curr_str = " ".join(curr_line)
-        curr_str += " " * (maxWidth - len(curr_str))
-        res.append(curr_str)
+        last_line = " ".join(curr_line)
+        last_line += " " * (maxWidth - len(last_line))
+        res.append(last_line)
         
         return res
