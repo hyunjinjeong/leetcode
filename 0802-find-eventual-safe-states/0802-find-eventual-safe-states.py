@@ -15,14 +15,19 @@ class Solution:
             if in_degree[node] == 0:
                 q.append(node)
         
-        res = []
+        safe_nodes = set()
         while q:
             node = q.popleft()
-            res.append(node)
+            safe_nodes.add(node)
 
             for nei in reversed_graph[node]:
                 in_degree[nei] -= 1
                 if in_degree[nei] == 0:
                     q.append(nei)
         
-        return sorted(res)
+        res = []
+        for node in range(N):
+            if node in safe_nodes:
+                res.append(node)
+                
+        return res
