@@ -6,11 +6,11 @@ class Solution:
         q = collections.deque()
         for i in range(1, N):
             # Build decreasing deque
-            while q and dp[q[-1]] < dp[i - 1]:
-                q.pop()
-            
             if q and q[0] == i - k - 1:
                 q.popleft()
+
+            while q and dp[q[-1]] < dp[i - 1]:
+                q.pop()
             
             q.append(i - 1)
             
