@@ -18,9 +18,9 @@ class Solution:
 
         # cycle sort도 되네
         for i in range(N):
-            while i != nums[i] - 1 and nums[i] != nums[nums[i] - 1]:
-                # nums[i], nums[nums[i] - 1] = nums[nums[i] - 1], nums[i]
-                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+            while nums[i] != nums[nums[i] - 1]:
+                num_index = nums[i] - 1
+                nums[i], nums[num_index] = nums[num_index], nums[i]
         
         res = []
         for i in range(N):
