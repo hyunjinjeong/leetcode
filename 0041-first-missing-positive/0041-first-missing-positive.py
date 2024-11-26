@@ -23,8 +23,8 @@ class Solution:
 
         for i in range(N):
             while 1 <= nums[i] <= N and nums[i] != nums[nums[i] - 1]:
-                tmp = nums[i] - 1
-                nums[i], nums[tmp] = nums[tmp], nums[i]
+                num_index = nums[i] - 1
+                nums[i], nums[num_index] = nums[num_index], nums[i]
         
         res = N + 1
         for i, num in enumerate(nums):
