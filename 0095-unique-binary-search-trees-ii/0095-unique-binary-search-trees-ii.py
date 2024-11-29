@@ -7,6 +7,7 @@
 class Solution:
     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
         
+        @cache
         def build(start, end):
             res = []
             for root in range(start, end + 1):
