@@ -34,7 +34,6 @@ class Solution:
             left, right = start, end
             while left <= right:
                 mid = left + (right - left) // 2
-                print(left, right, mid)
             
                 mid_num = mountainArr.get(mid)
                 if mid_num == target:
