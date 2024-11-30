@@ -14,7 +14,7 @@ class Solution:
         # 2. Run bisect on both sides, [0, P-1] and [P+1, N-1]
         # 3. Return min()        
         def find_peak_index():
-            left, right = 0, mountainArr.length() - 1
+            left, right = 1, mountainArr.length() - 2
             while left <= right:
                 mid = left + (right - left) // 2
                 
