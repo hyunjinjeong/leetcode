@@ -22,6 +22,7 @@ class Solution:
                     if diff > threshold:
                         continue
 
+                    visited.add((adj_r, adj_c)) # 여기에 추가를 해야 되네..?
                     q.append((adj_r, adj_c, abs(heights[adj_r][adj_c] - heights[r][c])))
             
             return False
