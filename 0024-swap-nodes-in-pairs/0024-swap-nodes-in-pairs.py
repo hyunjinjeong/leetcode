@@ -13,13 +13,13 @@ class Solution:
         
         prev, curr = None, head
         while curr and curr.next:
-            nxt = curr.next
+            tmp_next = curr.next
             
             # swap
-            curr.next = nxt.next
-            nxt.next = curr
+            curr.next = tmp_next.next
+            tmp_next.next = curr
             if prev:
-                prev.next = nxt
+                prev.next = tmp_next
             
             # next
             prev = curr
