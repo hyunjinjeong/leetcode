@@ -1,39 +1,34 @@
 class RandomizedSet:
 
     def __init__(self):
-        self.positions = {}
-        self.items = []
+        self.index = {}
+        self.array = []
 
     def insert(self, val: int) -> bool:
-        # 요건 O(1)
-        if val in self.positions:
+        if val in self.index:
             return False
-        
-        self.items.append(val)
-        self.positions[val] = len(self.items) - 1
+
+        self.array.append(val)        
+        self.index[val] = len(self.array) - 1
         return True
 
     def remove(self, val: int) -> bool:
-        if val not in self.positions:
+        if val not in self.index:
             return False
         
-        # O(1)을 하려면 pop()으로 맨 오른쪽만 삭제해야 함.
-        # 와.. 마지막 원소랑 삭제 대상이랑 swap한 다음에 마지막 원소를 pop하는 방법이 있네;;;
-        # swap
-        last_item_index, target_index = len(self.items) - 1, self.positions[val]
-        self.items[last_item_index], self.items[target_index] = self.items[target_index], self.items[last_item_index]
-        # 포지션도 업데이트
-        self.positions[self.items[target_index]] = target_index
-        # pop
-        self.items.pop()
-        self.positions.pop(val)
+        val_index = self.index[val]
+
+        self.array[-1], self.array[val_index] = self.array[val_index], self.array[-1]
+        self.index[self.array[val_index]] = val_index
+
+        self.array.pop()
+        self.index.pop(val)
+
         return True
-        
 
     def getRandom(self) -> int:
-        # 요것도 O(1)
-        index = random.randint(0, len(self.items) - 1)
-        return self.items[index]
+        return random.choice(self.array)
+        
 
 
 # Your RandomizedSet object will be instantiated and called as such:
