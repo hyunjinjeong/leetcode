@@ -27,7 +27,8 @@ class RandomizedSet:
         return True
 
     def getRandom(self) -> int:
-        return random.choice(self.array)
+        random_index = random.randint(0, len(self.array) - 1)
+        return self.array[random_index]
         
 
 
