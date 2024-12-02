@@ -40,8 +40,9 @@ class NestedIterator:
         #     self.stack[-1] = (curr_list, curr_index + 1)
         #     self.stack.append((new_list, 0))
         while self.q and not self.q[0].isInteger():
-            element = self.q.popleft()
-            self.q.extendleft(reversed(element.getList()))
+            new_list = self.q.popleft().getList()
+            for i in range(len(new_list) - 1, -1, -1):
+                self.q.appendleft(new_list[i])
 
     def next(self) -> int:
         # curr_list, curr_index = self.stack[-1]
