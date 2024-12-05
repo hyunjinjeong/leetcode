@@ -35,7 +35,6 @@ class Solution:
             curr = []
             while len(curr) < 3 and i < len(products) and products[i].startswith(prefix):
                 curr.append(products[i])
-                print(curr)
                 i += 1
             res.append(curr)
 
