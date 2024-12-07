@@ -7,18 +7,41 @@ class Solution:
         if grid[0][0] == 1 or grid[N - 1][N - 1] == 1:
             return -1
 
-        heap = [(1, 0, 0)]
-        visited = set()
-        while heap:
-            length, r, c = heapq.heappop(heap)
-            if (r, c) == (N - 1, N - 1):
+        # heap = [(1, 0, 0)]
+        # visited = set()
+        # while heap:
+        #     length, r, c = heapq.heappop(heap)
+        #     if (r, c) == (N - 1, N - 1):
+        #         return length
+            
+        #     visited.add((r, c))
+        #     for adj_r, adj_c in [(r, c + 1), (r, c - 1), (r - 1, c), (r + 1, c)
+        #         , (r + 1, c + 1), (r + 1, c - 1), (r - 1, c + 1), (r - 1, c - 1)]:
+        #         if 0 <= adj_r < N and 0 <= adj_c < N and grid[adj_r][adj_c] == 0 and (adj_r, adj_c) not in visited:
+        #             heapq.heappush(heap, (length + 1, adj_r, adj_c))
+        #             visited.add((adj_r, adj_c))
+            
+        # return -1
+
+        # 그냥 간단한 BFS도 동작하는구만
+        q = collections.deque([(1, 0, 0)])
+        visited = set([(0, 0)])
+        
+        while q:
+            length, r, c = q.popleft()
+            if r == c == N - 1:
                 return length
             
-            visited.add((r, c))
             for adj_r, adj_c in [(r, c + 1), (r, c - 1), (r - 1, c), (r + 1, c)
                 , (r + 1, c + 1), (r + 1, c - 1), (r - 1, c + 1), (r - 1, c - 1)]:
-                if 0 <= adj_r < N and 0 <= adj_c < N and grid[adj_r][adj_c] == 0 and (adj_r, adj_c) not in visited:
-                    heapq.heappush(heap, (length + 1, adj_r, adj_c))
-                    visited.add((adj_r, adj_c))
-            
+                if not (0 <= adj_r < N and 0 <= adj_c < N):
+                    continue
+                if grid[adj_r][adj_c] == 1:
+                    continue
+                if (adj_r, adj_c) in visited:
+                    continue
+
+                q.append((length + 1, adj_r, adj_c))
+                visited.add((adj_r, adj_c))
+        
         return -1
