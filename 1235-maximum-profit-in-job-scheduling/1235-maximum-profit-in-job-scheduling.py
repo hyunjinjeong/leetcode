@@ -14,15 +14,15 @@ class Solution:
             
             return left
 
-        START, END = 0, 1
+        N = len(startTime)
+        START, END, PROFIT = 0, 1, 2
         
-        jobs = sorted(zip(startTime, endTime))
-        dp = [0] * (len(jobs) + 1)
+        jobs = sorted(zip(startTime, endTime, profit))
+        dp = [0] * (N + 1)
         
-        for i in range(len(jobs) - 1, -1, -1):
-            # 
+        for i in range(N - 1, -1, -1):
             k = bisect_left(jobs[i][END])
-            dp[i] = max(profit[i] + dp[k], dp[i+1])
+            dp[i] = max(jobs[i][PROFIT] + dp[k], dp[i + 1])
         
         return dp[0]
     
