@@ -7,23 +7,22 @@ class Solution:
             
             while left < right:
                 mid = (left + right) // 2
-                if jobs[mid][START] < target:
-                    left = mid + 1
-                else:
+                if jobs[mid][START] >= target:
                     right = mid
+                else:
+                    left = mid + 1
             
             return left
 
-        START, END, PROFIT = 0, 1, 2
+        START, END = 0, 1
         
-        # startTime을 기준으로 정렬
-        jobs = sorted(zip(startTime, endTime, profit))
+        jobs = sorted(zip(startTime, endTime))
         dp = [0] * (len(jobs) + 1)
         
-        for i in range(len(jobs)-1, -1, -1):
-            # binary search를 이용해서, 현재 job의 endTime보다 큰 startTime을 가진 job을 찾음. 맨 왼쪽.
+        for i in range(len(jobs) - 1, -1, -1):
+            # 
             k = bisect_left(jobs[i][END])
-            dp[i] = max(jobs[i][PROFIT] + dp[k], dp[i+1])
+            dp[i] = max(profit[i] + dp[k], dp[i+1])
         
         return dp[0]
     
