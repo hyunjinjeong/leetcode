@@ -12,22 +12,11 @@ class Solution:
             num_count = count[num]
             if num_count == 1:
                 return -1
-            
-            curr = 0
-            while num_count > 4:
-                num_count -= 3
-                curr += 1
-            
-            if num_count == 4:
-                curr += 2
+            if num_count % 3 == 0:
+                res += num_count // 3
+            elif num_count % 3 == 1:
+                res += (num_count - 4) // 3 + 2
             else:
-                curr += 1
-            
-            res += curr
-
-            # 근데 여기서 2개짜리를 쓸지 4개짜리를 쓸지는 어떻게 정하지
-            # 4는 2 2고 5는 2 3, 6은 3 3, 7은 3 2 2, 8은 3 3 2, 9는 3 3 3, 10은 3 3 2 2
-            # 11은 3 3 3 2, 12는 3333, 13은 33322
-            # 4 이상까지는 3으로 빼고 그 다음엔 2랑 3 중에 하나 정하면 될 듯?
+                res += num_count // 3 + 1
         
         return res
