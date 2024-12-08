@@ -11,6 +11,7 @@ class Solution:
             while left <= right and curr > target_sum:
                 curr -= nums[left]
                 left += 1
+
             if curr == target_sum:
                 res = max(res, right - left + 1)
         
