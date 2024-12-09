@@ -9,19 +9,50 @@ class Solution:
         # 그러면 원패스로는 일단 불가능함. 왜냐면 오른쪽 노드를 알 수가 없다.
         # two pass로는? 추가 공간을 쓰면 쉽..나?
         # monotonic stack을 써서 구성할 수 있겠는데
-        stack = []
+        # stack = []
 
-        node = head
+        # node = head
+        # while node:
+        #     while stack and stack[-1] < node.val:
+        #         stack.pop()
+        #     stack.append(node.val)
+        #     node = node.next
+
+        # dummy = ListNode()
+        # node = dummy
+        # for val in stack:
+        #     node.next = ListNode(val)
+        #     node = node.next
+        
+        # return dummy.next
+
+        # reverse하는 방법이 있구나
+        prev, node = None, head
         while node:
-            while stack and stack[-1] < node.val:
-                stack.pop()
-            stack.append(node.val)
-            node = node.next
-
+            tmp_next = node.next
+            node.next = prev
+            prev = node
+            node = tmp_next
+        
+        # prev is new head
+        node = prev
         dummy = ListNode()
-        node = dummy
-        for val in stack:
-            node.next = ListNode(val)
+
+        new_node = dummy
+        curr_max = prev.val
+        while node:
+            if node.val >= curr_max:
+                new_node.next = ListNode(node.val)
+                new_node = new_node.next
+                curr_max = node.val
             node = node.next
         
-        return dummy.next
+        # 또 reverse..?
+        prev, node = None, dummy.next
+        while node:
+            tmp_next = node.next
+            node.next = prev
+            prev = node
+            node = tmp_next
+
+        return prev
