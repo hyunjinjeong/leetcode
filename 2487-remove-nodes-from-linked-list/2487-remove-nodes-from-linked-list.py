@@ -36,16 +36,15 @@ class Solution:
                 node = tmp_next
             return prev
         
-        node = reverse(head)
-        dummy = ListNode()
-
-        new_node = dummy
+        reversed_head = reverse(head)
+        
+        node = reversed_head
         curr_max = node.val
-        while node:
-            if node.val >= curr_max:
-                new_node.next = ListNode(node.val)
-                new_node = new_node.next
-                curr_max = node.val
-            node = node.next
+        while node and node.next:
+            if node.next.val >= curr_max:
+                curr_max = node.next.val
+                node = node.next
+            else:
+                node.next = node.next.next
 
-        return reverse(dummy.next)
+        return reverse(reversed_head)
