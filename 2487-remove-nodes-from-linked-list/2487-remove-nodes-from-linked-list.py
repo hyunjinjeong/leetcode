@@ -27,32 +27,25 @@ class Solution:
         # return dummy.next
 
         # reverse하는 방법이 있구나
-        prev, node = None, head
-        while node:
-            tmp_next = node.next
-            node.next = prev
-            prev = node
-            node = tmp_next
+        def reverse(head_node):
+            prev, node = None, head_node
+            while node:
+                tmp_next = node.next
+                node.next = prev
+                prev = node
+                node = tmp_next
+            return prev
         
-        # prev is new head
-        node = prev
+        node = reverse(head)
         dummy = ListNode()
 
         new_node = dummy
-        curr_max = prev.val
+        curr_max = node.val
         while node:
             if node.val >= curr_max:
                 new_node.next = ListNode(node.val)
                 new_node = new_node.next
                 curr_max = node.val
             node = node.next
-        
-        # 또 reverse..?
-        prev, node = None, dummy.next
-        while node:
-            tmp_next = node.next
-            node.next = prev
-            prev = node
-            node = tmp_next
 
-        return prev
+        return reverse(dummy.next)
