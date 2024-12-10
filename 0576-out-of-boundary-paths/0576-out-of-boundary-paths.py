@@ -28,7 +28,7 @@ class Solution:
         # bottom-up으로...
         dp = [[0] * n for _ in range(m)]
 
-        for move in range(1, maxMove + 1):
+        for move in range(maxMove): # move는 loop를 도는 역할 말고는 하는게 없군
             tmp_dp = [[0] * n for _ in range(m)]
             for r in range(m):
                 for c in range(n):
