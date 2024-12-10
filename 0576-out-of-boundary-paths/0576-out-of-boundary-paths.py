@@ -21,6 +21,6 @@ class Solution:
             right = dfs(r, c + 1, move_left - 1)
             down = dfs(r + 1, c, move_left - 1)
             left = dfs(r, c - 1, move_left - 1)
-            return ((((up + right) % MOD) + down % MOD) + left) % MOD
+            return (((((up + right) % MOD) + down) % MOD) + left) % MOD
         
         return dfs(startRow, startColumn, maxMove)
