@@ -10,17 +10,33 @@ class Solution:
         # left_move가 있으니까 구분이 될 듯?
         MOD = 10 ** 9 + 7
 
-        @cache
-        def dfs(r, c, move_left):
-            if r < 0 or r >= m or c < 0 or c >= n:
-                return 1
-            if move_left == 0:
-                return 0
+        # @cache
+        # def dfs(r, c, move_left):
+        #     if r < 0 or r >= m or c < 0 or c >= n:
+        #         return 1
+        #     if move_left == 0:
+        #         return 0
             
-            up = dfs(r - 1, c, move_left - 1)
-            right = dfs(r, c + 1, move_left - 1)
-            down = dfs(r + 1, c, move_left - 1)
-            left = dfs(r, c - 1, move_left - 1)
-            return (((((up + right) % MOD) + down) % MOD) + left) % MOD
+        #     up = dfs(r - 1, c, move_left - 1)
+        #     right = dfs(r, c + 1, move_left - 1)
+        #     down = dfs(r + 1, c, move_left - 1)
+        #     left = dfs(r, c - 1, move_left - 1)
+        #     return (((((up + right) % MOD) + down) % MOD) + left) % MOD
         
-        return dfs(startRow, startColumn, maxMove)
+        # return dfs(startRow, startColumn, maxMove)
+
+        # bottom-up으로...
+        dp = [[0] * n for _ in range(m)]
+
+        for move in range(1, maxMove + 1):
+            tmp_dp = [[0] * n for _ in range(m)]
+            for r in range(m):
+                for c in range(n):
+                    up = dp[r - 1][c] if r > 0 else 1
+                    right = dp[r][c + 1] if c < n - 1 else 1
+                    down = dp[r + 1][c] if r < m - 1 else 1
+                    left = dp[r][c - 1] if c > 0 else 1
+                    tmp_dp[r][c] = ((up + right) % MOD + (down + left) % MOD) % MOD
+            dp = tmp_dp
+        
+        return dp[startRow][startColumn]
