@@ -8,6 +8,7 @@ class Solution:
         # 실제로 되돌아가진 않을 것 같고 식을 쓰지 않을까?
         # 예를 들어서 단순히 왔다갔다는 2를 빼면 됨. 아니면 실제로 되돌아가기..?
         # left_move가 있으니까 구분이 될 듯?
+        MOD = 10 ** 9 + 7
 
         @cache
         def dfs(r, c, move_left):
@@ -20,6 +21,6 @@ class Solution:
             right = dfs(r, c + 1, move_left - 1)
             down = dfs(r + 1, c, move_left - 1)
             left = dfs(r, c - 1, move_left - 1)
-            return up + right + down + left
+            return (up + right + down + left) % MOD
         
         return dfs(startRow, startColumn, maxMove)
