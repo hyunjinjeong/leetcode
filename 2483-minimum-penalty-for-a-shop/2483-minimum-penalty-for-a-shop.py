@@ -15,25 +15,42 @@ class Solution:
         # no는 0 0 0 0 0
         # 그래서 0 1 2 3 4 5 이런 식으로 되겠다.
         
-        # 근데 yes는 순서대로 세나가면 되니까 굳이 저장할 필요가 없네
-        # NO만 미리 계산해두면 될 듯?
-        N = len(customers)
+        # # 근데 yes는 순서대로 세나가면 되니까 굳이 저장할 필요가 없네
+        # # NO만 미리 계산해두면 될 듯?
+        # N = len(customers)
 
-        close_penalty = [0] * (N + 1)
-        for i in range(N - 1, -1, -1):
-            close_penalty[i] = close_penalty[i + 1]
-            if customers[i] == "Y":
-                close_penalty[i] += 1
+        # close_penalty = [0] * (N + 1)
+        # for i in range(N - 1, -1, -1):
+        #     close_penalty[i] = close_penalty[i + 1]
+        #     if customers[i] == "Y":
+        #         close_penalty[i] += 1
         
-        curr_min = N
-        open_penalty = 0
-        res = -1
-        for i in range(N + 1):
-            if open_penalty + close_penalty[i] < curr_min:
-                curr_min = open_penalty + close_penalty[i]
-                res = i
+        # curr_min = N
+        # open_penalty = 0
+        # res = -1
+        # for i in range(N + 1):
+        #     if open_penalty + close_penalty[i] < curr_min:
+        #         curr_min = open_penalty + close_penalty[i]
+        #         res = i
 
-            if i < N and customers[i] == "N": # open penalty는 i - 1번쨰껄 계산해야 함
-                open_penalty += 1
+        #     if i < N and customers[i] == "N": # open penalty는 i - 1번쨰껄 계산해야 함
+        #         open_penalty += 1
 
+        # return res
+
+        # one pass도 되네
+        min_penalty = 0
+        curr_penalty = 0
+        res = 0
+
+        for i, c in enumerate(customers):
+            if c == "Y":
+                curr_penalty -= 1
+            else:
+                curr_penalty += 1
+        
+            if curr_penalty < min_penalty:
+                res = i + 1
+                min_penalty = curr_penalty
+        
         return res
