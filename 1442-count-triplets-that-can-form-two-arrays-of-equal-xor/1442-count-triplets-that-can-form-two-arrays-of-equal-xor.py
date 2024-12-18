@@ -5,9 +5,9 @@ class Solution:
 
         for i in range(N - 1):
             xor = arr[i]
-            for j in range(i + 1, N):
-                xor ^= arr[j]
+            for k in range(i + 1, N):
+                xor ^= arr[k]
                 if xor == 0:
-                    res += j - i
+                    res += k - i
         
         return res
