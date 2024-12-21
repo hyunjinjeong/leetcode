@@ -13,15 +13,30 @@ class Solution:
         # prefix sum을 계산해서 위의 식에 집어넣으면 될 듯?
         N = len(nums)
 
-        prefix_sum = [0]
-        for num in nums:
-            prefix_sum.append(prefix_sum[-1] + num)
+        # prefix_sum = [0]
+        # for num in nums:
+        #     prefix_sum.append(prefix_sum[-1] + num)
+
+        # res = []
+        # for i, num in enumerate(nums):            
+        #     left = num * i - prefix_sum[i]
+        #     right = (prefix_sum[N] - prefix_sum[i + 1]) - num * (N - i - 1)
+        #     res.append(left + right)
+        
+        # return res
+            
+        # 요건 memory O(1) 버전
+        total_sum = sum(nums)
+        left_sum = 0
 
         res = []
-        for i, num in enumerate(nums):            
-            left = num * i - prefix_sum[i]
-            right = (prefix_sum[N] - prefix_sum[i + 1]) - num * (N - i - 1)
+        for i, num in enumerate(nums):
+            right_sum = total_sum - left_sum - num
+
+            left = num * i - left_sum
+            right = right_sum - num * (N - i - 1)
             res.append(left + right)
+
+            left_sum += num
         
         return res
-            
