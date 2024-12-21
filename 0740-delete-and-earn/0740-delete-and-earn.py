@@ -19,16 +19,30 @@ class Solution:
         # return dfs(min_num)
 
         # bottom up으로 해봅시당
+        # N = len(nums)
+
+        # count = collections.Counter(nums)
+        # max_num = max(nums)
+        # dp = [0] * (max_num + 1)
+        # dp[1] = count[1]
+
+        # for num in range(2, max_num + 1):
+        #     pick = count[num] * num + dp[num - 2]
+        #     not_pick = dp[num - 1]
+        #     dp[num] = max(pick, not_pick)
+        
+        # return dp[max_num]
+
+        # memory O(1)
         N = len(nums)
 
         count = collections.Counter(nums)
         max_num = max(nums)
-        dp = [0] * (max_num + 1)
-        dp[1] = count[1]
+        prev, curr = 0, 0
 
-        for num in range(2, max_num + 1):
-            pick = count[num] * num + dp[num - 2]
-            not_pick = dp[num - 1]
-            dp[num] = max(pick, not_pick)
+        for num in range(1, max_num + 1):
+            pick = count[num] * num + prev
+            not_pick = curr
+            prev, curr = curr, max(pick, not_pick)
         
-        return dp[max_num]
+        return curr
