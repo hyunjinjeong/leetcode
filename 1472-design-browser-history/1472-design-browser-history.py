@@ -8,12 +8,10 @@ class BrowserHistory:
     def visit(self, url: str) -> None:
         if self.index == len(self.history) - 1:
             self.history.append(url)
-            self.history_length = len(self.history)
-            self.index = len(self.history) - 1
         else:
             self.history[self.index + 1] = url
-            self.index += 1
-            self.history_length = self.index + 1
+        self.index += 1
+        self.history_length = self.index + 1
 
     def back(self, steps: int) -> str:
         self.index = max(self.index - steps, 0)
