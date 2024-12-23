@@ -1,26 +1,27 @@
 class BrowserHistory:
 
     def __init__(self, homepage: str):
-        # 정직하게 stack에 다 넣으면?
-        # visit만 하고 back만 찾을 땐 쉬움. 근데 뒤로 간 상태에서 visit을 하면?
-        # O(N)만큼의 삭제 시간이 필요.
-        self.arr = [homepage]
+        self.history = [homepage]
+        self.history_length = 1
         self.index = 0
         
     def visit(self, url: str) -> None:
-        if self.index < len(self.arr) - 1:
-            self.arr = self.arr[:self.index + 1]
-
-        self.arr.append(url)
-        self.index = len(self.arr) - 1
+        if self.index == len(self.history) - 1:
+            self.history.append(url)
+            self.history_length = len(self.history)
+            self.index = len(self.history) - 1
+        else:
+            self.history[self.index + 1] = url
+            self.index += 1
+            self.history_length = self.index + 1
 
     def back(self, steps: int) -> str:
         self.index = max(self.index - steps, 0)
-        return self.arr[self.index]
+        return self.history[self.index]
 
     def forward(self, steps: int) -> str:
-        self.index = min(self.index + steps, len(self.arr) - 1)
-        return self.arr[self.index]
+        self.index = min(self.index + steps, self.history_length - 1)
+        return self.history[self.index]
 
 
 # Your BrowserHistory object will be instantiated and called as such:
