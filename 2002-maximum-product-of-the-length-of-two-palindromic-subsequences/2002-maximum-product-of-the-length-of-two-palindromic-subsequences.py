@@ -10,6 +10,7 @@ class Solution:
                     return False
             return True
 
+        @cache
         def dfs(i, left, right):
             if i == len(s):
                 if is_palindrome(left) and is_palindrome(right):
