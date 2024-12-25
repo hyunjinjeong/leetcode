@@ -7,7 +7,7 @@ class Solution:
         for right, c in enumerate(s):
             curr += c
             if len(curr) == 10:
-                seen[word] += 1
+                seen[curr] += 1
                 curr = curr[1:]
         
         res = []
