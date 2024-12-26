@@ -9,9 +9,8 @@ class Solution:
         for num in nums:
             prefix_sum.append(prefix_sum[-1] + num)
         
-        res = -1
-        for i in range(2, len(nums)):
+        for i in range(len(nums) - 1, 1, -1):
             if prefix_sum[i] > nums[i]:
-                res = prefix_sum[i + 1]
+                return prefix_sum[i + 1]
 
-        return res
+        return -1
