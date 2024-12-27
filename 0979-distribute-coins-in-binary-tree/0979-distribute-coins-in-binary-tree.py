@@ -17,7 +17,7 @@ class Solution:
             
             left = post_order(node.left)
             right = post_order(node.right)
-            self.res += abs(left + right + node.val - 1)
+            self.res += abs(left) + abs(right)
             return left + right + node.val - 1
         
         self.res = 0
