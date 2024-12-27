@@ -15,13 +15,14 @@ class Solution:
         node = head
         while node:
             if node.val >= x:
-                great_node.next = ListNode(node.val)
+                great_node.next = node
                 great_node = great_node.next
             else:
-                small_node.next = ListNode(node.val)
+                small_node.next = node
                 small_node = small_node.next
             
             node = node.next
         
+        great_node.next = None
         small_node.next = great_head.next
         return small_head.next
