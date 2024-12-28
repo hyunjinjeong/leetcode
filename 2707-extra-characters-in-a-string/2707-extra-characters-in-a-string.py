@@ -21,13 +21,16 @@ class Solution:
 
         # bottom up
 
+        word_set = set(dictionary)
+
         N = len(s)
         dp = [0] * (N + 1)
 
         for i in range(N - 1, -1, -1):
             dp[i] = dp[i + 1] + 1
-            for word in dictionary:
-                if i + len(word) <= len(s) and s[i:i + len(word)] == word:
-                    dp[i] = min(dp[i + len(word)], dp[i])
+            for j in range(i, N):
+                word = s[i:j + 1]
+                if word in word_set:
+                    dp[i] = min(dp[j + 1], dp[i])
             
         return dp[0]
