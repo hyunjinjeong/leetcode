@@ -9,7 +9,7 @@ class Solution:
         target = total_sum // k
 
         # backtracking으로 모든 경우를 하나씩 다 확인하는 건가?
-        visited = [False] * len(nums)
+        visited = set()
         nums.sort(reverse=True)
         
         def dfs(start, count, curr_sum):
@@ -20,14 +20,15 @@ class Solution:
                 return dfs(0, count + 1, 0)
             
             for i in range(start, len(nums)):
-                if i > 0 and not visited[i - 1] and nums[i] == nums[i - 1]:
+                if i > 0 and not i - 1 in visited and nums[i] == nums[i - 1]:
+                    continue
+                if i in visited or curr_sum + nums[i] > target:
                     continue
 
-                if not visited[i] and curr_sum + nums[i] <= target:
-                    visited[i] = True
-                    if dfs(i + 1, count, curr_sum + nums[i]):
-                        return True
-                    visited[i] = False
+                visited.add(i)
+                if dfs(i + 1, count, curr_sum + nums[i]):
+                    return True
+                visited.remove(i)
             
             return False
 
