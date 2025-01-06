@@ -13,6 +13,7 @@ class Solution:
         
         # return curr
 
+        # x 비트 중 0인 부분에만 n - 1을 박아넣으면 되는구나..!
         curr = x
         n -= 1
         mask = 1
