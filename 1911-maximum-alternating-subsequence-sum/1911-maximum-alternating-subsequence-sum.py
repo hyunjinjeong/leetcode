@@ -21,6 +21,8 @@ class Solution:
         # 이렇게 greedy로도 됨
         even_sum, odd_sum = 0, 0
         for num in nums:
+            # odd_sum + num은 짝수 인덱스에 추가하는 경우
+            # even_sum - num은 홀수 인덱스에 추가하는 경우
             even_sum, odd_sum = max(odd_sum + num, even_sum), max(even_sum - num, odd_sum)
         
         return even_sum
