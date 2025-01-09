@@ -20,8 +20,7 @@ class Solution:
 
         # 이렇게 greedy로도 됨
         even_sum, odd_sum = 0, 0
-
-        for i, num in enumerate(nums):
+        for num in nums:
             even_sum, odd_sum = max(odd_sum + num, even_sum), max(even_sum - num, odd_sum)
         
         return even_sum
