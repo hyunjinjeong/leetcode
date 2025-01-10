@@ -5,21 +5,35 @@ class Solution:
         N = len(nums)
         nums.sort()
 
-        dp = [1] * N
-        prev = [-1] * N
+        # dp = [1] * N
+        # prev = [-1] * N
 
-        for i in range(N):
-            for j in range(i):
-                if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
-                    dp[i] = dp[j] + 1
-                    prev[i] = j
-        
-        max_dp = max(dp)
-        max_index = dp.index(max_dp)
+        # for i in range(N):
+        #     for j in range(i):
+        #         if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
+        #             dp[i] = dp[j] + 1
+        #             prev[i] = j
+
+        # max_dp = max(dp)
+        # max_index = dp.index(max_dp)
+
+        # res = []
+        # while max_index >= 0:
+        #     res.append(nums[max_index])
+        #     max_index = prev[max_index]
+
+        # return res[::-1]
+
+        # 이렇게도 됨
+        dp = [[num] for num in nums]
 
         res = []
-        while max_index >= 0:
-            res.append(nums[max_index])
-            max_index = prev[max_index]
-
-        return res[::-1]
+        for i in range(N):
+            for j in range(i):
+                if nums[i] % nums[j] == 0 and len(dp[j]) + 1 > len(dp[i]):
+                    dp[i] = [nums[i]] + dp[j]
+            
+            if len(dp[i]) > len(res):
+                res = dp[i]
+        
+        return res
