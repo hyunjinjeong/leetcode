@@ -6,24 +6,20 @@ class Solution:
         nums.sort()
 
         dp = [1] * N
+        prev = [-1] * N
 
         for i in range(N):
-            for j in range(0, i):
-                if nums[i] % nums[j] == 0:
-                    dp[i] = max(dp[j] + 1, dp[i])
+            for j in range(i):
+                if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
+                    dp[i] = dp[j] + 1
+                    prev[i] = j
         
-        max_dp, max_index = 0, 0
-        for i in range(N):
-            if dp[i] > max_dp:
-                max_dp, max_index = dp[i], i
-        
-        max_val = nums[max_index]
+        max_dp = max(dp)
+        max_index = dp.index(max_dp)
 
         res = []
         while max_index >= 0:
-            if max_val % nums[max_index] == 0:
-                res.append(nums[max_index])
-            max_index -= 1
-        res.reverse()
-        
-        return res
+            res.append(nums[max_index])
+            max_index = prev[max_index]
+
+        return res[::-1]
