@@ -14,10 +14,8 @@ class Solution:
             curr_total_quality += quality[i]
             heapq.heappush(workers, -quality[i])
 
-            if len(workers) > k:
-                curr_total_quality += heapq.heappop(workers)
-            
             if len(workers) == k:
                 res = min(curr_total_quality * ratio, res)
+                curr_total_quality += heapq.heappop(workers)
         
         return res
