@@ -18,15 +18,16 @@ class Solution:
 
         # bottom up으로 해봅시당
         # 바로 이전 step만 사용하니까 1D array로 가능할 듯?
-        dp = [0] * arrLen
+        arr_len = min(arrLen, steps)
+        dp = [0] * arr_len
         dp[0] = 1 # base
 
         for _ in range(steps):
-            next_dp = [0] * arrLen
-            for i in range(arrLen):
+            next_dp = [0] * arr_len
+            for i in range(arr_len):
                 stay = dp[i]
                 left = dp[i - 1] if i > 0 else 0
-                right = dp[i + 1] if i < arrLen - 1 else 0
+                right = dp[i + 1] if i < arr_len - 1 else 0
                 next_dp[i] = (((stay + left) % MOD) + right) % MOD
             dp = next_dp
         
