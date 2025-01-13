@@ -11,14 +11,10 @@ class Solution:
                 a, b = b, a % b
             return a
         
-        prev, curr = None, head
-        while curr:
-            if prev and curr:
-                new_node = ListNode(gcd(prev.val, curr.val))
-                new_node.next = curr
-                prev.next = new_node
-            
-            prev, curr = curr, curr.next
+        curr = head
+        while curr and curr.next:
+            curr.next = ListNode(val=gcd(curr.val, curr.next.val), next=curr.next)
+            curr = curr.next.next
         
         return head
             
