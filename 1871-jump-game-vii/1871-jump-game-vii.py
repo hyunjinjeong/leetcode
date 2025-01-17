@@ -22,11 +22,11 @@ class Solution:
 
         # dp + sliding window
         dp = [c == "0" for c in s]
-        prev = 0
+        possible_indexes = 0
 
         for i in range(1, len(s)):
-            prev += 1 if i >= minJump and dp[i - minJump] else 0
-            prev -= 1 if i >= maxJump + 1 and dp[i - maxJump - 1] else 0
-            dp[i] = dp[i] and prev > 0
+            possible_indexes += 1 if i >= minJump and dp[i - minJump] else 0
+            possible_indexes -= 1 if i >= maxJump + 1 and dp[i - maxJump - 1] else 0
+            dp[i] = dp[i] and possible_indexes > 0
         
         return dp[-1]
