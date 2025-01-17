@@ -16,7 +16,6 @@ class Solution:
                     q.append(j)
                     if j == len(s) - 1:
                         return True
-                max_index = j
-            # max_index = i + maxJump
+            max_index = i + maxJump
         
         return False
