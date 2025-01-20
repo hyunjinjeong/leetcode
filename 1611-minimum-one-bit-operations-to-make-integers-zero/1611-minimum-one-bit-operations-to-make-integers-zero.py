@@ -19,12 +19,13 @@ class Solution:
         # 1010이면? 1000 - 10
         res = 0
         k = 0
-        mask = 1
-        while mask <= n:
-            if n & mask:
+        # mask = 1
+        while n:
+            if n & 1:
                 res = 2 ** (k + 1) - 1 - res
             
-            mask <<= 1
+            # mask <<= 1
+            n >>= 1
             k += 1
         
         return res
