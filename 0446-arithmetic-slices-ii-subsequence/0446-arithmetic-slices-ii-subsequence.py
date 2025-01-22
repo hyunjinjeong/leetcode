@@ -26,8 +26,9 @@ class Solution:
         for i in range(N):
             for j in range(i):
                 diff = nums[i] - nums[j]
-                prev_count = dp[j][diff] if diff in dp[j] else 0
-                dp[i][diff] = dp[i].get(diff, 0) + prev_count + 1
-                res += prev_count # 이래야 3개짜리부터 res에 더해짐
+                dp[i][diff] = dp[i].get(diff, 0) + 1
+                if diff in dp[j]:
+                    dp[i][diff] += dp[j][diff]
+                    res += dp[j][diff]
 
         return res
