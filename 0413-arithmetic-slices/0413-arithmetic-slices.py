@@ -3,10 +3,12 @@ class Solution:
         N = len(nums)
         res = 0
 
-        dp = [0] * N
+        prev_count, curr_count = 0, 0
         for i in range(2, N):
             if nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]:
-                dp[i] += dp[i - 1] + 1
-                res += dp[i]
+                curr_count += prev_count + 1
+                res += curr_count
+                
+            prev_count, curr_count = curr_count, 0
         
         return res
