@@ -25,13 +25,15 @@ class Solution:
             for j in range(len(piles[i])):
                 prefix_sums[i].append(prefix_sums[i][-1] + piles[i][j])
         
-        dp = [[0] * (k + 1) for _ in range(N + 1)]
+        dp = [0] * (k + 1)
 
         for i in range(N):
+            new_dp = [0] * (k + 1)
             for coins in range(k + 1):
                 for curr_coins in range(min(coins, len(piles[i])) + 1):
-                    prev_sum = dp[i][coins - curr_coins] if i > 0 else 0
+                    prev_sum = dp[coins - curr_coins] if i > 0 else 0
                     curr_sum = prefix_sums[i][curr_coins]
-                    dp[i + 1][coins] = max(prev_sum + curr_sum, dp[i + 1][coins])
+                    new_dp[coins] = max(prev_sum + curr_sum, new_dp[coins])
+            dp = new_dp
 
-        return dp[N][k]
+        return dp[k]
