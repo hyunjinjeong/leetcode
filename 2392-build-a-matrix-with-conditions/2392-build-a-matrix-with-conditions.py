@@ -78,20 +78,22 @@ class Solution:
                 if degree == 0:
                     q.append(num)
             
-            res = []
+            order = {}
+            index = 0
             while q:
                 num = q.popleft()
-                res.append(num)
+                order[num] = index
+                index += 1
 
                 for next_num in graph[num]:
                     in_degree[next_num] -= 1
                     if in_degree[next_num] == 0:
                         q.append(next_num)
             
-            if len(res) != k:
+            if len(order) != k:
                 return [] # cycle
             
-            return res
+            return order
         
         order_rows = topological_sort(rowConditions)
         order_cols = topological_sort(colConditions)
@@ -100,9 +102,7 @@ class Solution:
             return []
         
         res = [[0] * k for _ in range(k)]
-        for i in range(k):
-            for j in range(k):
-                if order_rows[i] == order_cols[j]:
-                    res[i][j] = order_rows[i]
+        for i in range(1, k + 1):
+            res[order_rows[i]][order_cols[i]] = i
 
         return res
