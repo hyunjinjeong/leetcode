@@ -14,7 +14,7 @@ class Solution:
             curr = -heapq.heappop(evens)
             res = min(curr - minimum, res)
             
-            if curr % 2 == 1: # 현재가 홀수면 최댓값이 더 이상 작아질 수 없음.
+            if curr % 2 == 1: # 현재가 홀수면 최댓값이 더 이상 작아질 수 없음. 최솟값은 줄어들기만 하므로 break.
                 break
             minimum = min(minimum, curr // 2)
             heapq.heappush(evens, -(curr // 2))
