@@ -7,16 +7,9 @@ class Solution:
         def get_first_two_minimum_indices(row):
             first, second = None, None
             for col in range(N):
-                if first is None:
-                    first = col
-                elif second is None:
-                    if grid[row][col] < grid[row][first]:
-                        first, second = col, first
-                    else:
-                        second = col
-                elif grid[row][col] < grid[row][first]:
+                if first is None or grid[row][col] < grid[row][first]:
                     first, second = col, first
-                elif grid[row][col] < grid[row][second]:
+                elif second is None or grid[row][col] < grid[row][second]:
                     second = col
             
             return first, second
