@@ -25,4 +25,29 @@ class Solution:
             return res + sub
         
         return dfs(0, 0, COLS - 1)
+        
+        # bottom up
+        # row는 매번 이전 row만 참조하니까 COLS^2 공간만 사용해도 되겠다
+
+        dp = [[0] * COLS for _ in range(COLS)]
+
+        for r in range(ROWS - 1, -1, -1):
+            new_dp = [[0] * COLS for _ in range(COLS)]
+            for c1 in range(COLS):
+                for c2 in range(c1, COLS):
+                    max_cherries = grid[r][c1]
+                    if c1 != c2:
+                        max_cherries += grid[r][c2]
+                    
+                    for c1_d in range(-1, 2):
+                        for c2_d in range(-1, 2):
+                            prev_c1, prev_c2 = c1 + c1_d, c2 + c2_d
+                            if prev_c1 < 0 or prev_c2 == COLS:
+                                continue
+                            max_cherries = max(dp[prev_c1][prev_c2] + max_cherries, max_cherries)
+
+                    new_dp[c1][c2] = max_cherries
             
+            dp = new_dp
+        
+        return dp[0][COLS - 1]
