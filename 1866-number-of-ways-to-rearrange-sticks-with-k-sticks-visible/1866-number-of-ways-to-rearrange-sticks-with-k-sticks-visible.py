@@ -7,8 +7,7 @@ class Solution:
         MOD = 10 ** 9 + 7
 
         dp = [[0] * (k + 1) for _ in range(n + 1)]
-        for i in range(1, k + 1):
-            dp[i][i] = 1
+        dp[1][1] = 1
 
         for i in range(2, n + 1):
             for j in range(1, k + 1):
