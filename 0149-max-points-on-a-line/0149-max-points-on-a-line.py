@@ -7,18 +7,20 @@ class Solution:
 
         res = 1
         for i in range(len(points)):
-            slopes = collections.defaultdict(list)
+            slopes = collections.defaultdict(int)
             base_x, base_y = points[i]
+            
             for j in range(len(points)):
                 if i == j:
                     continue
                 target_x, target_y = points[j]
+                
                 if target_y != base_y:
                     slope = (target_x - base_x) / (target_y - base_y)
                 else:
                     slope = None
                 
-                slopes[slope].append(j)
-                res = max(len(slopes[slope]) + 1, res)
+                slopes[slope] += 1
+                res = max(slopes[slope] + 1, res)
         
         return res
