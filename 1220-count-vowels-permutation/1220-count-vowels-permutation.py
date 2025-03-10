@@ -18,8 +18,6 @@ class Solution:
         # 바로 이전 상태만 참고하니까 길이 5짜리 배열로 구현할 수 있을 듯
         MOD = 10 ** 9 + 7
 
-        index = { "a": 0, "e": 1, "i": 2, "o": 3, "u": 4 }
-
         dp = [1] * 5
         for num in range(1, n):
             new_dp = [1] * 5
