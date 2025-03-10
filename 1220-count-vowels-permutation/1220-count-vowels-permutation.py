@@ -19,19 +19,16 @@ class Solution:
         MOD = 10 ** 9 + 7
 
         dp = [1] * 5
-        for num in range(1, n):
+        for _ in range(1, n):
             new_dp = [1] * 5
-            for index in range(5):
-                if index == 0: # a
-                    new_dp[index] = (dp[1] + (dp[2] + dp[4]) % MOD) % MOD
-                elif index == 1: # e
-                    new_dp[index] = (dp[0] + dp[2]) % MOD
-                elif index == 2: # i
-                    new_dp[index] = (dp[1] + dp[3]) % MOD
-                elif index == 3: # o
-                    new_dp[index] = dp[2]
-                elif index == 4: # u
-                    new_dp[index] = (dp[2] + dp[3]) % MOD
+            
+            # 순서대로 a, e, i, o, u
+            new_dp[0] = (dp[1] + (dp[2] + dp[4]) % MOD) % MOD
+            new_dp[1] = (dp[0] + dp[2]) % MOD
+            new_dp[2] = (dp[1] + dp[3]) % MOD
+            new_dp[3] = dp[2]
+            new_dp[4] = (dp[2] + dp[3]) % MOD
+            
             dp = new_dp
         
         res = 0
