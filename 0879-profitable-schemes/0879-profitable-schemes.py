@@ -13,17 +13,15 @@ class Solution:
 
         @cache
         def dfs(i, curr_members, curr_profit):
-            if curr_members >= n:
-                return 0
             if i == len(group):
-                return 1 if curr_members == 0 and curr_profit >= minProfit else 0
+                return 1 if curr_profit >= minProfit else 0
 
-            not_pick = dfs(i + 1, curr_members, curr_profit)
-            pick = 0
-            if curr_members + group[i] <= n:
+            # not pick
+            res = dfs(i + 1, curr_members, curr_profit)
+            if curr_members + group[i] <= n: # pick
                 new_profit = min(curr_profit + profit[i], minProfit)
-                pick = 1 + dfs(i + 1, curr_members + group[i], new_profit) if curr_profit + profit[i] >= minProfit else dfs(i + 1, curr_members + group[i], new_profit)
+                res += dfs(i + 1, curr_members + group[i], new_profit)
             
-            return pick + not_pick
+            return res % MOD
         
-        return dfs(0, 0, 0) % MOD
+        return dfs(0, 0, 0)
