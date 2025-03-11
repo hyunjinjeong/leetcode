@@ -19,8 +19,7 @@ class Solution:
             # not pick
             res = dfs(i + 1, curr_members, curr_profit)
             if curr_members + group[i] <= n: # pick
-                new_profit = min(curr_profit + profit[i], minProfit)
-                res += dfs(i + 1, curr_members + group[i], new_profit)
+                res += dfs(i + 1, curr_members + group[i], min(curr_profit + profit[i], minProfit))
             
             return res % MOD
         
