@@ -5,7 +5,6 @@ class SummaryRanges:
 
     def addNum(self, value: int) -> None:
         self.numbers.add(value)
-        # self.intervals.append([value, value])
 
     def getIntervals(self) -> List[List[int]]:
         intervals = []
