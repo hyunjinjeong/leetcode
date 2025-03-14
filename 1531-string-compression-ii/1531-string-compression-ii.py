@@ -11,17 +11,17 @@ class Solution:
         # 생각나는건 DP인데...
         
         @cache
-        def dfs(i, char, count, k):
-            if k < 0:
+        def dfs(i, char, count, left):
+            if left < 0:
                 return 100
             if i == len(s):
                 return 0
             
-            delete_char = dfs(i + 1, char, count, k - 1)
+            delete_char = dfs(i + 1, char, count, left - 1)
             if s[i] == char:
-                keep_char = dfs(i + 1, char, count + 1, k) + (1 if count in (1, 9, 99) else 0)
+                keep_char = dfs(i + 1, char, count + 1, left) + (1 if count in (1, 9, 99) else 0)
             else:
-                keep_char = dfs(i + 1, s[i], 1, k) + 1
+                keep_char = dfs(i + 1, s[i], 1, left) + 1
             
             return min(delete_char, keep_char)
         
