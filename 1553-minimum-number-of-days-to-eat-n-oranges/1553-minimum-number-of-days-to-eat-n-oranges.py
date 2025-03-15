@@ -12,6 +12,6 @@ class Solution:
             if oranges <= 1:
                 return oranges
 
-            return min(1 + oranges % 2 + dfs(oranges // 2), 1 + oranges % 3 + dfs(oranges // 3))
+            return 1 + min(oranges % 2 + dfs(oranges // 2), oranges % 3 + dfs(oranges // 3))
         
         return dfs(n)
