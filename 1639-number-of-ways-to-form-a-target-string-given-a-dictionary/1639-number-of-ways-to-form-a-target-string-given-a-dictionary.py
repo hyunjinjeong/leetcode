@@ -17,24 +17,39 @@ class Solution:
             for i in range(len(word)):
                 frequency[i][ord(word[i]) - ord("a")] += 1
 
-        @cache
-        def dfs(i, target_index):
-            if target_index == len(target):
-                return 1
-            if i == len(words[0]):
-                return 0
+        # @cache
+        # def dfs(i, target_index):
+        #     if target_index == len(target):
+        #         return 1
+        #     if i == len(words[0]):
+        #         return 0
             
-            res = 0
+        #     res = 0
 
-            # for word in words:
-            #     if word[i] == target[target_index]:
-            #         # 여기가 똑같은 dfs(i + 1, target_index + 1)을 계쏙 호출하니까 그냥 곱하면 될 듯?
-            #         res = (res + dfs(i + 1, target_index + 1)) % MOD # pick
+        #     # for word in words:
+        #     #     if word[i] == target[target_index]:
+        #     #         # 여기가 똑같은 dfs(i + 1, target_index + 1)을 계쏙 호출하니까 그냥 곱하면 될 듯?
+        #     #         res = (res + dfs(i + 1, target_index + 1)) % MOD # pick
 
-            freq = frequency[i][ord(target[target_index]) - ord("a")]
-            res = (res + freq * dfs(i + 1, target_index + 1) % MOD) % MOD # pick
-            res = (res + dfs(i + 1, target_index)) % MOD # skip
+        #     freq = frequency[i][ord(target[target_index]) - ord("a")]
+        #     res = (res + freq * dfs(i + 1, target_index + 1) % MOD) % MOD # pick
+        #     res = (res + dfs(i + 1, target_index)) % MOD # skip
 
-            return res
+        #     return res
         
-        return dfs(0, 0)
+        # return dfs(0, 0)
+
+        # bottom up
+        dp = [[0] * (len(target) + 1) for _ in range(len(words[0]) + 1)]
+        
+        # base
+        for i in range(len(words[0]) + 1):
+            dp[i][len(target)] = 1
+
+        for i in range(len(words[0]) - 1, -1, -1):
+            for j in range(len(target) - 1, -1, -1):
+                freq = frequency[i][ord(target[j]) - ord("a")]
+                dp[i][j] = (dp[i][j] + freq * dp[i + 1][j + 1] % MOD) % MOD # pick
+                dp[i][j] = (dp[i][j] + dp[i + 1][j]) % MOD # skip
+        
+        return dp[0][0]
