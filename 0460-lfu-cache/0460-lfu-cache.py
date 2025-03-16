@@ -20,43 +20,38 @@ class LFUCache:
         if key not in self.cache:
             return -1
         
-        node, freq = self.cache[key]
+        node = self.cache[key]
+        self._increase_frequency(node)
+
+        return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            self._increase_frequency(node)
+            node.value = value
+        else:
+            self._invalidate()
+
+            node = Node(key, value, 1)
+            self.cache[key] = node
+            self.min_freq = 1
+            
+            dll = self.dll_by_freq[1]
+            dll.append_node(node)
+    
+    def _increase_frequency(self, node):
+        freq = node.freq
         
         prev_dll = self.dll_by_freq[freq]
         prev_dll.remove_node(node)
         if prev_dll.size == 0 and self.min_freq == freq:
             self.min_freq = freq + 1
 
-        self.cache[key] = (node, freq + 1)
-        
         new_dll = self.dll_by_freq[freq + 1]
         new_dll.append_node(node)
-        
-        return node.value
 
-    def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            node, freq = self.cache[key]
-            node.value = value
-            
-            prev_dll = self.dll_by_freq[freq]
-            prev_dll.remove_node(node)
-            if prev_dll.size == 0 and self.min_freq == freq:
-                self.min_freq = freq + 1
-
-            self.cache[key] = (node, freq + 1)
-
-            new_dll = self.dll_by_freq[freq + 1]
-            new_dll.append_node(node)
-        else:
-            self._invalidate()
-
-            node = Node(key, value)
-            self.cache[key] = (node, 1)
-            self.min_freq = 1
-            
-            dll = self.dll_by_freq[1]
-            dll.append_node(node)
+        node.freq += 1
     
     def _invalidate(self):
         if len(self.cache) < self.capacity:
@@ -65,7 +60,7 @@ class LFUCache:
         min_freq_dll = self.dll_by_freq[self.min_freq]
         deleted_node = min_freq_dll.remove_head()
 
-        self.cache.pop(deleted_node.key)
+        del self.cache[deleted_node.key]
 
 
 class DoublyLinkedList:
@@ -105,9 +100,10 @@ class DoublyLinkedList:
 
 
 class Node:
-    def __init__(self, key=None, value=None):
+    def __init__(self, key=None, value=None, freq=None):
         self.key = key
         self.value = value
+        self.freq = freq
         self.prev = None
         self.next = None
 
