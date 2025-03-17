@@ -11,18 +11,15 @@ class Solution:
         
         res = [0] * len(people)
 
-        # 만개 시작한 꽃 개수
-        flower_index = 0
+        start_flower_index = 0
+        end_flower_index = 0
         for time, index in sorted_people:
-            while flower_index < len(flowers) and starts[flower_index] <= time:
-                flower_index += 1
-            res[index] = flower_index
-        
-        # 종료된 꽃 개수
-        flower_index = 0
-        for time, index in sorted_people:
-            while flower_index < len(flowers) and ends[flower_index] < time:
-                flower_index += 1
-            res[index] -= flower_index
+            # 여기를 binary search를 사용할 수 있겠네
+            while start_flower_index < len(flowers) and starts[start_flower_index] <= time:
+                start_flower_index += 1
+            while end_flower_index < len(flowers) and ends[end_flower_index] < time:
+                end_flower_index += 1
+
+            res[index] = start_flower_index - end_flower_index
 
         return res
