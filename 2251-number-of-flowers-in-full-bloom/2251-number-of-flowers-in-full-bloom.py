@@ -24,6 +24,5 @@ class Solution:
             while flower_index < len(flowers) and ends[flower_index] < time:
                 flower_index += 1
             res[index] -= flower_index
-        
-        print(res)
+
         return res
