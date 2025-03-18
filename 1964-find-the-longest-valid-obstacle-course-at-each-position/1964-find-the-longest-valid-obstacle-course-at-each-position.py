@@ -17,7 +17,7 @@ class Solution:
                     lo = mid + 1
             return lo
 
-        # dp[k]는 길이가 k인 코스의 마지막 장애물 값으로 가능한 최솟값
+        # dp[k]는 길이가 k + 1인 코스의 마지막 장애물 값으로 가능한 최솟값
         dp = []
         res = []
         for num in obstacles:
