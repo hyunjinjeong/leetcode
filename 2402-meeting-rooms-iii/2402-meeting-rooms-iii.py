@@ -14,22 +14,22 @@ class Solution:
         # meeting을 넣을 때마다 방의 count를 증가시켜주고..
         meetings.sort()
 
-        end_times, free_rooms = [], [i for i in range(n)]
+        used_rooms, free_rooms = [], [i for i in range(n)]
         room_count = [0] * n
 
         for i in range(len(meetings)):
-            while end_times and end_times[0][0] <= meetings[i][0]:
-                end, room_number = heapq.heappop(end_times)
+            while used_rooms and used_rooms[0][0] <= meetings[i][0]:
+                end, room_number = heapq.heappop(used_rooms)
                 heapq.heappush(free_rooms, room_number)
             
             if free_rooms:
                 room_number = heapq.heappop(free_rooms)
                 room_count[room_number] += 1
-                heapq.heappush(end_times, (meetings[i][1], room_number))
+                heapq.heappush(used_rooms, (meetings[i][1], room_number))
             else:
-                end, room_number = heapq.heappop(end_times)
+                end, room_number = heapq.heappop(used_rooms)
                 room_count[room_number] += 1
-                heapq.heappush(end_times, (end + (meetings[i][1] - meetings[i][0]), room_number))
+                heapq.heappush(used_rooms, (end + (meetings[i][1] - meetings[i][0]), room_number))
 
         res = 0
         max_count = -1
