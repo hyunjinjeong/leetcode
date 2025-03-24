@@ -8,34 +8,33 @@ class Solution:
         alice, bob = UnionFind(n), UnionFind(n)
 
         t1, t2, t3 = [], [], []
-        for i, (t, u, v) in enumerate(edges):
+        for node, (t, u, v) in enumerate(edges):
             if t == 1:
                 target = t1
             if t == 2:
                 target = t2
             elif t == 3:
                 target = t3
-            target.append((u - 1, v - 1, i))
+            target.append((u - 1, v - 1, node))
 
-        for u, v, i in t3:
+        for u, v, node in t3:
             if alice.should_connect(u, v):
-                alice.union(u, v, i)
+                alice.union(u, v, node)
             if bob.should_connect(u, v):
-                bob.union(u, v, i)
+                bob.union(u, v, node)
         
-        for u, v, i in t1:
+        for u, v, node in t1:
             if alice.should_connect(u, v):
-                alice.union(u, v, i)
+                alice.union(u, v, node)
 
-        for u, v, i in t2:
+        for u, v, node in t2:
             if bob.should_connect(u, v):
-                bob.union(u, v, i)
+                bob.union(u, v, node)
         
         if not (alice.all_connected() and bob.all_connected()):
             return -1
 
         return len(edges) - len(alice.nodes | bob.nodes)
-
 
 
 class UnionFind:
@@ -49,7 +48,7 @@ class UnionFind:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
     
-    def union(self, u, v, i):
+    def union(self, u, v, node):
         pu, pv = self.find(u), self.find(v)
         if self.size[pu] > self.size[pv]:
             self.parent[pv] = pu
@@ -58,7 +57,7 @@ class UnionFind:
             self.parent[pu] = pv
             self.size[pv] += self.size[pu]
         
-        self.nodes.add(i)
+        self.nodes.add(node)
     
     def should_connect(self, u, v):
         return self.find(u) != self.find(v)
