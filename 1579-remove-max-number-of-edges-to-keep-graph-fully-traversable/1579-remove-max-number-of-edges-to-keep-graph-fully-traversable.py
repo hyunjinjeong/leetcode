@@ -6,50 +6,49 @@ class Solution:
         # 최종 형상은 Alice(1+3)랑 Bob(2+3)에 대해서 각각은 모든 노드에 연결된 선이 1개씩만 있는 모습일 듯?
         # UF 쓰면 된다! 당연히 3번 먼저 써야 할 거고
         alice, bob = UnionFind(n), UnionFind(n)
-
-        t1, t2, t3 = [], [], []
-        for node, (t, u, v) in enumerate(edges):
-            if t == 1:
-                target = t1
-            if t == 2:
-                target = t2
-            elif t == 3:
-                target = t3
-            target.append((u - 1, v - 1, node))
-
-        for u, v, node in t3:
-            if alice.should_connect(u, v):
-                alice.union(u, v, node)
-            if bob.should_connect(u, v):
-                bob.union(u, v, node)
+        edge_count = 0
         
-        for u, v, node in t1:
-            if alice.should_connect(u, v):
-                alice.union(u, v, node)
+        for t, _u, _v in edges:
+            if t != 3:
+                continue
+            
+            u, v = _u - 1, _v - 1
 
-        for u, v, node in t2:
+            if alice.should_connect(u, v):
+                alice.union(u, v)
+                edge_count += 1
             if bob.should_connect(u, v):
-                bob.union(u, v, node)
+                bob.union(u, v)
+        
+        for t, _u, _v in edges:
+            u, v = _u - 1, _v - 1
+            if t == 1 and alice.should_connect(u, v):
+                alice.union(u, v)
+                edge_count += 1
+            if t == 2 and bob.should_connect(u, v):
+                bob.union(u, v)
+                edge_count += 1
         
         if not (alice.all_connected() and bob.all_connected()):
             return -1
 
-        return len(edges) - len(alice.nodes | bob.nodes)
+        return len(edges) - edge_count
 
 
 class UnionFind:
     def __init__(self, n):
         self.parent = [i for i in range(n)]
         self.size = [1] * n
-        self.nodes = set()
+        self.edge_count = 0
     
     def find(self, x):
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
     
-    def union(self, u, v, node):
+    def union(self, u, v):
         pu, pv = self.find(u), self.find(v)
+
         if self.size[pu] > self.size[pv]:
             self.parent[pv] = pu
             self.size[pu] += self.size[pv]
@@ -57,10 +56,10 @@ class UnionFind:
             self.parent[pu] = pv
             self.size[pv] += self.size[pu]
         
-        self.nodes.add(node)
+        self.edge_count += 1
     
     def should_connect(self, u, v):
         return self.find(u) != self.find(v)
     
     def all_connected(self):
-        return any(s == len(self.size) for s in self.size)
+        return self.edge_count == len(self.size) - 1
