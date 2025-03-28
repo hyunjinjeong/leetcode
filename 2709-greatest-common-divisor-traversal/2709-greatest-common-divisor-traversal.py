@@ -9,29 +9,27 @@ class Solution:
 
         uf = UnionFind(N)
 
-        div_index = {}
+        factor_index = {}
         for i, num in enumerate(nums):
             div = 2
             while div * div <= num:
                 if num % div == 0:
-                    if div in div_index:
-                        uf.union(i, div_index[div])
+                    if div in factor_index:
+                        uf.union(i, factor_index[div])
                     else:
-                        div_index[div] = i
+                        factor_index[div] = i
                     
                     while num % div == 0:
                         num //= div
                 div += 1
                 
             if num > 1:
-                if num in div_index:
-                    uf.union(i, div_index[num])
+                if num in factor_index:
+                    uf.union(i, factor_index[num])
                 else:
-                    div_index[num] = i
+                    factor_index[num] = i
         
         return uf.count == 1
-
-
 
 
 class UnionFind:
