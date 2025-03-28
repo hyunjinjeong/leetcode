@@ -11,10 +11,12 @@ class Solution:
                 return 0
             
             res = float("inf")
-            for cut in range(start + 1, end):
-                res = min(dfs(start, cut) + dfs(cut, end) + new_cuts[end] - new_cuts[start], res)
+            for cut in cuts:
+                if cut <= start or cut >= end:
+                    continue
+                
+                res = min(end - start + dfs(start, cut) + dfs(cut, end), res)
             
-            return res
+            return res if res < float("inf") else 0
         
-        new_cuts = [0] + sorted(cuts) + [n]
-        return dfs(0, len(new_cuts) - 1)
+        return dfs(0, n)
