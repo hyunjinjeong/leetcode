@@ -5,46 +5,41 @@ class Solution:
         # connected grid를 disconnect 시키려면? 일단 max가 2인데? 모서리에 2개 떼어내면 됨.
         M, N = len(grid), len(grid[0])
 
-        def get_one_count(i, j, visited):
-            count = 1
+        def dfs(i, j, visited):
+            if not (0 <= i < M):
+                return
+            if not (0 <= j < N):
+                return
+            if grid[i][j] == 0:
+                return
+            if (i, j) in visited:
+                return
 
             visited.add((i, j))
             for adj_i, adj_j in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
-                if 0 <= adj_i < M and 0 <= adj_j < N and grid[adj_i][adj_j] == 1 and (adj_i, adj_j) not in visited:
-                    count += get_one_count(adj_i, adj_j, visited)
-
-            return count
-
-        one_count = 0
-        for i in range(M):
-            for j in range(N):
-                if grid[i][j] == 1:
-                    one_count += 1
+                dfs(adj_i, adj_j, visited)
         
-        if one_count == 0:
+        def get_island_count():
+            island_count = 0
+            visited = set()
+            for i in range(M):
+                for j in range(N):
+                    if grid[i][j] == 1 and (i, j) not in visited:
+                        dfs(i, j, visited)
+                        island_count += 1
+            return island_count
+
+        if get_island_count() != 1:
             return 0
-        if one_count == 1:
-            return 1
 
-        entered = False
         for i in range(M):
             for j in range(N):
-                if grid[i][j] == 1:
-                    if get_one_count(i, j, set()) != one_count:
-                        return 0
-                    entered = True
-                    break
-            if entered:
-                break
-        
-        for i in range(M):
-            for j in range(N):
-                if grid[i][j] == 1:
-                    grid[i][j] = 0
-                    for adj_i, adj_j in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
-                        if 0 <= adj_i < M and 0 <= adj_j < N and grid[adj_i][adj_j] == 1:
-                            if get_one_count(adj_i, adj_j, set()) < one_count - 1:
-                                return 1
-                    grid[i][j] = 1
+                if grid[i][j] == 0:
+                    continue
+                
+                grid[i][j] = 0
+                if get_island_count() != 1:
+                    return 1
+                grid[i][j] = 1
         
         return 2
