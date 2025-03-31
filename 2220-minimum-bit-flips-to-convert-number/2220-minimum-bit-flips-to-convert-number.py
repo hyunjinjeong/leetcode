@@ -8,8 +8,7 @@ class Solution:
 
         xor = start ^ goal
         while xor:
-            if xor & 1:
-                res += 1
-            xor >>= 1
+            res += 1
+            xor &= xor - 1
 
         return res
