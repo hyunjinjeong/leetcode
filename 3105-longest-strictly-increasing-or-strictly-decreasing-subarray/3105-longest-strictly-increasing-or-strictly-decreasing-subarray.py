@@ -1,24 +1,20 @@
 class Solution:
     def longestMonotonicSubarray(self, nums: List[int]) -> int:
         res = 0
-        streak = 1
+        increasing, decreasing = 1, 1
         
         prev = nums[0]
         for num in nums:
             if num > prev:
-                streak += 1
+                increasing += 1
+                decreasing = 1
+            elif num < prev:
+                increasing = 1
+                decreasing += 1
             else:
-                streak = 1
-            res = max(streak, res)
-            prev = num
-        
-        prev = nums[0]
-        for num in nums:
-            if num < prev:
-                streak += 1
-            else:
-                streak = 1
-            res = max(streak, res)
+                increasing = 1
+                decreasing = 1
+            res = max(res, increasing, decreasing)
             prev = num
         
         return res
