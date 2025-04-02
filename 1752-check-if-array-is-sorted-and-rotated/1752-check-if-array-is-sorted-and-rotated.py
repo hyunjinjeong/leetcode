@@ -4,13 +4,9 @@ class Solution:
         N = len(nums)
         
         streak = 0
-        prev = 0
-        for i in range(N * 2):
-            index = i % N
-            num = nums[index]
-
+        for i in range(1, N * 2):
+            num, prev = nums[i % N], nums[(i - 1) % N]
             streak = streak + 1 if num >= prev else 1
             if streak == N:
                 return True
-            prev = num
         return False
