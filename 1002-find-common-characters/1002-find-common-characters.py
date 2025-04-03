@@ -10,10 +10,7 @@ class Solution:
                 new_counter[c] += 1
             
             for c in counter:
-                if c in new_counter:
-                    counter[c] = min(counter[c], new_counter[c])
-                else:
-                    counter[c] = 0
+                counter[c] = min(counter[c], new_counter[c])
 
         res = []
         for c in counter:
