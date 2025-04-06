@@ -10,9 +10,14 @@ class Solution:
     def postorder(self, root: 'Node') -> List[int]:
         if not root:
             return []
-        
+
         res = []
-        for child in root.children:
-            res += self.postorder(child)
+
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            for child in node.children:
+                stack.append(child)
         
-        return res + [root.val]
+        return reversed(res)
