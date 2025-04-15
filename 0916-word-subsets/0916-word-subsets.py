@@ -5,18 +5,13 @@ class Solution:
         # count의 max를 다 저장해두는건 어떨까? 될 것 같은데
         words2_max_counter = collections.defaultdict(int)
         for word2 in words2:
-            word2_counter = collections.defaultdict(int)
-            for c in word2:
-                word2_counter[c] += 1
-            
+            word2_counter = collections.Counter(word2)
             for c in word2_counter:
                 words2_max_counter[c] = max(words2_max_counter[c], word2_counter[c])
         
         res = []
         for word1 in words1:
-            word1_counter = collections.defaultdict(int)
-            for c in word1:
-                word1_counter[c] += 1
+            word1_counter = collections.Counter(word1)
             
             is_universal = True
             for c in words2_max_counter:
