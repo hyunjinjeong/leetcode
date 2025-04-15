@@ -5,12 +5,12 @@ class Solution:
         # 이때 min은 binary search로 찾으면 됨
         # 7 17 -> 7 7 10 -> 7 7 5 5
         # 24. 흠 이 예시는 그렇게 안 되는데...
-        # 
+        # 17 -> 
 
         def can_contain_all_balls(max_balls_in_bag):
             total_ops = 0
             for num in nums:
-                ops = math.ceil(num / max_balls_in_bag) - 1
+                ops = (num - 1) // max_balls_in_bag
                 total_ops += ops
                 if total_ops > maxOperations:
                     return False
