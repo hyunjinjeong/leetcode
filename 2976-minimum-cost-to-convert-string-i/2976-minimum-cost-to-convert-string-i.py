@@ -20,7 +20,7 @@ class Solution:
         for src, dst, curr_cost in zip(original, changed, cost):
             edges[src].append((dst, curr_cost))
         
-        min_costs = {c: get_min_costs(c) for c in set(source)}
+        min_costs = {c: get_min_costs(c) for c in lower_alphabets}
         
         min_cost = 0
         for i in range(len(source)):
