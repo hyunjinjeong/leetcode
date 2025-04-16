@@ -7,10 +7,12 @@ class Solution:
 
             while heap:
                 curr_cost, node = heapq.heappop(heap)
+                if node in min_costs:
+                    continue
+                min_costs[node] = curr_cost
+
                 for adj, adj_cost in edges[node]:
-                    if curr_cost + adj_cost < min_costs[adj]:
-                        min_costs[adj] = curr_cost + adj_cost
-                        heapq.heappush(heap, (curr_cost + adj_cost, adj))
+                    heapq.heappush(heap, (curr_cost + adj_cost, adj))
 
             return min_costs
         
