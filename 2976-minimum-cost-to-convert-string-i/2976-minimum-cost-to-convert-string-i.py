@@ -17,12 +17,10 @@ class Solution:
         lower_alphabets = "abcdefghijklmnopqrstuvwxyz"
 
         edges = {c: [] for c in lower_alphabets}
-        for i in range(len(original)):
-            edges[original[i]].append((changed[i], cost[i]))
+        for src, dst, curr_cost in zip(original, changed, cost):
+            edges[src].append((dst, curr_cost))
         
-        min_costs = {}
-        for c in lower_alphabets:
-            min_costs[c] = get_min_costs(c)
+        min_costs = {c: get_min_costs(c) for c in lower_alphabets}
         
         min_cost = 0
         for i in range(len(source)):
