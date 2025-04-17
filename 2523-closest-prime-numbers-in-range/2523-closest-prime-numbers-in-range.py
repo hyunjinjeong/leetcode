@@ -3,13 +3,12 @@ class Solution:
         is_prime = [True] * (right + 1)
         is_prime[0] = is_prime[1] = False
 
-        for num in range(2, right + 1):
+        for num in range(2, int(math.sqrt(right)) + 1):
             if not is_prime[num]:
                 continue
-            multi = 2
-            while num * multi <= right:
-                is_prime[num * multi] = False
-                multi += 1
+            
+            for multiple in range(num * num, right + 1, num):
+                is_prime[multiple] = False
         
         small, large = -1, -1
         prev = -1
