@@ -8,14 +8,14 @@ class Solution:
         num_to_group_index = {}
 
         prev = float("-inf")
-        group_index = -1
         for curr in sorted(nums):
             if curr - prev > limit:
                 groups.append(collections.deque())
-                group_index += 1
             
+            group_index = len(groups) - 1
             groups[group_index].append(curr)
             num_to_group_index[curr] = group_index
+            
             prev = curr
 
         for i, num in enumerate(nums):
