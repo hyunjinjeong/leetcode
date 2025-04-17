@@ -6,13 +6,10 @@ class Solution:
         # grouping 하면 되는구나
         groups = []
         num_to_group_index = {}
-        index_to_num = {i: num for i, num in enumerate(nums)}
-
-        nums.sort()
 
         prev = float("-inf")
         group_index = -1
-        for i, curr in enumerate(nums):
+        for curr in sorted(nums):
             if curr - prev > limit:
                 groups.append(collections.deque())
                 group_index += 1
@@ -21,10 +18,8 @@ class Solution:
             num_to_group_index[curr] = group_index
             prev = curr
 
-        for i in range(len(nums)):
-            num = index_to_num[i]
+        for i, num in enumerate(nums):
             group = groups[num_to_group_index[num]]
-            sorted_num = group.popleft()
-            nums[i] = sorted_num
+            nums[i] = group.popleft()
         
         return nums
