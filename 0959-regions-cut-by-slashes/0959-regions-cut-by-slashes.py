@@ -18,8 +18,6 @@ class Solution:
                     graph[row + 1][col + 1] = 1
                     graph[row + 2][col + 2] = 1
         
-        print(graph)
-        
         def dfs(r, c):
             graph[r][c] = -1
             for adj_r, adj_c in [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]:
