@@ -21,7 +21,9 @@ class Trie:
 
     def insert(self, path):
         node = self.root
-        for name in path.split("/")[1:]:
+        for name in path.split("/"):
+            if name == "":
+                continue
             if name not in node.children:
                 node.children[name] = Node(name)
             node = node.children[name]
@@ -29,7 +31,10 @@ class Trie:
 
     def is_root(self, path):
         node = self.root
-        for name in path.split("/")[1:-1]:
+        folders = path.split("/")
+        for i, name in enumerate(folders):
+            if name == "" or i == len(folders) - 1:
+                continue
             node = node.children[name]
             if node.is_path:
                 return False
