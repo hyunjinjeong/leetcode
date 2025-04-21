@@ -36,6 +36,5 @@ class UnionFind:
         count = 0
         for i in range(len(self.parent)):
             if self.parent[i] == i and self.edge_count[i] == (self.size[i] * (self.size[i] - 1) // 2):
-                print(i, "is coplete")
                 count += 1
         return count
