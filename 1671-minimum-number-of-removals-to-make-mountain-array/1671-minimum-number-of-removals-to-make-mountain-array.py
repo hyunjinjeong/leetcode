@@ -7,7 +7,7 @@ class Solution:
         # 이렇게 보니 LIS 문제임
         N = len(nums)
 
-        def bisect_right(target, arr):
+        def bisect_left(target, arr):
             lo, hi = 0, len(arr)
             while lo < hi:
                 mid = lo + (hi - lo) // 2
@@ -22,7 +22,7 @@ class Solution:
             arr = [target_arr[0]]
 
             for i in range(1, N):
-                index = bisect_right(target_arr[i], arr)
+                index = bisect_left(target_arr[i], arr)
                 if index == len(arr):
                     arr.append(target_arr[i])
                 else:
