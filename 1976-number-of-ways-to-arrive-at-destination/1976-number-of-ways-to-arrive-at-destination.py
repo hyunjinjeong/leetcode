@@ -17,6 +17,9 @@ class Solution:
         heap = [(0, 0)]
         while heap:
             curr_time, curr_node = heapq.heappop(heap)
+            if curr_time > shortest_times[curr_node]:
+                continue
+            
             for adj_node, adj_time in graph[curr_node]:
                 if curr_time + adj_time < shortest_times[adj_node]:
                     shortest_times[adj_node] = curr_time + adj_time
