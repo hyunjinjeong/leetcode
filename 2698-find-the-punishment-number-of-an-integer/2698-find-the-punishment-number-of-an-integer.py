@@ -3,6 +3,7 @@ class Solution:
         # 2번째 컨디션이 문젠데
         # n이 최대 1000이니까 제곱수가 1000000. 자릿수가 많지는 않음
         # backtracking으로 하나씩 전부 해봐야 하나?
+        @cache
         def is_valid(start, curr, target, string):
             if start == len(string) and curr == target:
                 return True
