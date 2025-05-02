@@ -12,7 +12,7 @@ class Solution:
                     hi = mid
             return lo
         
-        items.sort(key=lambda tup: (tup[0], tup[1]))
+        items.sort(key=lambda tup: tup[0])
 
         max_beauties = [0]
         for price, beauty in items:
