@@ -10,13 +10,12 @@ class Solution:
                     lo = mid + 1
                 else:
                     hi = mid
-            return lo
+            return lo - 1
         
         items.sort(key=lambda tup: tup[0])
-
-        max_beauties = [0]
-        for price, beauty in items:
-            max_beauties.append(max(beauty, max_beauties[-1]))
+        max_beauty = items[0][1]
+        for i in range(1, len(items)):
+            items[i][1] = max(items[i][1], items[i - 1][1])
 
         res = []
         for target_price in queries:
@@ -24,7 +23,7 @@ class Solution:
             if index == -1:
                 res.append(0)
             elif index == len(items):
-                res.append(max_beauties[-1])
+                res.append(items[-1][1])
             else:
-                res.append(max_beauties[index])
+                res.append(items[index][1])
         return res
