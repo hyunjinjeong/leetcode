@@ -23,7 +23,7 @@ class Solution:
             if num_list[i] > max_digit:
                 max_digit = num_list[i]
                 max_index = i
-            elif num_list[i] < max_digit:
+            elif num_list[i] < max_digit: # max보다 작은 숫자 중 가장 왼쪽의 숫자를 스왑
                 swap_i, swap_j = i, max_index
         
         num_list[swap_i], num_list[swap_j] = num_list[swap_j], num_list[swap_i]
