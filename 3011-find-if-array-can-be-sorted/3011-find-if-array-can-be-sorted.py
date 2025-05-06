@@ -12,16 +12,34 @@ class Solution:
                 n >>= 1
             return count
         
-        groups = []
-        index = -1
-        for num in nums:
-            if index == -1 or set_bits(num) != set_bits(groups[index][0]):
-                groups.append([])
-                index += 1
-            groups[index].append(num)
+        # groups = []
+        # index = -1
+        # for num in nums:
+        #     if index == -1 or set_bits(num) != set_bits(groups[index][0]):
+        #         groups.append([])
+        #         index += 1
+        #     groups[index].append(num)
         
-        for i in range(1, len(groups)):
-            if max(groups[i - 1]) > min(groups[i]):
-                return False
+        # for i in range(1, len(groups)):
+        #     if max(groups[i - 1]) > min(groups[i]):
+        #         return False
 
+        # return True
+
+        # group을 안 만들어도 되는구나
+        prev_max = float("-inf")
+        curr_min, curr_max = nums[0], nums[0]
+        for num in nums:
+            if set_bits(num) == set_bits(curr_min):
+                curr_min = min(num, curr_min)
+                curr_max = max(num, curr_max)
+            else:
+                if prev_max > curr_min:
+                    return False
+                prev_max = curr_max
+                curr_min, curr_max = num, num
+        
+        if prev_max > curr_min:
+            return False
+        
         return True
