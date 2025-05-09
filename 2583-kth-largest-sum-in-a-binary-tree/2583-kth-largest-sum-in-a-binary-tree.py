@@ -9,20 +9,23 @@ class Solution:
         # level sum은 쉽고.. 정렬해도 되고 크기 k짜리 min heap의 0번째 원소.
         level_sums = []
 
-        q = collections.deque([(root, 0)])
+        q = collections.deque([root])
         while q:
-            node, level = q.popleft()
-            if len(level_sums) == level:
-                level_sums.append(0)
+            level_sum = 0
+            for _ in range(len(q)):
+                node = q.popleft()
+                level_sum += node.val
+                
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
             
-            level_sums[level] += node.val
-            if node.left:
-                q.append((node.left, level + 1))
-            if node.right:
-                q.append((node.right, level + 1))
+            heapq.heappush(level_sums, level_sum)
+            if len(level_sums) > k:
+                heapq.heappop(level_sums)
         
         if len(level_sums) < k:
             return -1
 
-        level_sums.sort(reverse=True)
-        return level_sums[k - 1]
+        return level_sums[0]
