@@ -7,18 +7,23 @@ class Solution:
         # i번째 book이 있을 때.. 그 book을 현재 shelf에 넣을 수도 있고 다음 shelf에 넣을 수도 있음.
         # 근데 현재 shelf에 아무 책도 없을 때는 무조건 현재 shelf에 넣어야 함.
         # 혹은 현재 shelf의 길이를 더하면 shelfWidth보다 커지면 무조건 다음 shelf에 넣어야 함.
+        memo = {}
+
         @cache
-        def dfs(i, curr_shelf, curr_width, curr_height):
+        def dfs(i, curr_width, curr_height):
             if i == len(books):
                 return curr_height
+            if (i, curr_width) in memo:
+                return memo[(i, curr_width)]
         
             width, height = books[i]
             
+            use_next_shelf = curr_height + dfs(i + 1, width, height)
             if curr_width + width > shelfWidth: # 못 넣으면
-                return curr_height + dfs(i + 1, curr_shelf + 1, width, height)
+                return use_next_shelf
 
-            use_curr_shelf = dfs(i + 1, curr_shelf, curr_width + width, max(height, curr_height))
-            use_next_shelf = curr_height + dfs(i + 1, curr_shelf + 1, width, height)
-            return min(use_curr_shelf, use_next_shelf)
+            use_curr_shelf = dfs(i + 1, curr_width + width, max(height, curr_height))
+            memo[(i, curr_width)] = min(use_curr_shelf, use_next_shelf)
+            return memo[(i, curr_width)]
         
-        return dfs(0, 0, 0, 0)
+        return dfs(0, 0, 0)
