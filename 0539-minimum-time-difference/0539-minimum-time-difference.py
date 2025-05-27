@@ -15,7 +15,7 @@ class Solution:
         
         min_diff = float("inf")
         for i in range(1, N):
-            min_diff = min(min_diff, time_points_minutes[i] - time_points_minutes[i - 1], 1440 + time_points_minutes[i - 1] - time_points_minutes[i])
+            min_diff = min(min_diff, time_points_minutes[i] - time_points_minutes[i - 1])
 
         # 0, n - 1 체크
         min_diff = min(min_diff, 1440 + time_points_minutes[0] - time_points_minutes[N - 1])
