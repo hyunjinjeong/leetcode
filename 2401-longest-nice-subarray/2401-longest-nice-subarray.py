@@ -17,14 +17,13 @@ class Solution:
                 bit += 1
         
         longest = 1
-        # 10^9 니까 31비트 정도..?
-        bit_counts = [0] * 31
+        bit_counts = [0] * 32
 
         left = 0
         for right in range(len(nums)):
             add_to_bit_counts(nums[right], is_plus=True)
             while left < right and any([count > 1 for count in bit_counts]):
-                add_to_bit_counts(nums[right], is_plus=False)
+                add_to_bit_counts(nums[left], is_plus=False)
                 left += 1
             
             longest = max(longest, right - left + 1)
