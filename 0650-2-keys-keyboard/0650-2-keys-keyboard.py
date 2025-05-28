@@ -4,45 +4,24 @@ class Solution:
         # 처음에는 copy밖에 못하니까..
         # 1 다음에는 무조건 2가 된다.
         # 그래서 3이면 다시 paste 해서 A copy -> A paste -> A paste.
-        # 만약 4면? A copy -> A paste -> AA copy -> AA paste. 4개. 혹은 A copy -> A paste * 3 해도 4개.
-        # 5면? A copy -> A paste * 4 하면 5개
-        # 6이면? 6개짜리 있을거고, A copy -> A paste -> AA copy -> AA paste -> AA paste 하면 5개.
-        # 이게 홀수개면 무조건 A만 copy할 수 있네.. AA가 되는 순간부터는 짝수가 됨
-        # 8이면? A copy -> A paste -> AA copy -> AA paste -> AAAA copy -> AAAA paste. 6개.
+        # 소수가 아니면 나눠지는 수가 있어서, 나눈 수를 쓸지 정할 수 있겠구만. 소수면 n개고
 
-        # 규칙을 생각해보자.. 현재 개수의 2배씩만 더할 수 있음.
-        # 즉 6은 2 2 2 .. 8은 2 2 4 . 10은? 2 2 2 2 2 밖에 안 됨.
-        # 12는? 2 2 2 6 이 된다.
-        # 14는? 얘도 2 * 7이고, 16은? 2 2 4 8.
-        # 그러면 숫자를 2로 나눴을 때 여전히 2의 배수인지가 중요하네
-        # 6은 2로 나눴을 때 3이니까 아님. 그래서 2가 3개.
-        # 8은 2로 나눴을 때 4. 그러면 ops(4) + 2가 된다.
-        # 12는 6. ops(6) + 2.
-        # 16은 8. ops(8) + 2.
-        # 그럼 20은? ops(10) + 2... 요런 식이구만.
-
-        # 6은? A copy -> A paste -> AA copy -> AA paste -> AA paste. 5개.
-        # 10은? 6에다가 AA paste를 2번 더. 그럼 7개.
-
-        if n == 1:
-            return 0
-        if n % 2 == 1:
-            return n
+        # 10이면 2 * 5도 되고 5 * 2도 되는데 둘이 결과가 같으려나? 똑같네
+        # ops(quotient) + n // quotient 수만큼 들어간다.
 
         cache = {}
         def dfs(num):
-            if num == 2:
-                return 2 # A copy + A paste
+            if num == 1:
+                return 0
             if num in cache:
                 return num
             
-            ops = 0
-            if (num // 2) % 2 == 1:
-                ops = 2 + num // 2
-            else:
-                ops = 2 + dfs(num // 2)
+            ops = num
+            for quotient in range(2, int(num ** 1/2) + 1):
+                if num % quotient != 0:
+                    continue
+                ops = min(ops, dfs(quotient) + num // quotient)
 
-            cache[num] = ops
             return ops
         
         return dfs(n)
