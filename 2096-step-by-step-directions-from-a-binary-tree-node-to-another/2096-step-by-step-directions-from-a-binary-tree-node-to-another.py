@@ -29,7 +29,7 @@ class Solution:
             
             while q:
                 node, curr_path = q.popleft()
-                if node.val == startValue:
+                if node.val == target:
                     return curr_path
                 
                 if node.left:
