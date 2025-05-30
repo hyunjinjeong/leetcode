@@ -24,20 +24,27 @@ class Solution:
             else:
                 return find_left or find_right
         
-        def generate_path(lca, target, is_start):
-            q = collections.deque([(lca, "")])
+        def generate_path(node, target, path):
+            if not node:
+                return False
+            if node.val == target:
+                return True
             
-            while q:
-                node, curr_path = q.popleft()
-                if node.val == target:
-                    return curr_path
-                
-                if node.left:
-                    q.append((node.left, curr_path + ("U" if is_start else "L")))
-                if node.right:
-                    q.append((node.right, curr_path + ("U" if is_start else "R")))
-            
-            return ""
+            path.append("L")
+            if generate_path(node.left, target, path):
+                return True
+            path.pop()
 
-        lca = find_lowest_common_ancestor(root)            
-        return generate_path(lca, startValue, True) + generate_path(lca, destValue, False)
+            path.append("R")
+            if generate_path(node.right, target, path):
+                return True
+            path.pop()
+
+        lca = find_lowest_common_ancestor(root)
+        
+        start_path, dest_path = [], []
+        generate_path(lca, startValue, start_path)
+        generate_path(lca, destValue, dest_path)
+
+        res = ["U"] * len(start_path) + dest_path
+        return "".join(res)
