@@ -8,13 +8,11 @@ class Solution:
         nums_set = set(nums)
         dummy = ListNode(next=head)
 
-        prev, node = dummy, head
-        while node:
-            while node and node.val in nums_set:
+        node = dummy
+        while node.next:
+            if node.next.val in nums_set:
+                node.next = node.next.next
+            else:
                 node = node.next
-            
-            prev.next = node
-            if node:
-                prev, node = node, node.next
         
         return dummy.next
