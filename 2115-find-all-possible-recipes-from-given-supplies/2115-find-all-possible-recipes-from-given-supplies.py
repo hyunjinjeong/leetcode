@@ -4,13 +4,13 @@ class Solution:
         # topological sort로 recipe끼리 관계를 정리하면 풀 수 있을 듯?
         recipes_set = set(recipes)
         supplies_set = set(supplies)
-        recipe_to_ingredient = {}
+        recipe_to_index = {}
 
         graph, in_degree = {}, {}
         for i in range(len(recipes)):
             graph[recipes[i]] = []
             in_degree[recipes[i]] = 0
-            recipe_to_ingredient[recipes[i]] = ingredients[i]
+            recipe_to_index[recipes[i]] = i
 
         for recipe, ingredient_list in zip(recipes, ingredients):
             for base_recipe in ingredient_list:
@@ -28,7 +28,7 @@ class Solution:
             recipe = q.popleft()
             
             can_make_recipe = True
-            for ingredient in recipe_to_ingredient[recipe]:
+            for ingredient in ingredients[recipe_to_index[recipe]]:
                 if ingredient in recipes_set:
                     continue
                 if ingredient not in supplies_set:
