@@ -5,15 +5,13 @@ class Solution:
         # 대충 monotonic stack 쓰는 문제 같은데..
         def bisect(target):
             lo, hi = 0, len(stack)
-            res = -1
             while lo < hi:
                 mid = lo + (hi - lo) // 2
                 if heights[stack[mid]] > target:
-                    res = max(res, mid)
                     lo = mid + 1
                 else:
                     hi = mid
-            return res
+            return lo - 1 # lo is the first index that satifies <= target. So lo - 1 is the last index for > target.
 
         res = [-1] * len(queries)
         new_queries = [[] for _ in range(len(heights))]
@@ -22,20 +20,19 @@ class Solution:
             alice, bob = sorted(query)
             if alice == bob or heights[alice] < heights[bob]:
                 res[i] = bob
-            else:
+            else: # heights[alice] > heights[bob]
                 new_queries[bob].append((heights[alice], i))
 
-        stack = []
-        for i in range(len(heights) - 1, -1, -1):
-            stack_size = len(stack)
-            for alice_height, bob in new_queries[i]:
-                pos = bisect(alice_height)
-                if 0 <= pos < stack_size:
-                    res[bob] = stack[pos]
+        stack = [] # monotonically decreasing
+        for bob in range(len(heights) - 1, -1, -1):
+            for alice_height, query_index in new_queries[bob]:
+                pos = bisect(alice_height) # the smallest index which has heights[index] > alice_height
+                if 0 <= pos < len(stack):
+                    res[query_index] = stack[pos]
             
-            while stack and heights[stack[-1]] <= heights[i]:
+            while stack and heights[stack[-1]] <= heights[bob]:
                 stack.pop()
             
-            stack.append(i)
+            stack.append(bob)
 
         return res
