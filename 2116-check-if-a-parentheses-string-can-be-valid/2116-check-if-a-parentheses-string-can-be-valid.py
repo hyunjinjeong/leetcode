@@ -5,12 +5,12 @@ class Solution:
             return False
         
         cmax, cmin = 0, 0
-        for c, lock in zip(s, locked):
-            if lock == "0":
+        for i in range(len(s)):
+            if locked[i] == "0":
                 cmax += 1 # "("로 사용
                 cmin -= 1 # ")"로 사용
             else:
-                if c == "(":
+                if s[i] == "(":
                     cmax += 1
                     cmin += 1
                 else:
