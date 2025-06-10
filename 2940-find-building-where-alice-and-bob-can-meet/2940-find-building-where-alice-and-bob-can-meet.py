@@ -8,7 +8,7 @@ class Solution:
             res = -1
             while lo < hi:
                 mid = lo + (hi - lo) // 2
-                if stack[mid][0] > target:
+                if heights[stack[mid]] > target:
                     res = max(res, mid)
                     lo = mid + 1
                 else:
@@ -31,11 +31,11 @@ class Solution:
             for alice_height, bob in new_queries[i]:
                 pos = bisect(alice_height)
                 if 0 <= pos < stack_size:
-                    res[bob] = stack[pos][1]
+                    res[bob] = stack[pos]
             
-            while stack and stack[-1][0] <= heights[i]:
+            while stack and heights[stack[-1]] <= heights[i]:
                 stack.pop()
             
-            stack.append((heights[i], i))
+            stack.append(i)
 
         return res
