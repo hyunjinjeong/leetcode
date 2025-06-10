@@ -1,25 +1,24 @@
 class Solution:
     def canBeValid(self, s: str, locked: str) -> bool:
-        # valid parentheses string 문제랑 비슷하게 greedy로 되려나?
         if len(s) % 2 == 1:
             return False
         
-        cmax, cmin = 0, 0
+        max_open_parentheses, min_open_parentheses = 0, 0
         for i in range(len(s)):
             if locked[i] == "0":
-                cmax += 1 # "("로 사용
-                cmin -= 1 # ")"로 사용
+                max_open_parentheses += 1 # "("
+                min_open_parentheses -= 1 # ")"
             else:
                 if s[i] == "(":
-                    cmax += 1
-                    cmin += 1
+                    max_open_parentheses += 1
+                    min_open_parentheses += 1
                 else:
-                    cmax -= 1
-                    cmin -= 1
+                    max_open_parentheses -= 1
+                    min_open_parentheses -= 1
 
-            if cmax < 0:
+            if max_open_parentheses < 0:
                 return False
             
-            cmin = max(cmin, 0)
+            min_open_parentheses = max(min_open_parentheses, 0)
         
-        return cmin == 0
+        return min_open_parentheses == 0
