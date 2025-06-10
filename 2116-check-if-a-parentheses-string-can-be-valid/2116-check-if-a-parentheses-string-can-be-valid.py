@@ -6,7 +6,6 @@ class Solution:
         
         cmax, cmin = 0, 0
         for c, lock in zip(s, locked):
-            print(c, lock)
             if lock == "0":
                 cmax += 1 # "("로 사용
                 cmin -= 1 # ")"로 사용
