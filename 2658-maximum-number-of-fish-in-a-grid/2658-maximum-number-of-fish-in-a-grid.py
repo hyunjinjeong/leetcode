@@ -4,13 +4,19 @@ class Solution:
         R, C = len(grid), len(grid[0])
 
         def dfs(r, c):
+            if not (0 <= r < R and 0 <= c < C):
+                return 0
+            if grid[r][c] == 0:
+                return 0
+            if (r, c) in visited:
+                return 0
+
             count = grid[r][c]
-            grid[r][c] = -1 # mark visited
+            visited.add((r, c))
             
             for adj_r, adj_c in [(r + 1, c), (r, c + 1), (r - 1, c), (r, c - 1)]:
-                if 0 <= adj_r < R and 0 <= adj_c < C and grid[adj_r][adj_c] > 0:
                     count += dfs(adj_r, adj_c)
-            
+                    
             return count
         
         visited = set()
