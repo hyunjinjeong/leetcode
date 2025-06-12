@@ -6,17 +6,33 @@ class Solution:
         # 11은? 10으로 시작하는 모든 숫자 바로 뒤에
         # 그럼 101은..? 100 다음인데
 
-        def dfs(num):
-            if num > n:
-                return
+        # def dfs(num):
+        #     if num > n:
+        #         return
             
-            self.res.append(num)
-            for digit in range(10):
-                next_num = num * 10 + digit
-                dfs(next_num)
+        #     self.res.append(num)
+        #     for digit in range(10):
+        #         next_num = num * 10 + digit
+        #         dfs(next_num)
 
-        self.res = []
-        for digit in range(1, 10):
-            dfs(digit)
+        # self.res = []
+        # for digit in range(1, 10):
+        #     dfs(digit)
         
-        return self.res
+        # return self.res
+
+        # iterative
+        res = []
+
+        num = 1
+        while len(res) < n:
+            res.append(num)
+
+            if num * 10 <= n:
+                num *= 10
+            else:
+                while num == n or num % 10 == 9:
+                    num //= 10
+                num += 1
+        
+        return res
