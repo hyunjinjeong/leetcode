@@ -9,6 +9,9 @@ class Solution:
         # 전체 index 개수는 처음에 구해야 하나?
         # 아니지 index는 상대적인 순서만 중요하니까 나중에 넣으면 될 듯
         # BFS 돌리면서 하나씩 넣으면 되지 않을까?
+        if not root:
+            return []
+
         order_map = collections.defaultdict(list)
         
         q = collections.deque()
