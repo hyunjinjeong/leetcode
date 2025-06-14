@@ -14,14 +14,20 @@ class Solution:
         q = collections.deque()
         q.append((root, 0))
 
+        min_index, max_index = 0, 0
+
         while q:
             node, index = q.popleft()
             if not node:
                 continue
             
             order_map[index].append(node.val)
+            min_index = min(min_index, index)
+            max_index = max(max_index, index)
 
             q.append((node.left, index - 1))
             q.append((node.right, index + 1))
-        
-        return [order_map[key] for key in sorted(order_map.keys())]
+
+        # sorting 없이도 가능!        
+        # return [order_map[key] for key in sorted(order_map.keys())]
+        return [order_map[key] for key in range(min_index, max_index + 1)]
