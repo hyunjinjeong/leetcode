@@ -3,7 +3,7 @@ class MyCalendarTwo:
     def __init__(self):
         # self.bookings = []
         # self.overlap_bookings = []
-        self.events = collections.defaultdict(int)
+        self.events = sortedcontainers.SortedDict()
 
     def book(self, startTime: int, endTime: int) -> bool:
         # for s1, e1 in self.overlap_bookings:
@@ -16,11 +16,11 @@ class MyCalendarTwo:
 
         # self.bookings.append((startTime, endTime))
         # return True
-        self.events[startTime] += 1
-        self.events[endTime] -= 1
+        self.events[startTime] = self.events.get(startTime, 0) + 1
+        self.events[endTime] = self.events.get(endTime, 0) - 1
 
         count = 0
-        for event in sorted(self.events):
+        for event in self.events:
             count += self.events[event]
             if count > 2:
                 self.events[startTime] -= 1
