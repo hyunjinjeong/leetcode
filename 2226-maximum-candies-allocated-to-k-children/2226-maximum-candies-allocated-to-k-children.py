@@ -16,16 +16,16 @@ class Solution:
 
             return False
         
-        if len(candies) == 1:
-            return candies[0] // k
+        # if len(candies) == 1:
+        #     return candies[0] // k
         
-        lo, hi = 0, sum(candies)
+        lo, hi = 0, max(candies)
         while lo < hi:
-            mid = lo + (hi - lo) // 2
+            mid = lo + (hi - lo + 1) // 2
 
             if can_allocate(mid):
-                lo = mid + 1
+                lo = mid
             else:
-                hi = mid
+                hi = mid - 1
         
-        return lo - 1
+        return lo
