@@ -15,9 +15,6 @@ class Solution:
                     return True
 
             return False
-    
-        if len(candies) == 1:
-            return candies[0] // k
         
         lo, hi = 0, max(candies) + 1
         while lo < hi:
