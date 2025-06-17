@@ -15,17 +15,17 @@ class Solution:
                     return True
 
             return False
+    
+        if len(candies) == 1:
+            return candies[0] // k
         
-        # if len(candies) == 1:
-        #     return candies[0] // k
-        
-        lo, hi = 0, max(candies)
+        lo, hi = 0, max(candies) + 1
         while lo < hi:
-            mid = lo + (hi - lo + 1) // 2
+            mid = lo + (hi - lo) // 2
 
             if can_allocate(mid):
-                lo = mid
+                lo = mid + 1
             else:
-                hi = mid - 1
+                hi = mid
         
-        return lo
+        return lo - 1
