@@ -5,16 +5,16 @@ class Solution:
 
         def dfs(start, substrings):
             if start == len(s):
-                return len(substrings)
+                return 0
             
-            count = 1
+            count = 0
             for i in range(start, len(s)):
                 substring = s[start:i + 1]
                 if substring in substrings:
                     continue
                 
                 substrings.add(substring)
-                count = max(count, dfs(i + 1, substrings))
+                count = max(count, 1 + dfs(i + 1, substrings))
                 substrings.remove(substring)
             
             return count
