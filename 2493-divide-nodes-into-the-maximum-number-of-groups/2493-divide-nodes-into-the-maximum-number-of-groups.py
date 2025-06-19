@@ -34,23 +34,22 @@ class Solution:
         for node in range(1, n + 1):
             if node in visited:
                 continue
-            
+
             # group 구하기
             curr_group = {node}
+            visited.add(node)
             q = collections.deque([node])
             while q:
                 curr = q.popleft()
                 for adj in graph[curr]:
                     if adj in curr_group:
                         continue
-                    curr_group.add(adj)
                     visited.add(adj)
+                    curr_group.add(adj)
                     q.append(adj)
-            
-            print(curr_group)
-            
+
             # 그룹 내에서 모든 노드를 돌면서 최댓값 구하기
-            group_max_count = -1
+            group_max_count = 1
             for curr in curr_group:
                 group_count = get_group_count(curr)
                 if group_count == -1:
@@ -58,5 +57,5 @@ class Solution:
                 group_max_count = max(group_max_count, group_count)
             
             max_counts.append(group_max_count)
-        
+
         return sum(max_counts)
