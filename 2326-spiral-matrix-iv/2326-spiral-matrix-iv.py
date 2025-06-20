@@ -8,19 +8,13 @@ class Solution:
         mat = [[-1] * n for _ in range(m)]
 
         i, j = 0, 0
-        if n == 1:
-            di, dj = 1, 0
-        else:
-            di, dj = 0, 1
+        di, dj = 0, 1
 
         top, right, bottom, left = 0, n - 1, m - 1, 0
 
         node = head
         while node:
             mat[i][j] = node.val
-
-            i, j = i + di, j + dj
-            node = node.next
             
             if di == 0 and dj == 1 and j == right:
                 di, dj = 1, 0
@@ -34,5 +28,8 @@ class Solution:
             elif di == -1 and dj == 0 and i == top:
                 di, dj = 0, 1
                 left += 1
+            
+            i, j = i + di, j + dj
+            node = node.next
         
         return mat
