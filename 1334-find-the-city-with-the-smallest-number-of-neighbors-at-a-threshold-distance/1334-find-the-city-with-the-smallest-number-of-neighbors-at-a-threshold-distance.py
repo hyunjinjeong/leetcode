@@ -8,14 +8,13 @@ class Solution:
             dist = [float("inf") for _ in range(n)]
             dist[start] = 0
 
-            visited = [False for _ in range(n)]
-            count = -1 # 자기자신 제외
+            visited = set()
             while heap:
                 curr_dist, city = heapq.heappop(heap)
                 
-                if not visited[city]:
-                    count += 1
-                visited[city] = True
+                if city in visited:
+                    continue
+                visited.add(city)
                 
                 for adj, adj_dist in graph[city]:
                     next_dist = curr_dist + adj_dist
@@ -23,7 +22,7 @@ class Solution:
                         heapq.heappush(heap, (next_dist, adj))
                         dist[adj] = next_dist
             
-            return count
+            return len(visited) - 1 # 자기 자신 제외
 
         
         graph = {i: [] for i in range(n)}
@@ -34,11 +33,9 @@ class Solution:
         lowest_city = 0
         lowest_count = float("inf")
         for city in range(n):
-            print("city", city)
             count = get_counts(city)
-            if count > lowest_count:
-                continue
-            lowest_city = city
-            lowest_count = count
+            if count <= lowest_count:
+                lowest_city = city
+                lowest_count = count
         
         return lowest_city
