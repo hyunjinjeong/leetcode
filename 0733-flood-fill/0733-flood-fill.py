@@ -4,14 +4,14 @@ class Solution:
         
         def dfs(r, c):
             original_color = image[r][c]
-
+            if original_color == color:
+                return
+            
             image[r][c] = color
-            visited.add((r, c))
 
             for adj_r, adj_c in [(r + 1, c), (r, c + 1), (r - 1, c), (r, c - 1)]:
-                if 0 <= adj_r < M and 0 <= adj_c < N and image[adj_r][adj_c] == original_color and (adj_r, adj_c) not in visited:
+                if 0 <= adj_r < M and 0 <= adj_c < N and image[adj_r][adj_c] == original_color:
                     dfs(adj_r, adj_c)
         
-        visited = set()
         dfs(sr, sc)
         return image
