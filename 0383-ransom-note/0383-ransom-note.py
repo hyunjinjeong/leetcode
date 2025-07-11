@@ -1,12 +1,11 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        ransom_counter = collections.Counter(ransomNote)
-        magazine_counter = collections.Counter(magazine)
-        
-        for key in ransom_counter:
-            if key not in magazine_counter:
+        magazine_count = collections.Counter(magazine)
+
+        for c in ransomNote:
+            if c not in magazine_count or magazine_count[c] == 0:
                 return False
-            if magazine_counter[key] < ransom_counter[key]:
-                return False
+            
+            magazine_count[c] -= 1
         
         return True
