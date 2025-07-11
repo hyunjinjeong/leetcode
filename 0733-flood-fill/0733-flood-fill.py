@@ -1,21 +1,17 @@
 class Solution:
     def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
-        original_color = image[sr][sc]
-        if original_color == color:
-            return image
+        M, N = len(image), len(image[0])
         
-        moves = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         def dfs(r, c):
-            if r < 0 or r >= len(image):
-                return
-            if c < 0 or c >= len(image[0]):
-                return
-            if image[r][c] != original_color:
-                return
-            
+            original_color = image[r][c]
+
             image[r][c] = color
-            for move in moves:
-                dfs(r+move[0], c+move[1])
-            
+            visited.add((r, c))
+
+            for adj_r, adj_c in [(r + 1, c), (r, c + 1), (r - 1, c), (r, c - 1)]:
+                if 0 <= adj_r < M and 0 <= adj_c < N and image[adj_r][adj_c] == original_color and (adj_r, adj_c) not in visited:
+                    dfs(adj_r, adj_c)
+        
+        visited = set()
         dfs(sr, sc)
         return image
