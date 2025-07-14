@@ -3,7 +3,7 @@ class Solution:
         # 이거는 그냥 돌면 될 것 같은디
         # 근데 m이랑 n이 커서 그건 아닌가.. 아니면 어케 풂?
         # 일단 ㄱㄱ
-        def dfs(r, c):
+        def check_guarded_cells(r, c):
             # up
             for adj_r in range(r - 1, -1, -1):
                 if matrix[adj_r][c] > 0:
@@ -36,7 +36,7 @@ class Solution:
         for r in range(m):
             for c in range(n):
                 if matrix[r][c] == 1:
-                    dfs(r, c)
+                    check_guarded_cells(r, c)
         
         count = 0
         for r in range(m):
