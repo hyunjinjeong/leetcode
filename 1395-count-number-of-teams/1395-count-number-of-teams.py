@@ -11,25 +11,25 @@ class Solution:
         # 이제 이걸 dp로 바꿔야 하는데
 
         @cache
-        def get_monotonic_increasing_count(start, pick_count):
-            if pick_count == 3:
+        def get_monotonic_increasing_count(start, team_size):
+            if team_size == 3:
                 return 1
             
             count = 0
             for i in range(start + 1, len(rating)):
                 if rating[i] > rating[start]:
-                    count += get_monotonic_increasing_count(i, pick_count + 1)
+                    count += get_monotonic_increasing_count(i, team_size + 1)
             return count
         
         @cache
-        def get_monotonic_decreasing_count(start, pick_count):
-            if pick_count == 3:
+        def get_monotonic_decreasing_count(start, team_size):
+            if team_size == 3:
                 return 1
             
             count = 0
             for i in range(start + 1, len(rating)):
                 if rating[i] < rating[start]:
-                    count += get_monotonic_decreasing_count(i, pick_count + 1)
+                    count += get_monotonic_decreasing_count(i, team_size + 1)
             return count
         
         total_count = 0
