@@ -8,9 +8,7 @@ class Solution:
 
         group = {}
         for i in range(N):
-            prev_y_i = group.get(x[i], 0)
-            if y[i] > prev_y_i:
-                group[x[i]] = y[i]
+            group[x[i]] = max(y[i], group.get(x[i], 0))
         
         if len(group) < 3:
             return -1
