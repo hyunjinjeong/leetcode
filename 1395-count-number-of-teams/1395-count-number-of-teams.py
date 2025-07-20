@@ -41,32 +41,22 @@ class Solution:
         # 중간 원소를 기준으로 좌우를 구하는 식으로 최적화할 수 있음
         total_count = 0
 
-        # increasing count
         for mid in range(len(rating)):
-            left_count, right_count = 0, 0
+            left_smaller, left_larger = 0, 0
+            right_smaller, right_larger = 0, 0
 
             for left in range(0, mid):
                 if rating[left] < rating[mid]:
-                    left_count += 1
+                    left_smaller += 1
+                else:
+                    left_larger += 1
             
             for right in range(mid + 1, len(rating)):
                 if rating[right] > rating[mid]:
-                    right_count += 1
+                    right_larger += 1
+                else:
+                    right_smaller += 1
             
-            total_count += left_count * right_count
-        
-        # decreasing count
-        for mid in range(len(rating)):
-            left_count, right_count = 0, 0
-
-            for left in range(0, mid):
-                if rating[left] > rating[mid]:
-                    left_count += 1
-            
-            for right in range(mid + 1, len(rating)):
-                if rating[right] < rating[mid]:
-                    right_count += 1
-            
-            total_count += left_count * right_count
+            total_count += left_smaller * right_larger + left_larger * right_smaller
 
         return total_count
