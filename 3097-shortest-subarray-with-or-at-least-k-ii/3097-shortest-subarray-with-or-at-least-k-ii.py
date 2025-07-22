@@ -10,19 +10,11 @@ class Solution:
         # 일단 1의 개수 세서 ㄱㄱ
         one_counts = [0] * 30
 
-        def add_one_count(num):
+        def update_one_count(num, delta):
             i = 0
             while num:
                 if num & 1:
-                    one_counts[i] += 1
-                num >>= 1
-                i += 1
-        
-        def subtract_one_count(num):
-            i = 0
-            while num:
-                if num & 1:
-                    one_counts[i] -= 1
+                    one_counts[i] += delta
                 num >>= 1
                 i += 1
 
@@ -30,20 +22,17 @@ class Solution:
             res = 0
             for i in range(len(one_counts)):
                 if one_counts[i] > 0:
-                    res += 2 ** i
+                    res |= 1 << i
             return res
 
         shortest = len(nums) + 1
 
         left = 0
         for right in range(len(nums)):
-            add_one_count(nums[right])
-            while left < right and get_or_sum() >= k:
+            update_one_count(nums[right], 1)
+            while left <= right and get_or_sum() >= k:
                 shortest = min(shortest, right - left + 1)
-                subtract_one_count(nums[left])
+                update_one_count(nums[left], -1)
                 left += 1
-            
-            if get_or_sum() >= k:
-                shortest = min(shortest, right - left + 1)
 
         return shortest if shortest <= len(nums) else -1
