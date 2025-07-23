@@ -9,7 +9,6 @@ class Solution:
         curr_xor = 0
         for i in range(len(nums)):
             curr_xor ^= nums[i]
-            print("a", i, curr_xor)
             res_index = len(nums) - 1 - i
 
             # 이제 이 curr_xor에 어떤 숫자를 xor해서 최댓값이 나와야 함.
