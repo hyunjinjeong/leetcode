@@ -12,12 +12,16 @@ class Solution:
         node = head.next
 
         while node:
+            merged_sum = 0
             while node and node.val != 0:
-                merged_node.val += node.val
+                merged_sum += node.val
                 node = node.next
             
-            merged_node.next = node if node.next is not None else None
-            merged_node = node
+            merged_node.val = merged_sum
+
             node = node.next
+            merged_node.next = node
+            
+            merged_node = merged_node.next
             
         return head
