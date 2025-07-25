@@ -28,6 +28,6 @@ class Solution:
             
             if is_valid(head, tree_node):
                 return True
-            return is_valid(head, tree_node.left) or is_valid(head, tree_node.right)
+            return dfs(tree_node.left) or dfs(tree_node.right)
         
         return dfs(root)
