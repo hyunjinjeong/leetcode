@@ -20,16 +20,15 @@ class Solution:
             
             return get_inorder_array(node.left) + [node] + get_inorder_array(node.right)
         
-        def get_sorted_array(arr):
-            arr.val
-        
         inorder_array = get_inorder_array(root)
-        sorted_array = sorted(inorder_array, key=lambda item: item.val)
 
-        swap_candidates = []
-        for i in range(len(inorder_array)):
-            if inorder_array[i].val != sorted_array[i].val:
-                swap_candidates.append(inorder_array[i])
+        x, y = None, None
+        for i in range(len(inorder_array) - 1):
+            if inorder_array[i + 1].val < inorder_array[i].val:
+                y = inorder_array[i + 1]
+                if x is None:
+                    x = inorder_array[i]
+                else:
+                    break
         
-        # 정확히 2개 있어야 함!
-        swap_candidates[0].val, swap_candidates[1].val = swap_candidates[1].val, swap_candidates[0].val
+        x.val, y.val = y.val, x.val
